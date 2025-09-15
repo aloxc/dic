@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童英语单词记忆助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        header {
+            background: #4e54c8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .category-btn {
+            background: #ff7e5f;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover {
+            background: #ff6b4a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 126, 95, 0.6);
+        }
+        
+        .breadcrumb {
+            padding: 15px 20px;
+            background: #f3f4f6;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .breadcrumb a {
+            color: #4e54c8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .breadcrumb a:hover {
+            color: #ff7e5f;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            margin: 0 8px;
+            color: #6b7280;
+        }
+        
+        .category-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .category-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .category-item:hover {
+            background: #f9fafb;
+        }
+        
+        .category-item i {
+            color: #9ca3af;
+        }
+        
+        .words-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .words-table th {
+            background: #4e54c8;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .words-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        
+        .words-table tr:hover {
+            background: #f3f4f6;
+        }
+        
+        .words-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        
+        .word-type {
+            background: #4e54c8;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .pronounce-btn {
+            background: #ff7e5f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+        
+        .pronounce-btn:hover {
+            background: #ff6b4a;
+        }
+        
+        .detail-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-btn:hover {
+            background: #059669;
+        }
+        
+        .detail-btn.expanded {
+            background: #ef4444;
+        }
+        
+        .detail-btn.expanded:hover {
+            background: #dc2626;
+        }
+        
+        .detail-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .detail-content.expanded {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .detail-inner {
+            padding: 15px;
+        }
+        
+        .detail-section {
+            margin-bottom: 12px;
+        }
+        
+        .detail-section h4 {
+            color: #4e54c8;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .detail-section p {
+            color: #374151;
+            line-height: 1.5;
+        }
+        
+        .example {
+            background: #eef2ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .content-area {
+            padding: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .words-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .category-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            
+            .words-table th:nth-child(5),
+            .words-table td:nth-child(5) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>儿童英语单词记忆助手</h1>
+            <p class="subtitle">让英语学习变得有趣又高效</p>
+        </header>
+        
+        <div class="content-area">
+            <button class="category-btn" id="categoryToggle">
+                <i class="fas fa-list"></i> 选择单词分类
+            </button>
+            
+            <div class="breadcrumb" id="breadcrumb">
+                <a data-id="root">所有分类</a>
+            </div>
+            
+            <div class="category-panel" id="categoryPanel">
+                <!-- 分类内容将通过JavaScript动态生成 -->
+            </div>
+            
+            <table class="words-table" id="wordsTable">
+                <thead>
+                    <tr>
+                        <th>单词</th>
+                        <th>类型</th>
+                        <th>读音</th>
+                        <th>中文意思</th>
+                        <th>详细解释</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 单词内容将通过JavaScript动态生成 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 儿童英语单词记忆助手 | 让孩子快乐学英语</p>
+    </footer>
+
+    <script>
+        // 模拟单词数据（实际应用中可以从JSON文件加载）
+        const wordData = {
+            "categories": [
+                {
+                    "id": "animals",
+                    "name": "动物",
+                    "subcategories": [
+                        {
+                            "id": "farm_animals",
+                            "name": "农场动物",
+                            "words": [
+                                {
+                                    "word": "cow",
+                                    "type": "n.",
+                                    "meaning": "奶牛",
+                                    "detail": {
+                                        "definition": "一种大型家畜，通常饲养以获取牛奶和牛肉",
+                                        "examples": [
+                                            "The cow is grazing in the field. (奶牛正在田野里吃草。)",
+                                            "We get milk from cows. (我们从奶牛身上获取牛奶。)"
+                                        ],
+                                        "synonyms": ["cattle", "bovine"],
+                                        "notes": "cow通常指母牛，公牛称为bull"
+                                    }
+                                },
+                                {
+                                    "word": "pig",
+                                    "type": "n.",
+                                    "meaning": "猪",
+                                    "detail": {
+                                        "definition": "一种杂食性家畜，通常饲养以获取猪肉",
+                                        "examples": [
+                                            "The pig rolled in the mud to keep cool. (猪在泥里打滚以保持凉爽。)",
+                                            "Pigs are very intelligent animals. (猪是非常聪明的动物。)"
+                                        ],
+                                        "synonyms": ["swine", "hog"],
+                                        "notes": "pig通常指家猪，野猪称为wild boar"
+                                    }
+                                },
+                                {
+                                    "word": "sheep",
+                                    "type": "n.",
+                                    "meaning": "绵羊"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "wild_animals",
+                            "name": "野生动物",
+                            "words": [
+                                {
+                                    "word": "lion",
+                                    "type": "n.",
+                                    "meaning": "狮子",
+                                    "detail": {
+                                        "definition": "大型猫科动物，被称为'百兽之王'",
+                                        "examples": [
+                                            "The lion is hunting for food. (狮子正在猎食。)",
+                                            "Lions live in groups called prides. (狮子群居生活，群体称为狮群。)"
+                                        ],
+                                        "synonyms": ["big cat", "king of beasts"],
+                                        "notes": "雄狮有鬃毛，雌狮没有"
+                                    }
+                                },
+                                {
+                                    "word": "tiger",
+                                    "type": "n.",
+                                    "meaning": "老虎",
+                                    "detail": {
+                                        "definition": "大型猫科动物，有橙黄色毛皮和黑色条纹",
+                                        "examples": [
+                                            "The tiger is an endangered species. (老虎是濒危物种。)",
+                                            "Tigers are excellent swimmers. (老虎是出色的游泳者。)"
+                                        ],
+                                        "synonyms": ["big cat", "predator"],
+                                        "notes": "老虎是最大的猫科动物"
+                                    }
+                                },
+                                {
+                                    "word": "elephant",
+                                    "type": "n.",
+                                    "meaning": "大象"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "food",
+                    "name": "食物",
+                    "subcategories": [
+                        {
+                            "id": "fruits",
+                            "name": "水果",
+                            "words": [
+                                {
+                                    "word": "apple",
+                                    "type": "n.",
+                                    "meaning": "苹果",
+                                    "detail": {
+                                        "definition": "一种圆形水果，通常为红色、绿色或黄色，口感脆甜",
+                                        "examples": [
+                                            "I eat an apple every day. (我每天吃一个苹果。)",
+                                            "Apple pie is a traditional American dessert. (苹果派是传统的美式甜点。)"
+                                        ],
+                                        "synonyms": ["pome", "fruit"],
+                                        "notes": "苹果有很多品种，如红富士、嘎啦果等"
+                                    }
+                                },
+                                {
+                                    "word": "banana",
+                                    "type": "n.",
+                                    "meaning": "香蕉",
+                                    "detail": {
+                                        "definition": "一种长而弯曲的黄色水果，果肉柔软香甜",
+                                        "examples": [
+                                            "Monkeys like to eat bananas. (猴子喜欢吃香蕉。)",
+                                            "Bananas are rich in potassium. (香蕉富含钾元素。)"
+                                        ],
+                                        "synonyms": ["fruit", "plantain"],
+                                        "notes": "香蕉未成熟时是绿色的，成熟后变黄"
+                                    }
+                                },
+                                {
+                                    "word": "orange",
+                                    "type": "n.",
+                                    "meaning": "橙子"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "vegetables",
+                            "name": "蔬菜",
+                            "words": [
+                                {
+                                    "word": "carrot",
+                                    "type": "n.",
+                                    "meaning": "胡萝卜",
+                                    "detail": {
+                                        "definition": "一种长圆锥形的橙色根茎类蔬菜",
+                                        "examples": [
+                                            "Rabbits love to eat carrots. (兔子喜欢吃胡萝卜。)",
+                                            "Carrots are good for your eyesight. (胡萝卜对视力有益。)"
+                                        ],
+                                        "synonyms": ["root vegetable", "daucus"],
+                                        "notes": "胡萝卜富含β-胡萝卜素，对人体有益"
+                                    }
+                                },
+                                {
+                                    "word": "tomato",
+                                    "type": "n.",
+                                    "meaning": "西红柿",
+                                    "detail": {
+                                        "definition": "一种圆形或椭圆形的红色水果，常作为蔬菜食用",
+                                        "examples": [
+                                            "I use tomatoes to make salad. (我用西红柿做沙拉。)",
+                                            "Tomatoes are rich in vitamin C. (西红柿富含维生素C。)"
+                                        ],
+                                        "synonyms": ["fruit", "berry"],
+                                        "notes": "西红柿在植物学上是水果，但常被当作蔬菜烹饪"
+                                    }
+                                },
+                                {
+                                    "word": "potato",
+                                    "type": "n.",
+                                    "meaning": "土豆"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "colors",
+                    "name": "颜色",
+                    "words": [
+                        {
+                            "word": "red",
+                            "type": "adj.",
+                            "meaning": "红色",
+                            "detail": {
+                                "definition": "一种原色，类似于血液的颜色",
+                                "examples": [
+                                    "She was wearing a red dress. (她穿着一件红色的裙子。)",
+                                    "Red light means stop. (红灯表示停止。)"
+                                ],
+                                "synonyms": ["crimson", "scarlet", "ruby"],
+                                "notes": "红色在许多文化中象征爱情、激情和危险"
+                            }
+                        },
+                        {
+                            "word": "blue",
+                            "type": "adj.",
+                            "meaning": "蓝色",
+                            "detail": {
+                                "definition": "一种原色，类似于天空或海洋的颜色",
+                                "examples": [
+                                    "The sky is blue today. (今天天空是蓝色的。)",
+                                    "He has blue eyes. (他有蓝色的眼睛。)"
+                                ],
+                                "synonyms": ["azure", "cobalt", "sapphire"],
+                                "notes": "蓝色常与冷静、悲伤或稳定相关联"
+                            }
+                        },
+                        {
+                            "word": "green",
+                            "type": "adj.",
+                            "meaning": "绿色"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // DOM元素
+        const categoryToggle = document.getElementById('categoryToggle');
+        const categoryPanel = document.getElementById('categoryPanel');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const wordsTableBody = document.querySelector('#wordsTable tbody');
+
+        // 当前状态
+        let currentCategory = null;
+        let currentSubcategory = null;
+        let categoryPanelVisible = false;
+
+        // 显示分类面板
+        function showCategoryPanel() {
+            categoryPanel.style.display = 'block';
+            categoryPanelVisible = true;
+            renderCategories();
+        }
+
+        // 隐藏分类面板
+        function hideCategoryPanel() {
+            categoryPanel.style.display = 'none';
+            categoryPanelVisible = false;
+        }
+
+        // 渲染分类列表
+        function renderCategories() {
+            // 清空面板
+            categoryPanel.innerHTML = '';
+            
+            if (currentCategory === null) {
+                // 显示一级分类
+                wordData.categories.forEach(category => {
+                    const item = document.createElement('div');
+                    item.className = 'category-item';
+                    item.innerHTML = `
+                        ${category.name}
+                        <i class="fas fa-chevron-right"></i>
+                    `;
+                    item.addEventListener('click', () => {
+                        if (category.subcategories) {
+                            // 有二级分类
+                            currentCategory = category;
+                            renderSubcategories();
+                        } else {
+                            // 没有二级分类，直接显示单词
+                            currentCategory = category;
+                            currentSubcategory = null;
+                            renderWords();
+                            updateBreadcrumb();
+                            hideCategoryPanel();
+                        }
+                    });
+                    categoryPanel.appendChild(item);
+                });
+            } else {
+                // 显示返回按钮和二级分类
+                const backItem = document.createElement('div');
+                backItem.className = 'category-item';
+                backItem.innerHTML = `
+                    <i class="fas fa-arrow-left"></i> 返回分类列表
+                `;
+                backItem.addEventListener('click', () => {
+                    currentCategory = null;
+                    currentSubcategory = null;
+                    renderCategories();
+                    updateBreadcrumb();
+                });
+                categoryPanel.appendChild(backItem);
+                
+                // 显示二级分类
+                if (currentCategory.subcategories) {
+                    currentCategory.subcategories.forEach(subcategory => {
+                        const item = document.createElement('div');
+                        item.className = 'category-item';
+                        item.innerHTML = `
+                            ${subcategory.name}
+                            <i class="fas fa-chevron-right"></i>
+                        `;
+                        item.addEventListener('click', () => {
+                            currentSubcategory = subcategory;
+                            renderWords();
+                            updateBreadcrumb();
+                            hideCategoryPanel();
+                        });
+                        categoryPanel.appendChild(item);
+                    });
+                }
+            }
+        }
+
+        // 渲染二级分类（已合并到renderCategories中）
+        function renderSubcategories() {
+            renderCategories(); // 现在统一使用renderCategories
+            updateBreadcrumb();
+        }
+
+        // 渲染单词列表
+        function renderWords() {
+            // 清空表格
+            wordsTableBody.innerHTML = '';
+            
+            let words = [];
+            
+            if (currentSubcategory) {
+                words = currentSubcategory.words;
+            } else if (currentCategory) {
+                words = currentCategory.words;
+            } else {
+                // 显示所有单词
+                wordData.categories.forEach(category => {
+                    if (category.words) {
+                        words = words.concat(category.words);
+                    }
+                    if (category.subcategories) {
+                        category.subcategories.forEach(subcategory => {
+                            words = words.concat(subcategory.words);
+                        });
+                    }
+                });
+            }
+            
+            // 填充单词表格
+            words.forEach(word => {
+                const row = document.createElement('tr');
+                
+                // 创建详细解释内容
+                let detailContent = '';
+                if (word.detail) {
+                    detailContent = `
+                        <div class="detail-content">
+                            <div class="detail-inner">
+                                <div class="detail-section">
+                                    <h4>定义</h4>
+                                    <p>${word.detail.definition}</p>
+                                </div>
+                                ${word.detail.examples ? `
+                                <div class="detail-section">
+                                    <h4>例句</h4>
+                                    ${word.detail.examples.map(example => `
+                                        <p class="example">${example}</p>
+                                    `).join('')}
+                                </div>
+                                ` : ''}
+                                ${word.detail.synonyms ? `
+                                <div class="detail-section">
+                                    <h4>同义词</h4>
+                                    <p>${word.detail.synonyms.join(', ')}</p>
+                                </div>
+                                ` : ''}
+                                ${word.detail.notes ? `
+                                <div class="detail-section">
+                                    <h4>备注</h4>
+                                    <p>${word.detail.notes}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                row.innerHTML = `
+                    <td>${word.word}</td>
+                    <td><span class="word-type">${word.type}</span></td>
+                    <td>
+                        <button class="pronounce-btn" data-word="${word.word}">
+                            <i class="fas fa-volume-up"></i> 发音
+                        </button>
+                    </td>
+                    <td>${word.meaning}</td>
+                    <td>
+                        ${word.detail ? `
+                            <button class="detail-btn" data-word="${word.word}">
+                                <i class="fas fa-info-circle"></i> 详细解释
+                            </button>
+                        ` : '<span style="color: #9ca3af;">无</span>'}
+                    </td>
+                `;
+                
+                // 添加详细解释内容
+                if (word.detail) {
+                    const cell = document.createElement('td');
+                    cell.colSpan = 5;
+                    cell.style.padding = '0';
+                    cell.style.border = 'none';
+                    cell.innerHTML = detailContent;
+                    
+                    // 创建包含行
+                    const containerRow = document.createElement('tr');
+                    containerRow.className = 'detail-row';
+                    containerRow.style.display = 'none';
+                    containerRow.appendChild(cell);
+                    
+                    wordsTableBody.appendChild(row);
+                    wordsTableBody.appendChild(containerRow);
+                    
+                    // 添加详细解释按钮事件
+                    const detailBtn = row.querySelector('.detail-btn');
+                    detailBtn.addEventListener('click', () => {
+                        const isExpanded = detailBtn.classList.contains('expanded');
+                        
+                        if (isExpanded) {
+                            // 折叠详细解释
+                            detailBtn.classList.remove('expanded');
+                            detailBtn.innerHTML = '<i class="fas fa-info-circle"></i> 详细解释';
+                            containerRow.style.display = 'none';
+                            detailBtn.style.background = '';
+                        } else {
+                            // 展开详细解释
+                            detailBtn.classList.add('expanded');
+                            detailBtn.innerHTML = '<i class="fas fa-times"></i> 收起';
+                            containerRow.style.display = 'table-row';
+                            
+                            // 获取详细解释内容元素并添加展开类
+                            const detailContent = containerRow.querySelector('.detail-content');
+                            detailContent.classList.add('expanded');
+                        }
+                    });
+                } else {
+                    wordsTableBody.appendChild(row);
+                }
+            });
+            
+            // 添加发音功能
+            document.querySelectorAll('.pronounce-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const word = button.getAttribute('data-word');
+                    pronounceWord(word);
+                });
+            });
+        }
+
+        // 更新面包屑导航
+        function updateBreadcrumb() {
+            breadcrumb.innerHTML = '';
+            
+            // 根链接
+            const rootLink = document.createElement('a');
+            rootLink.textContent = '所有分类';
+            rootLink.setAttribute('data-id', 'root');
+            rootLink.addEventListener('click', () => {
+                currentCategory = null;
+                currentSubcategory = null;
+                renderWords();
+                updateBreadcrumb();
+            });
+            breadcrumb.appendChild(rootLink);
+            
+            if (currentCategory) {
+                const separator1 = document.createElement('span');
+                separator1.textContent = '/';
+                breadcrumb.appendChild(separator1);
+                
+                const categoryLink = document.createElement('a');
+                categoryLink.textContent = currentCategory.name;
+                categoryLink.setAttribute('data-id', currentCategory.id);
+                categoryLink.addEventListener('click', () => {
+                    currentSubcategory = null;
+                    renderWords();
+                    updateBreadcrumb();
+                });
+                breadcrumb.appendChild(categoryLink);
+                
+                if (currentSubcategory) {
+                    const separator2 = document.createElement('span');
+                    separator2.textContent = '/';
+                    breadcrumb.appendChild(separator2);
+                    
+                    const subcategorySpan = document.createElement('span');
+                    subcategorySpan.textContent = currentSubcategory.name;
+                    breadcrumb.appendChild(subcategorySpan);
+                }
+            }
+        }
+
+        // 单词发音功能
+        function pronounceWord(word) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('很抱歉，您的浏览器不支持语音合成功能。');
+            }
+        }
+
+        // 初始化
+        function init() {
+            // 初始渲染所有单词
+            renderWords();
+            
+            // 分类按钮点击事件
+            categoryToggle.addEventListener('click', () => {
+                if (categoryPanelVisible) {
+                    hideCategoryPanel();
+                } else {
+                    showCategoryPanel();
+                }
+            });
+            
+            // 点击页面其他区域关闭分类面板
+            document.addEventListener('click', (e) => {
+                if (categoryPanelVisible && 
+                    !categoryPanel.contains(e.target) && 
+                    e.target !== categoryToggle) {
+                    hideCategoryPanel();
+                }
+            });
+        }
+
+        // 启动应用
+        init();
+    </script>
+</body>
+</html>
