@@ -198,10 +198,6 @@
             min-width: 120px;
         }
         
-        .pronounce-cell {
-            text-align: center;
-            min-width: 80px;
-        }
         
         .pronounce-btn {
             background: #ff7e5f;
@@ -303,9 +299,6 @@
                 padding: 6px 8px;
             }
             
-            .pronounce-btn .text {
-                display: none; /* 在小屏幕上隐藏"发音"文字 */
-            }
             
             .words-table {
                 font-size: 0.9rem;
@@ -351,9 +344,7 @@
                 min-width: 100px;
             }
             
-            .pronounce-cell {
-                min-width: 60px;
-            }
+
             
             .word-type {
                 font-size: 0.8rem;
@@ -367,11 +358,6 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>儿童英语单词记忆助手</h1>
-            <p class="subtitle">让英语学习变得有趣又高效</p>
-        </header>
-        
         <div class="content-area">
             <div class="breadcrumb" id="breadcrumb">
                 <a data-id="root">
@@ -391,7 +377,6 @@
                         <tr>
                             <th>单词</th>
                             <th>中文意思</th>
-                            <th class="pronounce-cell">读音</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -403,7 +388,7 @@
     </div>
     
     <footer>
-        <p>© 2023 儿童英语单词记忆助手 | 让孩子快乐学英语</p>
+        <p>© 2023 让孩子快乐学英语</p>
     </footer>
 
     <script>
@@ -860,23 +845,22 @@
                 
                 // 处理单词类型显示
                 const typeHTML = word.type.map(t => 
-                    `<div class="word-type">${t}</div>`
+                    `${t}`
                 ).join('');
                 
                 row.innerHTML = `
                     <td class="word-cell">
                         <div class="word-cell">
-                            ${typeHTML}
+
+							<div class="word-type">						<span style="width:30;height:30">
+							<button class="pronounce-btn" data-word="${word.word}">
+								<i class="fas fa-volume-up"></i>
+							</button>
+						</span>${typeHTML}</div>
                             <div class="word-text">${word.word}</div>
                         </div>
                     </td>
                     <td class="meaning-cell">${word.meaning}</td>
-                    <td class="pronounce-cell">
-                        <button class="pronounce-btn" data-word="${word.word}">
-                            <i class="fas fa-volume-up"></i>
-                            <span class="text">发音</span>
-                        </button>
-                    </td>
                 `;
                 
                 wordsTableBody.appendChild(row);
