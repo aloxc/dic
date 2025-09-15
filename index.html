@@ -52,30 +52,6 @@
             opacity: 0.9;
         }
         
-        .category-btn {
-            background: #ff7e5f;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .category-btn:hover {
-            background: #ff6b4a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 126, 95, 0.6);
-        }
-        
         .breadcrumb {
             padding: 15px 20px;
             background: #f3f4f6;
@@ -84,6 +60,7 @@
             align-items: center;
             flex-wrap: wrap;
             border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
         }
         
         .breadcrumb a {
@@ -91,11 +68,16 @@
             text-decoration: none;
             cursor: pointer;
             transition: color 0.2s;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .breadcrumb a:hover {
             color: #ff7e5f;
-            text-decoration: underline;
+            background: #e5e7eb;
         }
         
         .breadcrumb span {
@@ -132,6 +114,21 @@
             color: #9ca3af;
         }
         
+        .category-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .word-count {
+            background: #4e54c8;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
         .words-table {
             width: 100%;
             border-collapse: collapse;
@@ -145,11 +142,24 @@
             text-align: left;
         }
         
-        .words-table tr:nth-child(even) {
+        .words-table tr {
+            transition: background-color 0.2s;
+        }
+        
+        .words-table tr.has-detail {
+            background-color: #f0f9ff;
+        }
+        
+        .words-table tr.has-detail:hover {
+            background-color: #e0f2fe;
+            cursor: pointer;
+        }
+        
+        .words-table tr:nth-child(even):not(.has-detail) {
             background: #f9fafb;
         }
         
-        .words-table tr:hover {
+        .words-table tr:hover:not(.has-detail) {
             background: #f3f4f6;
         }
         
@@ -159,12 +169,21 @@
             vertical-align: top;
         }
         
+        .word-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
         .word-type {
-            background: #4e54c8;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
+            color: #6b7280;
             font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .word-text {
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         
         .pronounce-btn {
@@ -184,38 +203,12 @@
             background: #ff6b4a;
         }
         
-        .detail-btn {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .detail-btn:hover {
-            background: #059669;
-        }
-        
-        .detail-btn.expanded {
-            background: #ef4444;
-        }
-        
-        .detail-btn.expanded:hover {
-            background: #dc2626;
-        }
-        
         .detail-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease;
             background: #f8fafc;
             border-radius: 8px;
-            margin-top: 10px;
         }
         
         .detail-content.expanded {
@@ -225,10 +218,9 @@
         
         .detail-inner {
             padding: 15px;
-        }
-        
-        .detail-section {
-            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         
         .detail-section h4 {
@@ -271,13 +263,17 @@
                 font-size: 1.8rem;
             }
             
-            .category-btn {
-                padding: 10px 20px;
+            .word-count {
+                font-size: 0.7rem;
+                padding: 1px 6px;
+            }
+            
+            .breadcrumb {
                 font-size: 1rem;
             }
             
-            .words-table th:nth-child(5),
-            .words-table td:nth-child(5) {
+            .words-table th:nth-child(3),
+            .words-table td:nth-child(3) {
                 display: none;
             }
         }
@@ -291,12 +287,12 @@
         </header>
         
         <div class="content-area">
-            <button class="category-btn" id="categoryToggle">
-                <i class="fas fa-list"></i> 选择单词分类
-            </button>
-            
             <div class="breadcrumb" id="breadcrumb">
-                <a data-id="root">所有分类</a>
+                <a data-id="root">
+                    <i class="fas fa-folder-open"></i> 
+                    <span>所有分类</span>
+                    <span class="word-count" id="totalWordCount">0</span>
+                </a>
             </div>
             
             <div class="category-panel" id="categoryPanel">
@@ -307,10 +303,8 @@
                 <thead>
                     <tr>
                         <th>单词</th>
-                        <th>类型</th>
-                        <th>读音</th>
                         <th>中文意思</th>
-                        <th>详细解释</th>
+                        <th>读音</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -338,7 +332,7 @@
                             "words": [
                                 {
                                     "word": "cow",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "奶牛",
                                     "detail": {
                                         "definition": "一种大型家畜，通常饲养以获取牛奶和牛肉",
@@ -352,7 +346,7 @@
                                 },
                                 {
                                     "word": "pig",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "猪",
                                     "detail": {
                                         "definition": "一种杂食性家畜，通常饲养以获取猪肉",
@@ -366,7 +360,7 @@
                                 },
                                 {
                                     "word": "sheep",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "绵羊"
                                 }
                             ]
@@ -377,7 +371,7 @@
                             "words": [
                                 {
                                     "word": "lion",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "狮子",
                                     "detail": {
                                         "definition": "大型猫科动物，被称为'百兽之王'",
@@ -391,7 +385,7 @@
                                 },
                                 {
                                     "word": "tiger",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "老虎",
                                     "detail": {
                                         "definition": "大型猫科动物，有橙黄色毛皮和黑色条纹",
@@ -405,7 +399,7 @@
                                 },
                                 {
                                     "word": "elephant",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "大象"
                                 }
                             ]
@@ -422,7 +416,7 @@
                             "words": [
                                 {
                                     "word": "apple",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "苹果",
                                     "detail": {
                                         "definition": "一种圆形水果，通常为红色、绿色或黄色，口感脆甜",
@@ -436,7 +430,7 @@
                                 },
                                 {
                                     "word": "banana",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "香蕉",
                                     "detail": {
                                         "definition": "一种长而弯曲的黄色水果，果肉柔软香甜",
@@ -450,7 +444,7 @@
                                 },
                                 {
                                     "word": "orange",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "橙子"
                                 }
                             ]
@@ -461,7 +455,7 @@
                             "words": [
                                 {
                                     "word": "carrot",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "胡萝卜",
                                     "detail": {
                                         "definition": "一种长圆锥形的橙色根茎类蔬菜",
@@ -475,7 +469,7 @@
                                 },
                                 {
                                     "word": "tomato",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "西红柿",
                                     "detail": {
                                         "definition": "一种圆形或椭圆形的红色水果，常作为蔬菜食用",
@@ -489,7 +483,7 @@
                                 },
                                 {
                                     "word": "potato",
-                                    "type": "n.",
+                                    "type": ["n."],
                                     "meaning": "土豆"
                                 }
                             ]
@@ -502,7 +496,7 @@
                     "words": [
                         {
                             "word": "red",
-                            "type": "adj.",
+                            "type": ["adj.", "n."],
                             "meaning": "红色",
                             "detail": {
                                 "definition": "一种原色，类似于血液的颜色",
@@ -516,7 +510,7 @@
                         },
                         {
                             "word": "blue",
-                            "type": "adj.",
+                            "type": ["adj.", "n."],
                             "meaning": "蓝色",
                             "detail": {
                                 "definition": "一种原色，类似于天空或海洋的颜色",
@@ -530,7 +524,7 @@
                         },
                         {
                             "word": "green",
-                            "type": "adj.",
+                            "type": ["adj.", "n."],
                             "meaning": "绿色"
                         }
                     ]
@@ -539,15 +533,51 @@
         };
 
         // DOM元素
-        const categoryToggle = document.getElementById('categoryToggle');
         const categoryPanel = document.getElementById('categoryPanel');
         const breadcrumb = document.getElementById('breadcrumb');
         const wordsTableBody = document.querySelector('#wordsTable tbody');
+        const totalWordCount = document.getElementById('totalWordCount');
 
         // 当前状态
         let currentCategory = null;
         let currentSubcategory = null;
         let categoryPanelVisible = false;
+        let expandedRow = null;
+
+        // 计算分类的单词总数（包括子分类）
+        function calculateWordCount(category) {
+            let count = 0;
+            
+            // 添加当前分类的单词数
+            if (category.words) {
+                count += category.words.length;
+            }
+            
+            // 添加所有子分类的单词数
+            if (category.subcategories) {
+                category.subcategories.forEach(subcategory => {
+                    if (subcategory.words) {
+                        count += subcategory.words.length;
+                    }
+                });
+            }
+            
+            return count;
+        }
+
+        // 计算子分类的单词总数
+        function calculateSubcategoryWordCount(subcategory) {
+            return subcategory.words ? subcategory.words.length : 0;
+        }
+
+        // 计算所有分类的单词总数
+        function calculateTotalWordCount() {
+            let total = 0;
+            wordData.categories.forEach(category => {
+                total += calculateWordCount(category);
+            });
+            return total;
+        }
 
         // 显示分类面板
         function showCategoryPanel() {
@@ -572,9 +602,15 @@
                 wordData.categories.forEach(category => {
                     const item = document.createElement('div');
                     item.className = 'category-item';
+                    
+                    const wordCount = calculateWordCount(category);
+                    
                     item.innerHTML = `
-                        ${category.name}
-                        <i class="fas fa-chevron-right"></i>
+                        <div class="category-name">
+                            ${category.name}
+                            <span class="word-count">${wordCount}</span>
+                        </div>
+                        ${category.subcategories ? `<i class="fas fa-chevron-right"></i>` : ''}
                     `;
                     item.addEventListener('click', () => {
                         if (category.subcategories) {
@@ -612,8 +648,14 @@
                     currentCategory.subcategories.forEach(subcategory => {
                         const item = document.createElement('div');
                         item.className = 'category-item';
+                        
+                        const wordCount = calculateSubcategoryWordCount(subcategory);
+                        
                         item.innerHTML = `
-                            ${subcategory.name}
+                            <div class="category-name">
+                                ${subcategory.name}
+                                <span class="word-count">${wordCount}</span>
+                            </div>
                             <i class="fas fa-chevron-right"></i>
                         `;
                         item.addEventListener('click', () => {
@@ -628,141 +670,179 @@
             }
         }
 
-        // 渲染二级分类（已合并到renderCategories中）
+        // 渲染二级分类
         function renderSubcategories() {
-            renderCategories(); // 现在统一使用renderCategories
+            renderCategories();
             updateBreadcrumb();
+        }
+
+        // 获取指定分类的所有单词
+        function getWordsByCategory(category, subcategory = null) {
+            let words = [];
+            
+            if (subcategory) {
+                // 获取指定二级分类的单词
+                words = subcategory.words || [];
+            } else if (category) {
+                // 获取一级分类下的所有单词（包括二级分类）
+                if (category.words) {
+                    words = words.concat(category.words);
+                }
+                
+                if (category.subcategories) {
+                    category.subcategories.forEach(sub => {
+                        if (sub.words) {
+                            words = words.concat(sub.words);
+                        }
+                    });
+                }
+            } else {
+                // 获取所有单词
+                wordData.categories.forEach(cat => {
+                    if (cat.words) {
+                        words = words.concat(cat.words);
+                    }
+                    if (cat.subcategories) {
+                        cat.subcategories.forEach(sub => {
+                            if (sub.words) {
+                                words = words.concat(sub.words);
+                            }
+                        });
+                    }
+                });
+            }
+            
+            return words;
         }
 
         // 渲染单词列表
         function renderWords() {
             // 清空表格
             wordsTableBody.innerHTML = '';
+            expandedRow = null;
             
-            let words = [];
-            
-            if (currentSubcategory) {
-                words = currentSubcategory.words;
-            } else if (currentCategory) {
-                words = currentCategory.words;
-            } else {
-                // 显示所有单词
-                wordData.categories.forEach(category => {
-                    if (category.words) {
-                        words = words.concat(category.words);
-                    }
-                    if (category.subcategories) {
-                        category.subcategories.forEach(subcategory => {
-                            words = words.concat(subcategory.words);
-                        });
-                    }
-                });
-            }
+            // 获取当前分类的单词
+            const words = getWordsByCategory(currentCategory, currentSubcategory);
             
             // 填充单词表格
             words.forEach(word => {
                 const row = document.createElement('tr');
                 
+                // 如果有详细解释，添加特殊样式
+                if (word.detail) {
+                    row.classList.add('has-detail');
+                }
+                
                 // 创建详细解释内容
                 let detailContent = '';
                 if (word.detail) {
                     detailContent = `
-                        <div class="detail-content">
-                            <div class="detail-inner">
-                                <div class="detail-section">
-                                    <h4>定义</h4>
-                                    <p>${word.detail.definition}</p>
+                        <td colspan="3" style="padding: 0; border: none;">
+                            <div class="detail-content">
+                                <div class="detail-inner">
+                                    <div class="detail-section">
+                                        <h4>定义</h4>
+                                        <p>${word.detail.definition}</p>
+                                    </div>
+                                    ${word.detail.examples ? `
+                                    <div class="detail-section">
+                                        <h4>例句</h4>
+                                        ${word.detail.examples.map(example => `
+                                            <p class="example">${example}</p>
+                                        `).join('')}
+                                    </div>
+                                    ` : ''}
+                                    ${word.detail.synonyms ? `
+                                    <div class="detail-section">
+                                        <h4>同义词</h4>
+                                        <p>${word.detail.synonyms.join(', ')}</p>
+                                    </div>
+                                    ` : ''}
+                                    ${word.detail.notes ? `
+                                    <div class="detail-section">
+                                        <h4>备注</h4>
+                                        <p>${word.detail.notes}</p>
+                                    </div>
+                                    ` : ''}
                                 </div>
-                                ${word.detail.examples ? `
-                                <div class="detail-section">
-                                    <h4>例句</h4>
-                                    ${word.detail.examples.map(example => `
-                                        <p class="example">${example}</p>
-                                    `).join('')}
-                                </div>
-                                ` : ''}
-                                ${word.detail.synonyms ? `
-                                <div class="detail-section">
-                                    <h4>同义词</h4>
-                                    <p>${word.detail.synonyms.join(', ')}</p>
-                                </div>
-                                ` : ''}
-                                ${word.detail.notes ? `
-                                <div class="detail-section">
-                                    <h4>备注</h4>
-                                    <p>${word.detail.notes}</p>
-                                </div>
-                                ` : ''}
                             </div>
-                        </div>
+                        </td>
                     `;
                 }
                 
+                // 处理单词类型显示
+                const typeHTML = word.type.map(t => 
+                    `<span class="word-type">${t}</span>`
+                ).join('');
+                
                 row.innerHTML = `
-                    <td>${word.word}</td>
-                    <td><span class="word-type">${word.type}</span></td>
+                    <td>
+                        <div class="word-cell">
+                            ${typeHTML}
+                            <span class="word-text">${word.word}</span>
+                        </div>
+                    </td>
+                    <td>${word.meaning}</td>
                     <td>
                         <button class="pronounce-btn" data-word="${word.word}">
                             <i class="fas fa-volume-up"></i> 发音
                         </button>
                     </td>
-                    <td>${word.meaning}</td>
-                    <td>
-                        ${word.detail ? `
-                            <button class="detail-btn" data-word="${word.word}">
-                                <i class="fas fa-info-circle"></i> 详细解释
-                            </button>
-                        ` : '<span style="color: #9ca3af;">无</span>'}
-                    </td>
                 `;
                 
-                // 添加详细解释内容
+                wordsTableBody.appendChild(row);
+                
+                // 如果有详细解释，添加详细解释行和点击事件
                 if (word.detail) {
-                    const cell = document.createElement('td');
-                    cell.colSpan = 5;
-                    cell.style.padding = '0';
-                    cell.style.border = 'none';
-                    cell.innerHTML = detailContent;
+                    const detailRow = document.createElement('tr');
+                    detailRow.className = 'detail-row';
+                    detailRow.style.display = 'none';
+                    detailRow.innerHTML = detailContent;
                     
-                    // 创建包含行
-                    const containerRow = document.createElement('tr');
-                    containerRow.className = 'detail-row';
-                    containerRow.style.display = 'none';
-                    containerRow.appendChild(cell);
+                    wordsTableBody.appendChild(detailRow);
                     
-                    wordsTableBody.appendChild(row);
-                    wordsTableBody.appendChild(containerRow);
-                    
-                    // 添加详细解释按钮事件
-                    const detailBtn = row.querySelector('.detail-btn');
-                    detailBtn.addEventListener('click', () => {
-                        const isExpanded = detailBtn.classList.contains('expanded');
+                    // 添加点击事件
+                    row.addEventListener('click', () => {
+                        const isExpanded = detailRow.style.display === 'table-row';
                         
                         if (isExpanded) {
                             // 折叠详细解释
-                            detailBtn.classList.remove('expanded');
-                            detailBtn.innerHTML = '<i class="fas fa-info-circle"></i> 详细解释';
-                            containerRow.style.display = 'none';
-                            detailBtn.style.background = '';
+                            detailRow.style.display = 'none';
+                            row.classList.remove('expanded');
+                            expandedRow = null;
                         } else {
+                            // 先关闭其他展开的行
+                            if (expandedRow) {
+                                expandedRow.style.display = 'none';
+                                expandedRow.previousElementSibling.classList.remove('expanded');
+                            }
+                            
                             // 展开详细解释
-                            detailBtn.classList.add('expanded');
-                            detailBtn.innerHTML = '<i class="fas fa-times"></i> 收起';
-                            containerRow.style.display = 'table-row';
+                            detailRow.style.display = 'table-row';
+                            row.classList.add('expanded');
+                            expandedRow = detailRow;
                             
                             // 获取详细解释内容元素并添加展开类
-                            const detailContent = containerRow.querySelector('.detail-content');
+                            const detailContent = detailRow.querySelector('.detail-content');
                             detailContent.classList.add('expanded');
                         }
                     });
-                } else {
-                    wordsTableBody.appendChild(row);
+                    
+                    // 添加详细解释行的点击事件（点击后折叠）
+                    detailRow.addEventListener('click', (e) => {
+                        if (e.target === detailRow || e.target.closest('.detail-content')) {
+                            detailRow.style.display = 'none';
+                            row.classList.remove('expanded');
+                            expandedRow = null;
+                        }
+                    });
                 }
             });
             
             // 添加发音功能
             document.querySelectorAll('.pronounce-btn').forEach(button => {
-                button.addEventListener('click', () => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 阻止事件冒泡，避免触发行点击事件
                     const word = button.getAttribute('data-word');
                     pronounceWord(word);
                 });
@@ -773,15 +853,21 @@
         function updateBreadcrumb() {
             breadcrumb.innerHTML = '';
             
-            // 根链接
+            // 根链接 - 所有分类
+            const totalCount = calculateTotalWordCount();
             const rootLink = document.createElement('a');
-            rootLink.textContent = '所有分类';
+            rootLink.innerHTML = `
+                <i class="fas fa-folder-open"></i> 
+                <span>所有分类</span>
+                <span class="word-count">${totalCount}</span>
+            `;
             rootLink.setAttribute('data-id', 'root');
             rootLink.addEventListener('click', () => {
                 currentCategory = null;
                 currentSubcategory = null;
                 renderWords();
                 updateBreadcrumb();
+                showCategoryPanel();
             });
             breadcrumb.appendChild(rootLink);
             
@@ -790,13 +876,20 @@
                 separator1.textContent = '/';
                 breadcrumb.appendChild(separator1);
                 
+                const categoryWordCount = calculateWordCount(currentCategory);
                 const categoryLink = document.createElement('a');
-                categoryLink.textContent = currentCategory.name;
+                categoryLink.innerHTML = `
+                    <i class="fas fa-folder"></i> 
+                    <span>${currentCategory.name}</span>
+                    <span class="word-count">${categoryWordCount}</span>
+                `;
                 categoryLink.setAttribute('data-id', currentCategory.id);
                 categoryLink.addEventListener('click', () => {
+                    // 点击一级分类，显示该分类下所有单词（包括二级分类）
                     currentSubcategory = null;
                     renderWords();
                     updateBreadcrumb();
+                    showCategoryPanel();
                 });
                 breadcrumb.appendChild(categoryLink);
                 
@@ -805,8 +898,14 @@
                     separator2.textContent = '/';
                     breadcrumb.appendChild(separator2);
                     
+                    const subcategoryWordCount = calculateSubcategoryWordCount(currentSubcategory);
                     const subcategorySpan = document.createElement('span');
-                    subcategorySpan.textContent = currentSubcategory.name;
+                    subcategorySpan.innerHTML = `
+                        <i class="fas fa-folder"></i> 
+                        <span>${currentSubcategory.name}</span>
+                        <span class="word-count">${subcategoryWordCount}</span>
+                    `;
+                    subcategorySpan.style.color = '#374151';
                     breadcrumb.appendChild(subcategorySpan);
                 }
             }
@@ -825,15 +924,20 @@
 
         // 初始化
         function init() {
+            // 更新总单词数
+            totalWordCount.textContent = calculateTotalWordCount();
+            
             // 初始渲染所有单词
             renderWords();
             
-            // 分类按钮点击事件
-            categoryToggle.addEventListener('click', () => {
-                if (categoryPanelVisible) {
-                    hideCategoryPanel();
-                } else {
-                    showCategoryPanel();
+            // 面包屑点击事件
+            breadcrumb.addEventListener('click', (e) => {
+                if (e.target === breadcrumb) {
+                    if (categoryPanelVisible) {
+                        hideCategoryPanel();
+                    } else {
+                        showCategoryPanel();
+                    }
                 }
             });
             
@@ -841,7 +945,7 @@
             document.addEventListener('click', (e) => {
                 if (categoryPanelVisible && 
                     !categoryPanel.contains(e.target) && 
-                    e.target !== categoryToggle) {
+                    !breadcrumb.contains(e.target)) {
                     hideCategoryPanel();
                 }
             });
