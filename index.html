@@ -129,17 +129,24 @@
             font-weight: bold;
         }
         
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
         .words-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            min-width: 500px; /* 确保表格有最小宽度 */
         }
         
         .words-table th {
             background: #4e54c8;
             color: white;
-            padding: 15px;
+            padding: 12px 10px;
             text-align: left;
+            white-space: nowrap;
         }
         
         .words-table tr {
@@ -164,7 +171,7 @@
         }
         
         .words-table td {
-            padding: 15px;
+            padding: 12px 10px;
             border-bottom: 1px solid #e5e7eb;
             vertical-align: top;
         }
@@ -173,6 +180,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            min-width: 120px;
         }
         
         .word-type {
@@ -186,21 +194,35 @@
             font-size: 1.1rem;
         }
         
+        .meaning-cell {
+            min-width: 120px;
+        }
+        
+        .pronounce-cell {
+            text-align: center;
+            min-width: 80px;
+        }
+        
         .pronounce-btn {
             background: #ff7e5f;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 5px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 5px;
             transition: background 0.2s;
+            white-space: nowrap;
         }
         
         .pronounce-btn:hover {
             background: #ff6b4a;
+        }
+        
+        .pronounce-btn .text {
+            display: inline;
         }
         
         .detail-content {
@@ -253,12 +275,8 @@
             opacity: 0.8;
         }
         
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            .words-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
             h1 {
                 font-size: 1.8rem;
             }
@@ -272,9 +290,77 @@
                 font-size: 1rem;
             }
             
-            .words-table th:nth-child(3),
-            .words-table td:nth-child(3) {
-                display: none;
+            .words-table th, 
+            .words-table td {
+                padding: 10px 8px;
+            }
+            
+            .word-text {
+                font-size: 1rem;
+            }
+            
+            .pronounce-btn {
+                padding: 6px 8px;
+            }
+            
+            .pronounce-btn .text {
+                display: none; /* 在小屏幕上隐藏"发音"文字 */
+            }
+            
+            .words-table {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            header {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .breadcrumb {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .content-area {
+                padding: 15px;
+            }
+            
+            .words-table th, 
+            .words-table td {
+                padding: 8px 6px;
+            }
+            
+            .word-cell {
+                min-width: 100px;
+            }
+            
+            .meaning-cell {
+                min-width: 100px;
+            }
+            
+            .pronounce-cell {
+                min-width: 60px;
+            }
+            
+            .word-type {
+                font-size: 0.8rem;
+            }
+            
+            .word-text {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -299,18 +385,20 @@
                 <!-- 分类内容将通过JavaScript动态生成 -->
             </div>
             
-            <table class="words-table" id="wordsTable">
-                <thead>
-                    <tr>
-                        <th>单词</th>
-                        <th>中文意思</th>
-                        <th>读音</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 单词内容将通过JavaScript动态生成 -->
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="words-table" id="wordsTable">
+                    <thead>
+                        <tr>
+                            <th>单词</th>
+                            <th>中文意思</th>
+                            <th class="pronounce-cell">读音</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 单词内容将通过JavaScript动态生成 -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     
@@ -772,20 +860,21 @@
                 
                 // 处理单词类型显示
                 const typeHTML = word.type.map(t => 
-                    `<span class="word-type">${t}</span>`
+                    `<div class="word-type">${t}</div>`
                 ).join('');
                 
                 row.innerHTML = `
-                    <td>
+                    <td class="word-cell">
                         <div class="word-cell">
                             ${typeHTML}
-                            <span class="word-text">${word.word}</span>
+                            <div class="word-text">${word.word}</div>
                         </div>
                     </td>
-                    <td>${word.meaning}</td>
-                    <td>
+                    <td class="meaning-cell">${word.meaning}</td>
+                    <td class="pronounce-cell">
                         <button class="pronounce-btn" data-word="${word.word}">
-                            <i class="fas fa-volume-up"></i> 发音
+                            <i class="fas fa-volume-up"></i>
+                            <span class="text">发音</span>
                         </button>
                     </td>
                 `;
