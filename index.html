@@ -17,7 +17,7 @@
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            padding: 0px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,13 +30,13 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            margin: 20px 0;
+            margin: 10px 0;
         }
         
         header {
             background: #4e54c8;
             color: white;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
             position: relative;
         }
@@ -53,7 +53,7 @@
         }
         
         .breadcrumb {
-            padding: 15px 20px;
+            padding: 2px 2px;
             background: #f3f4f6;
             font-size: 1.1rem;
             display: flex;
@@ -68,7 +68,7 @@
             text-decoration: none;
             cursor: pointer;
             transition: color 0.2s;
-            padding: 5px 10px;
+            padding: 2px 2px;
             border-radius: 5px;
             display: flex;
             align-items: center;
@@ -82,7 +82,7 @@
         
         .breadcrumb span {
             margin: 0 8px;
-            color: #6b7280;
+            color: #ff7e5f;
         }
         
         .category-panel {
@@ -132,7 +132,7 @@
         .table-container {
             width: 100%;
             overflow-x: auto;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         
         .words-table {
@@ -171,7 +171,7 @@
         }
         
         .words-table td {
-            padding: 12px 10px;
+            padding: 12px 0px;
             border-bottom: 1px solid #e5e7eb;
             vertical-align: top;
         }
@@ -187,20 +187,38 @@
             color: #6b7280;
             font-size: 0.85rem;
             font-weight: 500;
+			white-space: nowrap;
         }
         
         .word-text {
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
         
         .meaning-cell {
-            min-width: 80px;
+            min-width: 160px;
         }
         
         
         .pronounce-btn {
             background: #ff7e5f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+        
+        .pronounce-btn:hover {
+            background: #ff6b4a;
+        }
+
+        .word-btn {
+            background: #4e54c8;
             color: white;
             border: none;
             padding: 8px 12px;
@@ -213,14 +231,28 @@
             white-space: nowrap;
         }
         
-        .pronounce-btn:hover {
+        .word-btn:hover {
             background: #ff6b4a;
         }
-        
-        .pronounce-btn .text {
-            display: inline;
+
+        .chinese-btn {
+            background: #4e54c8;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+            white-space: nowrap;
         }
         
+        .chinese-btn:hover {
+            background: #ff6b4a;
+        }		
+       
         .detail-content {
             max-height: 0;
             overflow: hidden;
@@ -261,7 +293,7 @@
         }
         
         .content-area {
-            padding: 20px;
+            padding: 10px;
         }
         
         footer {
@@ -288,7 +320,7 @@
             
             .words-table th, 
             .words-table td {
-                padding: 10px 8px;
+                padding: 10px 2px;
             }
             
             .word-text {
@@ -300,6 +332,15 @@
             }
             
             
+            .word-btn {
+                padding: 6px 8px;
+            }
+            
+            
+            .chinese-btn {
+                padding: 6px 8px;
+            }
+            						
             .words-table {
                 font-size: 0.9rem;
             }
@@ -323,17 +364,17 @@
             }
             
             .breadcrumb {
-                padding: 10px 15px;
+                padding: 2px 2px;
                 font-size: 0.9rem;
             }
             
             .content-area {
-                padding: 15px;
+                padding: 10px;
             }
             
             .words-table th, 
             .words-table td {
-                padding: 8px 6px;
+                padding: 8px 2px;
             }
             
             .word-cell {
@@ -341,13 +382,12 @@
             }
             
             .meaning-cell {
-                min-width: 100px;
+                min-width: 160px;
             }
-            
-
             
             .word-type {
                 font-size: 0.8rem;
+				white-space: nowrap;
             }
             
             .word-text {
@@ -361,7 +401,6 @@
         <div class="content-area">
             <div class="breadcrumb" id="breadcrumb">
                 <a data-id="root">
-                    <i class="fas fa-folder-open"></i> 
                     <span>所有分类</span>
                     <span class="word-count" id="totalWordCount">0</span>
                 </a>
@@ -375,8 +414,16 @@
                 <table class="words-table" id="wordsTable">
                     <thead>
                         <tr>
-                            <th>单词</th>
-                            <th>中文意思</th>
+                            <th>
+								<button class="word-btn" id="word-btn" data-word="${word.word}">
+									<i class="fas fa-check-square"></i>单词
+								</button>
+							</th>
+                            <th>
+								<button class="chinese-btn" id="chinese-btn" data-word="${word.word}">
+									<i class="fas fa-check-square"></i>中文意思
+								</button>
+							</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -406,6 +453,7 @@
                                 {
                                     "word": "cow",
                                     "type": ["n."],
+									"dy":"kaʊ",
                                     "meaning": "奶牛",
                                     "detail": {
                                         "definition": "一种大型家畜，通常饲养以获取牛奶和牛肉",
@@ -421,6 +469,7 @@
                                     "word": "pig",
                                     "type": ["n."],
                                     "meaning": "猪",
+									"dy":"",
                                     "detail": {
                                         "definition": "一种杂食性家畜，通常饲养以获取猪肉",
                                         "examples": [
@@ -446,6 +495,7 @@
                                     "word": "lion",
                                     "type": ["n."],
                                     "meaning": "狮子",
+									"dy":"",
                                     "detail": {
                                         "definition": "大型猫科动物，被称为'百兽之王'",
                                         "examples": [
@@ -460,6 +510,7 @@
                                     "word": "tiger",
                                     "type": ["n."],
                                     "meaning": "老虎",
+									"dy":"",
                                     "detail": {
                                         "definition": "大型猫科动物，有橙黄色毛皮和黑色条纹",
                                         "examples": [
@@ -473,7 +524,8 @@
                                 {
                                     "word": "elephant",
                                     "type": ["n."],
-                                    "meaning": "大象"
+                                    "meaning": "大象",
+									"dy":""
                                 }
                             ]
                         }
@@ -491,6 +543,7 @@
                                     "word": "apple",
                                     "type": ["n."],
                                     "meaning": "苹果",
+									"dy":"",
                                     "detail": {
                                         "definition": "一种圆形水果，通常为红色、绿色或黄色，口感脆甜",
                                         "examples": [
@@ -505,6 +558,7 @@
                                     "word": "banana",
                                     "type": ["n."],
                                     "meaning": "香蕉",
+									"dy":"",
                                     "detail": {
                                         "definition": "一种长而弯曲的黄色水果，果肉柔软香甜",
                                         "examples": [
@@ -518,7 +572,8 @@
                                 {
                                     "word": "orange",
                                     "type": ["n."],
-                                    "meaning": "橙子"
+                                    "meaning": "橙子",
+									"dy":""
                                 }
                             ]
                         },
@@ -530,6 +585,7 @@
                                     "word": "carrot",
                                     "type": ["n."],
                                     "meaning": "胡萝卜",
+									"dy":"",
                                     "detail": {
                                         "definition": "一种长圆锥形的橙色根茎类蔬菜",
                                         "examples": [
@@ -544,6 +600,7 @@
                                     "word": "tomato",
                                     "type": ["n."],
                                     "meaning": "西红柿",
+									"dy":"təˈmeɪtoʊ",
                                     "detail": {
                                         "definition": "一种圆形或椭圆形的红色水果，常作为蔬菜食用",
                                         "examples": [
@@ -557,7 +614,8 @@
                                 {
                                     "word": "potato",
                                     "type": ["n."],
-                                    "meaning": "土豆"
+                                    "meaning": "土豆",
+									"dy":"",
                                 }
                             ]
                         }
@@ -571,6 +629,7 @@
                             "word": "red",
                             "type": ["adj.", "n."],
                             "meaning": "红色",
+							"dy":"",
                             "detail": {
                                 "definition": "一种原色，类似于血液的颜色",
                                 "examples": [
@@ -585,6 +644,7 @@
                             "word": "blue",
                             "type": ["adj.", "n."],
                             "meaning": "蓝色",
+							"dy":"",
                             "detail": {
                                 "definition": "一种原色，类似于天空或海洋的颜色",
                                 "examples": [
@@ -598,7 +658,8 @@
                         {
                             "word": "green",
                             "type": ["adj.", "n."],
-                            "meaning": "绿色"
+                            "meaning": "绿色",
+							"dy":""
                         }
                     ]
                 }
@@ -610,6 +671,9 @@
         const breadcrumb = document.getElementById('breadcrumb');
         const wordsTableBody = document.querySelector('#wordsTable tbody');
         const totalWordCount = document.getElementById('totalWordCount');
+		const wordBtn =  document.getElementById('word-btn');
+		const chineseBtn =  document.getElementById('chinese-btn');
+
 
         // 当前状态
         let currentCategory = null;
@@ -851,16 +915,18 @@
                 row.innerHTML = `
                     <td class="word-cell">
                         <div class="word-cell">
-
-							<div class="word-type">						<span style="width:30;height:30">
-							<button class="pronounce-btn" data-word="${word.word}">
-								<i class="fas fa-volume-up"></i>
-							</button>
-						</span>${typeHTML}</div>
-                            <div class="word-text">${word.word}</div>
+							<span class="engWord">
+								<div class="word-text">${word.word}</div>
+								<div class="word-type">
+									<button class="pronounce-btn" data-word="${word.word}">
+										<i class="fas fa-volume-up"></i>
+									</button>
+									${typeHTML} <span style="font-size:1.2rem">${word.dy ? "/" + word.dy + "/": ''}</span>
+								</div>
+							</span>
                         </div>
                     </td>
-                    <td class="meaning-cell">${word.meaning}</td>
+                    <td class="meaning-cell"><span class="chineseMeaning">${word.meaning}</span></td>
                 `;
                 
                 wordsTableBody.appendChild(row);
@@ -930,7 +996,6 @@
             const totalCount = calculateTotalWordCount();
             const rootLink = document.createElement('a');
             rootLink.innerHTML = `
-                <i class="fas fa-folder-open"></i> 
                 <span>所有分类</span>
                 <span class="word-count">${totalCount}</span>
             `;
@@ -952,7 +1017,6 @@
                 const categoryWordCount = calculateWordCount(currentCategory);
                 const categoryLink = document.createElement('a');
                 categoryLink.innerHTML = `
-                    <i class="fas fa-folder"></i> 
                     <span>${currentCategory.name}</span>
                     <span class="word-count">${categoryWordCount}</span>
                 `;
@@ -974,7 +1038,7 @@
                     const subcategoryWordCount = calculateSubcategoryWordCount(currentSubcategory);
                     const subcategorySpan = document.createElement('span');
                     subcategorySpan.innerHTML = `
-                        <i class="fas fa-folder"></i> 
+                        <i class="fas"></i> 
                         <span>${currentSubcategory.name}</span>
                         <span class="word-count">${subcategoryWordCount}</span>
                     `;
@@ -995,6 +1059,7 @@
             }
         }
 
+
         // 初始化
         function init() {
             // 更新总单词数
@@ -1002,7 +1067,38 @@
             
             // 初始渲染所有单词
             renderWords();
-            
+			//中文意思点击事件
+            chineseBtn.addEventListener('click', (e) => {
+				const chineseMeanings = document.querySelectorAll('.chineseMeaning');
+				if(chineseBtn.innerHTML.indexOf("check") > 0){
+					chineseBtn.innerHTML = '<i class="fas fa-square"></i>中文意思';
+					chineseMeanings.forEach(item => {
+					  // 对每个元素执行操作，例如更改文本内容
+					  item.style.display = 'none';
+					});
+				}else{
+					chineseBtn.innerHTML = '<i class="fas fa-check-square"></i>中文意思';
+					chineseMeanings.forEach(item => {
+					  // 对每个元素执行操作，例如更改文本内容
+					  item.style.display = '';
+					});
+				}
+			});
+			//单词点击事件
+            wordBtn.addEventListener('click', (e) => {
+				const engWords = document.querySelectorAll('.engWord');
+				if(wordBtn.innerHTML.indexOf("check") > 0){
+					wordBtn.innerHTML = '<i class="fas fa-square"></i>单词';
+					engWords.forEach(item => {
+					  item.style.display = 'none';
+					});
+				}else{
+					wordBtn.innerHTML = '<i class="fas fa-check-square"></i>单词';
+					engWords.forEach(item => {
+					  item.style.display = '';
+					});
+				}
+			});
             // 面包屑点击事件
             breadcrumb.addEventListener('click', (e) => {
                 if (e.target === breadcrumb) {
