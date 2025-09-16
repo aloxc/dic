@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>儿童英语单词记忆助手</title>
+    <title>英语单词记忆助手</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -442,7 +442,7 @@
         // 模拟单词数据（实际应用中可以从JSON文件加载）
         const wordData = {
             "categories": [
-                {
+                /*{
                     "id": "sample",
                     "name": "示例",
                     "subcategories": [
@@ -464,80 +464,3257 @@
                                         "synonyms": ["cattle", "bovine"],
                                         "notes": "cow通常指母牛，公牛称为bull"
                                     }
-                                },
-                                {
-                                    "word": "pig",
-                                    "type": ["n."],
-                                    "meaning": "猪",
-									"dy":"",
-                                    "detail": {
-                                        "definition": "一种杂食性家畜，通常饲养以获取猪肉",
-                                        "examples": [
-                                            "The pig rolled in the mud to keep cool. (猪在泥里打滚以保持凉爽。)",
-                                            "Pigs are very intelligent animals. (猪是非常聪明的动物。)"
-                                        ],
-                                        "synonyms": ["swine", "hog"],
-                                        "notes": "pig通常指家猪，野猪称为wild boar"
-                                    }
-                                },
-                                {
-                                    "word": "sheep",
-                                    "type": ["n."],
-                                    "meaning": "绵羊"
-                                }
-                            ]
-                        },
-                        {
-                            "id": "wild_animals",
-                            "name": "野生动物",
-                            "words": [
-                                {
-                                    "word": "lion",
-                                    "type": ["n."],
-                                    "meaning": "狮子",
-									"dy":"",
-                                    "detail": {
-                                        "definition": "大型猫科动物，被称为'百兽之王'",
-                                        "examples": [
-                                            "The lion is hunting for food. (狮子正在猎食。)",
-                                            "Lions live in groups called prides. (狮子群居生活，群体称为狮群。)"
-                                        ],
-                                        "synonyms": ["big cat", "king of beasts"],
-                                        "notes": "雄狮有鬃毛，雌狮没有"
-                                    }
-                                },
-                                {
-                                    "word": "tiger",
-                                    "type": ["n."],
-                                    "meaning": "老虎",
-									"dy":"",
-                                    "detail": {
-                                        "definition": "大型猫科动物，有橙黄色毛皮和黑色条纹",
-                                        "examples": [
-                                            "The tiger is an endangered species. (老虎是濒危物种。)",
-                                            "Tigers are excellent swimmers. (老虎是出色的游泳者。)"
-                                        ],
-                                        "synonyms": ["big cat", "predator"],
-                                        "notes": "老虎是最大的猫科动物"
-                                    }
-                                },
-                                {
-                                    "word": "elephant",
-                                    "type": ["n."],
-                                    "meaning": "大象",
-									"dy":""
                                 }
                             ]
                         }
                     ]
-                },
+                },*/
+				{
+                    "id": "pronouns",
+                    "name": "代词",
+                    "subcategories": [
+						{
+							"id": "personal_pronouns",
+                            "name": "人称代词主格",
+							"words": [
+								{
+								  "word": "I",
+								  "dy": "aɪ",
+								  "meaning": "我",
+								  "type": ["代"]
+								},
+								{
+								  "word": "you",
+								  "dy": "juː",
+								  "meaning": "你，你们",
+								  "type": ["代"]
+								},
+								{
+								  "word": "he",
+								  "dy": "hiː",
+								  "meaning": "他",
+								  "type": ["代"]
+								},
+								{
+								  "word": "she",
+								  "dy": "ʃiː",
+								  "meaning": "她",
+								  "type": ["代"]
+								},
+								{
+								  "word": "it",
+								  "dy": "ɪt",
+								  "meaning": "它",
+								  "type": ["代"]
+								},
+								{
+								  "word": "we",
+								  "dy": "wiː",
+								  "meaning": "我们",
+								  "type": ["代"]
+								},
+								{
+								  "word": "they",
+								  "dy": "ðeɪ",
+								  "meaning": "他们，她们，它们",
+								  "type": ["代"]
+								}
+							]
+						},
+						{
+							"id": "personal_pronoun_objects",
+                            "name": "人称代词宾格",
+							"words": [
+							    {
+								  "word": "me",
+								  "dy": "miː",
+								  "meaning": "我",
+								  "type": ["代"]
+								},
+								{
+								  "word": "you",
+								  "dy": "juː",
+								  "meaning": "你，你们",
+								  "type": ["代"]
+								},
+								{
+								  "word": "him",
+								  "dy": "hɪm",
+								  "meaning": "他",
+								  "type": ["代"]
+								},
+								{
+								  "word": "her",
+								  "dy": "hɜː",
+								  "meaning": "她",
+								  "type": ["代"]
+								},
+								{
+								  "word": "it",
+								  "dy": "ɪt",
+								  "meaning": "它",
+								  "type": ["代"]
+								},
+								{
+								  "word": "us",
+								  "dy": "ʌs",
+								  "meaning": "我们",
+								  "type": ["代"]
+								},
+								{
+								  "word": "them",
+								  "dy": "ðem",
+								  "meaning": "他们，她们，它们",
+								  "type": ["代"]
+								}
+							]
+						},
+						{
+							"id": "possessive_pronouns",
+                            "name": "物主代词",
+							"words": [
+								{
+								  "word": "my",
+								  "dy": "maɪ",
+								  "meaning": "我的",
+								  "type": ["代"]
+								},
+								{
+								  "word": "your",
+								  "dy": "jɔː",
+								  "meaning": "你的，你们的",
+								  "type": ["代"]
+								},
+								{
+								  "word": "his",
+								  "dy": "hɪz",
+								  "meaning": "他的",
+								  "type": ["代"]
+								},
+								{
+								  "word": "her",
+								  "dy": "hɜː",
+								  "meaning": "她的",
+								  "type": ["代"]
+								},
+								{
+								  "word": "its",
+								  "dy": "ɪts",
+								  "meaning": "它的",
+								  "type": ["代"]
+								},
+								{
+								  "word": "our",
+								  "dy": "aʊə",
+								  "meaning": "我们的",
+								  "type": ["代"]
+								},
+								{
+								  "word": "their",
+								  "dy": "ðeə",
+								  "meaning": "他们的，她们的，它们的",
+								  "type": ["代"]
+								}
+							]
+						},
+						{
+							"id": "Relative_pronouns",
+                            "name": "归属代词",
+							"words": [
+								{
+								  "word": "mine",
+								  "dy": "maɪn",
+								  "meaning": "我的（独立使用）",
+								  "type": ["代"]
+								},
+								{
+								  "word": "yours",
+								  "dy": "jɔːz",
+								  "meaning": "你的，你们的（独立使用）",
+								  "type": ["代"]
+								},
+								{
+								  "word": "his",
+								  "dy": "hɪz",
+								  "meaning": "他的（独立使用）",
+								  "type": ["代"]
+								},
+								{
+								  "word": "hers",
+								  "dy": "hɜːz",
+								  "meaning": "她的（独立使用）",
+								  "type": ["代"]
+								},
+								{
+								  "word": "its",
+								  "dy": "ɪts",
+								  "meaning": "它的（独立使用）",
+								  "type": ["代"]
+								},
+								{
+								  "word": "ours",
+								  "dy": "aʊəz",
+								  "meaning": "我们的（独立使用）",
+								  "type": ["代"]
+								},
+								{
+								  "word": "theirs",
+								  "dy": "ðeəz",
+								  "meaning": "他们的，她们的，它们的（独立使用）",
+								  "type": ["代"]
+								}
+							]
+						},
+						{
+							"id": "reflexive_pronouns",
+                            "name": "反身代词",
+							"words": [
+								{
+								  "word": "myself",
+								  "dy": "maɪˈself",
+								  "meaning": "我自己",
+								  "type": ["代"]
+								},
+								{
+								  "word": "yourself",
+								  "dy": "jɔːˈself",
+								  "meaning": "你自己",
+								  "type": ["代"]
+								},
+								{
+								  "word": "himself",
+								  "dy": "hɪmˈself",
+								  "meaning": "他自己",
+								  "type": ["代"]
+								},
+								{
+								  "word": "herself",
+								  "dy": "hɜːˈself",
+								  "meaning": "她自己",
+								  "type": ["代"]
+								},
+								{
+								  "word": "itself",
+								  "dy": "ɪtˈself",
+								  "meaning": "它自己",
+								  "type": ["代"]
+								},
+								{
+								  "word": "ourselves",
+								  "dy": "aʊəˈselvz",
+								  "meaning": "我们自己",
+								  "type": ["代"]
+								},
+								{
+								  "word": "yourselves",
+								  "dy": "jɔːˈselvz",
+								  "meaning": "你们自己",
+								  "type": ["代"]
+								},
+								{
+								  "word": "themselves",
+								  "dy": "ðəmˈselvz",
+								  "meaning": "他们自己，她们自己，它们自己",
+								  "type": ["代"]
+								}
+							]
+						},
+						{
+							"id": "demonstrative_pronouns",
+                            "name": "指示代词",
+							"words": [
+								{
+								  "word": "this",
+								  "dy": "ðɪs",
+								  "meaning": "这个",
+								  "type": ["代"]
+								},
+								{
+								  "word": "that",
+								  "dy": "ðæt",
+								  "meaning": "那个",
+								  "type": ["代"]
+								},
+								{
+								  "word": "these",
+								  "dy": "ðiːz",
+								  "meaning": "这些",
+								  "type": ["代"]
+								},
+								{
+								  "word": "those",
+								  "dy": "ðəʊz",
+								  "meaning": "那些",
+								  "type": ["代"]
+								}
+							]
+						},
+					]
+				},
+				{
+                    "id": "courses",
+                    "name": "课程类",
+                    "words": [
+						{
+						  "word": "mathematics",
+						  "dy": "ˌmæθəˈmætɪks",
+						  "meaning": "数学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "math",
+						  "dy": "ˌmæθ",
+						  "meaning": "数学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "Chinese",
+						  "dy": "ˌtʃaɪˈniːz",
+						  "meaning": "语文",
+						  "type": ["名"]
+						},
+						{
+						  "word": "English",
+						  "dy": "ˈɪŋɡlɪʃ",
+						  "meaning": "英语",
+						  "type": ["名"]
+						},
+						{
+						  "word": "physics",
+						  "dy": "ˈfɪzɪks",
+						  "meaning": "物理",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chemistry",
+						  "dy": "ˈkemɪstri",
+						  "meaning": "化学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "biology",
+						  "dy": "baɪˈɒlədʒi",
+						  "meaning": "生物",
+						  "type": ["名"]
+						},
+						{
+						  "word": "history",
+						  "dy": "ˈhɪstri",
+						  "meaning": "历史",
+						  "type": ["名"]
+						},
+						{
+						  "word": "geography",
+						  "dy": "dʒiˈɒɡrəfi",
+						  "meaning": "地理",
+						  "type": ["名"]
+						},
+						{
+						  "word": "music",
+						  "dy": "ˈmjuːzɪk",
+						  "meaning": "音乐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "art",
+						  "dy": "ɑːt",
+						  "meaning": "美术",
+						  "type": ["名"]
+						},
+						{
+						  "word": "PE",
+						  "dy": "ˌpi'i",
+						  "meaning": "体育",
+						  "type": ["名"]
+						},
+						{
+						  "word": "computer",
+						  "dy": "kəmˈpjuːtə",
+						  "meaning": "计算机；电脑",
+						  "type": ["名"]
+						},
+						{
+						  "word": "economics",
+						  "dy": "ˌiːkəˈnɒmɪks",
+						  "meaning": "经济学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "philosophy",
+						  "dy": "fəˈlɒsəfi",
+						  "meaning": "哲学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "psychology",
+						  "dy": "saɪˈkɒlədʒi",
+						  "meaning": "心理学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sociology",
+						  "dy": "ˌsəʊsiˈɒlədʒi",
+						  "meaning": "社会学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "law",
+						  "dy": "lɔː",
+						  "meaning": "法律",
+						  "type": ["名"]
+						},
+						{
+						  "word": "medicine",
+						  "dy": "ˈmedsn",
+						  "meaning": "医学",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "studtytools",
+                    "name": "文具类",
+                    "words": [
+						{
+						  "word": "pen",
+						  "dy": "pen",
+						  "meaning": "钢笔",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pencil",
+						  "dy": "ˈpensl",
+						  "meaning": "铅笔",
+						  "type": ["名"]
+						},
+						{
+						  "word": "eraser",
+						  "dy": "ɪˈreɪzə",
+						  "meaning": "橡皮擦",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ruler",
+						  "dy": "ˈruːlə",
+						  "meaning": "尺子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "notebook",
+						  "dy": "ˈnəʊtbʊk",
+						  "meaning": "笔记本",
+						  "type": ["名"]
+						},
+						{
+						  "word": "paper",
+						  "dy": "ˈpeɪpə",
+						  "meaning": "纸",
+						  "type": ["名"]
+						},
+						{
+						  "word": "folder",
+						  "dy": "ˈfəʊldə",
+						  "meaning": "文件夹",
+						  "type": ["名"]
+						},
+						{
+						  "word": "book",
+						  "dy": "bʊk",
+						  "meaning": "书本",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bag",
+						  "dy": "bæɡ",
+						  "meaning": "书包",
+						  "type": ["名"]
+						},
+						{
+						  "word": "schoolbag",
+						  "dy": "ˈskulˌbæɡ",
+						  "meaning": "书包",
+						  "type": ["名"]
+						},
+						{
+						  "word": "desk",
+						  "dy": "desk",
+						  "meaning": "书桌",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chair",
+						  "dy": "tʃeə",
+						  "meaning": "椅子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dictionary",
+						  "dy": "ˈdɪkʃəneri",
+						  "meaning": "字典",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "balls",
+                    "name": "体育类",
+                    "words": [
+						{
+						  "word": "ball",
+						  "dy": "ˈbɔːl",
+						  "meaning": "球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "basketball",
+						  "dy": "ˈbɑːskɪtbɔːl",
+						  "meaning": "篮球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "football",
+						  "dy": "ˈfʊtbɔːl",
+						  "meaning": "足球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "volleyball",
+						  "dy": "ˈvɒlibɔːl",
+						  "meaning": "排球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tennis",
+						  "dy": "ˈtenɪs",
+						  "meaning": "网球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "table tennis",
+						  "dy": "ˈteɪbl tenɪs",
+						  "meaning": "乒乓球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ping pong",
+						  "dy": "ˈpɪŋ pɒŋ",
+						  "meaning": "乒乓球（口语）",
+						  "type": ["名"]
+						},
+						{
+						  "word": "badminton",
+						  "dy": "ˈbædmɪntən",
+						  "meaning": "羽毛球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "baseball",
+						  "dy": "ˈbeɪsbɔːl",
+						  "meaning": "棒球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "golf",
+						  "dy": "ɡɒlf",
+						  "meaning": "高尔夫球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rugby",
+						  "dy": "ˈrʌɡbi",
+						  "meaning": "橄榄球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hockey",
+						  "dy": "ˈhɒki",
+						  "meaning": "曲棍球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "handball",
+						  "dy": "ˈhændbɔːl",
+						  "meaning": "手球",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "charts",
+                    "name": "图形类",
+                    "words": [
+						{
+						  "word": "circle",
+						  "dy": "ˈsɜːkl",
+						  "meaning": "圆形",
+						  "type": ["名"]
+						},
+						{
+						  "word": "square",
+						  "dy": "skweə",
+						  "meaning": "正方形",
+						  "type": ["名"]
+						},
+						{
+						  "word": "triangle",
+						  "dy": "ˈtraɪæŋɡl",
+						  "meaning": "三角形",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rectangle",
+						  "dy": "ˈrektæŋɡl",
+						  "meaning": "长方形",
+						  "type": ["名"]
+						},
+						{
+						  "word": "star",
+						  "dy": "stɑː",
+						  "meaning": "星形",
+						  "type": ["名"]
+						},
+						{
+						  "word": "heart",
+						  "dy": "hɑːt",
+						  "meaning": "心形",
+						  "type": ["名"]
+						},
+						{
+						  "word": "line",
+						  "dy": "laɪn",
+						  "meaning": "直线",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "relations",
+                    "name": "关系类",
+                    "words": [
+						{
+						  "word": "father",
+						  "dy": "ˈfɑːðə",
+						  "meaning": "父亲",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mother",
+						  "dy": "ˈmʌðə",
+						  "meaning": "母亲",
+						  "type": ["名"]
+						},
+						{
+						  "word": "parent",
+						  "dy": "ˈpeərənt",
+						  "meaning": "父母",
+						  "type": ["名"]
+						},
+						{
+						  "word": "son",
+						  "dy": "sʌn",
+						  "meaning": "儿子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "daughter",
+						  "dy": "ˈdɔːtə",
+						  "meaning": "女儿",
+						  "type": ["名"]
+						},
+						{
+						  "word": "child",
+						  "dy": "tʃaɪld",
+						  "meaning": "孩子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "brother",
+						  "dy": "ˈbrʌðə",
+						  "meaning": "兄弟",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sister",
+						  "dy": "ˈsɪstə",
+						  "meaning": "姐妹",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grandfather",
+						  "dy": "ˈɡrændfɑːðə",
+						  "meaning": "祖父",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grandmother",
+						  "dy": "ˈɡrændmʌðə",
+						  "meaning": "祖母",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grandparent",
+						  "dy": "ˈɡrændpeərənt",
+						  "meaning": "祖父母",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grandson",
+						  "dy": "ˈɡrændsʌn",
+						  "meaning": "孙子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "granddaughter",
+						  "dy": "ˈɡrændɔːtə",
+						  "meaning": "孙女",
+						  "type": ["名"]
+						},
+						{
+						  "word": "uncle",
+						  "dy": "ˈʌŋkl",
+						  "meaning": "叔叔，舅舅",
+						  "type": ["名"]
+						},
+						{
+						  "word": "aunt",
+						  "dy": "ɑːnt",
+						  "meaning": "阿姨，姑姑",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cousin",
+						  "dy": "ˈkʌzn",
+						  "meaning": "堂表兄弟姐妹",
+						  "type": ["名"]
+						},
+							{
+						  "word": "husband",
+						  "dy": "ˈhʌzbənd",
+						  "meaning": "丈夫",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wife",
+						  "dy": "waɪf",
+						  "meaning": "妻子",
+						  "type": ["名"]
+						},
+							{
+						  "word": "boyfriend",
+						  "dy": "ˈbɔɪfrend",
+						  "meaning": "男朋友",
+						  "type": ["名"]
+						},
+						{
+						  "word": "girlfriend",
+						  "dy": "ˈɡɜːlfrend",
+						  "meaning": "女朋友",
+						  "type": ["名"]
+						},
+						{
+						  "word": "friend",
+						  "dy": "frend",
+						  "meaning": "朋友",
+						  "type": ["名"]
+						},
+						   {
+						  "word": "classmate",
+						  "dy": "ˈklɑːsmeɪt",
+						  "meaning": "同学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "teacher",
+						  "dy": "ˈtiːtʃə",
+						  "meaning": "老师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "student",
+						  "dy": "ˈstjuːdnt",
+						  "meaning": "学生",
+						  "type": ["名"]
+						},
+						{
+						  "word": "boss",
+						  "dy": "bɒs",
+						  "meaning": "老板",
+						  "type": ["名"]
+						},
+						{
+						  "word": "employee",
+						  "dy": "ɪmˈplɔɪiː",
+						  "meaning": "员工",
+						  "type": ["名"]
+						},
+						{
+						  "word": "neighbor",
+						  "dy": "ˈneɪbə",
+						  "meaning": "邻居",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "occupations",
+                    "name": "职业类",
+                    "words": [
+						{
+						  "word": "teacher",
+						  "dy": "ˈtiːtʃər",
+						  "meaning": "教师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "doctor",
+						  "dy": "ˈdɒktər",
+						  "meaning": "医生",
+						  "type": ["名"]
+						},
+						{
+						  "word": "nurse",
+						  "dy": "nɜːs",
+						  "meaning": "护士",
+						  "type": ["名"]
+						},
+						{
+						  "word": "engineer",
+						  "dy": "ˌendʒɪˈnɪər",
+						  "meaning": "工程师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lawyer",
+						  "dy": "ˈlɔːjər",
+						  "meaning": "律师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chef",
+						  "dy": "ʃef",
+						  "meaning": "厨师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cook",
+						  "dy": "kʊk",
+						  "meaning": "厨师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "policeman",
+						  "dy": "pəˈliːsmən",
+						  "meaning": "警察",
+						  "type": ["名"]
+						},
+						{
+						  "word": "firefighter",
+						  "dy": "ˈfaɪəfaɪtər",
+						  "meaning": "消防员",
+						  "type": ["名"]
+						},
+						{
+						  "word": "soldier",
+						  "dy": "ˈsəʊldʒər",
+						  "meaning": "士兵",
+						  "type": ["名"]
+						},
+						{
+						  "word": "artist",
+						  "dy": "ˈɑːtɪst",
+						  "meaning": "艺术家",
+						  "type": ["名"]
+						},
+						{
+						  "word": "musician",
+						  "dy": "mjuˈzɪʃn",
+						  "meaning": "音乐家",
+						  "type": ["名"]
+						},
+						{
+						  "word": "writer",
+						  "dy": "ˈraɪtər",
+						  "meaning": "作家",
+						  "type": ["名"]
+						},
+						{
+						  "word": "actor",
+						  "dy": "ˈæktər",
+						  "meaning": "演员",
+						  "type": ["名"]
+						},
+						{
+						  "word": "actress",
+						  "dy": "ˈæktrəs",
+						  "meaning": "女演员",
+						  "type": ["名"]
+						},
+						{
+						  "word": "singer",
+						  "dy": "ˈsɪŋər",
+						  "meaning": "歌手",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dancer",
+						  "dy": "ˈdɑːnsər",
+						  "meaning": "舞蹈家",
+						  "type": ["名"]
+						},
+						{
+						  "word": "farmer",
+						  "dy": "ˈfɑːmər",
+						  "meaning": "农民",
+						  "type": ["名"]
+						},
+						{
+						  "word": "driver",
+						  "dy": "ˈdraɪvər",
+						  "meaning": "司机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pilot",
+						  "dy": "ˈpaɪlət",
+						  "meaning": "飞行员",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sailor",
+						  "dy": "ˈseɪlər",
+						  "meaning": "水手",
+						  "type": ["名"]
+						},
+						{
+						  "word": "scientist",
+						  "dy": "ˈsaɪəntɪst",
+						  "meaning": "科学家",
+						  "type": ["名"]
+						},
+						{
+						  "word": "manager",
+						  "dy": "ˈmænɪdʒər",
+						  "meaning": "经理",
+						  "type": ["名"]
+						},
+						{
+						  "word": "waiter",
+						  "dy": "ˈweɪtər",
+						  "meaning": "服务员",
+						  "type": ["名"]
+						},
+						{
+						  "word": "waitress",
+						  "dy": "ˈweɪtrəs",
+						  "meaning": "女服务员",
+						  "type": ["名"]
+						},
+						{
+						  "word": "businessman",
+						  "dy": "ˈbɪznəsmæn",
+						  "meaning": "商人",
+						  "type": ["名"]
+						},
+						{
+						  "word": "businesswoman",
+						  "dy": "ˈbɪznəswʊmən",
+						  "meaning": "女商人",
+						  "type": ["名"]
+						},
+						{
+						  "word": "student",
+						  "dy": "ˈstjuːdnt",
+						  "meaning": "学生",
+						  "type": ["名"]
+						},
+						{
+						  "word": "professor",
+						  "dy": "prəˈfesər",
+						  "meaning": "教授",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "traffics",
+                    "name": "交通类",
+                    "words": [
+						{
+						  "word": "car",
+						  "dy": "kɑː",
+						  "meaning": "汽车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bus",
+						  "dy": "bʌs",
+						  "meaning": "公交车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "train",
+						  "dy": "treɪn",
+						  "meaning": "火车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "subway",
+						  "dy": "ˈsʌbweɪ",
+						  "meaning": "地铁",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bicycle",
+						  "dy": "ˈbaɪsɪkl",
+						  "meaning": "自行车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bike",
+						  "dy": "baɪk",
+						  "meaning": "自行车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "motorcycle",
+						  "dy": "ˈməʊtəsaɪkl",
+						  "meaning": "摩托车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "taxi",
+						  "dy": "ˈtæksi",
+						  "meaning": "出租车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "van",
+						  "dy": "væn",
+						  "meaning": "厢式货车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "airplane",
+						  "dy": "ˈeəpleɪn",
+						  "meaning": "飞机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "aircraft",
+						  "dy": "ˈeəkrɑːft",
+						  "meaning": "飞机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "helicopter",
+						  "dy": "ˈhelɪkɒptə",
+						  "meaning": "直升机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ship",
+						  "dy": "ʃɪp",
+						  "meaning": "轮船",
+						  "type": ["名"]
+						},
+						{
+						  "word": "boat",
+						  "dy": "bəʊt",
+						  "meaning": "小船",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rocket",
+						  "dy": "ˈrɒkɪt",
+						  "meaning": "火箭",
+						  "type": ["名"]
+						},
+						{
+						  "word": "spaceship",
+						  "dy": "ˈspeɪsʃɪp",
+						  "meaning": "宇宙飞船",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ambulance",
+						  "dy": "ˈæmbjələns",
+						  "meaning": "救护车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tractor",
+						  "dy": "ˈtræktə",
+						  "meaning": "拖拉机",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "places",
+                    "name": "场所类",
+                    "words": [
+						{
+						  "word": "school",
+						  "dy": "skuːl",
+						  "meaning": "学校",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hospital",
+						  "dy": "ˈhɒspɪtl",
+						  "meaning": "医院",
+						  "type": ["名"]
+						},
+						{
+						  "word": "restaurant",
+						  "dy": "ˈrestrɒnt",
+						  "meaning": "餐厅",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hotel",
+						  "dy": "həʊˈtel",
+						  "meaning": "酒店",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bank",
+						  "dy": "bæŋk",
+						  "meaning": "银行",
+						  "type": ["名"]
+						},
+						{
+						  "word": "supermarket",
+						  "dy": "ˈsuːpəmɑːkɪt",
+						  "meaning": "超市",
+						  "type": ["名"]
+						},
+						{
+						  "word": "market",
+						  "dy": "ˈmɑːkɪt",
+						  "meaning": "市场",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mall",
+						  "dy": "mɔːl",
+						  "meaning": "购物中心",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cinema",
+						  "dy": "ˈsɪnəmə",
+						  "meaning": "电影院",
+						  "type": ["名"]
+						},
+						{
+						  "word": "library",
+						  "dy": "ˈlaɪbrəri",
+						  "meaning": "图书馆",
+						  "type": ["名"]
+						},
+						{
+						  "word": "museum",
+						  "dy": "mjuːˈziːəm",
+						  "meaning": "博物馆",
+						  "type": ["名"]
+						},
+						{
+						  "word": "park",
+						  "dy": "pɑːk",
+						  "meaning": "公园",
+						  "type": ["名"]
+						},
+						{
+						  "word": "zoo",
+						  "dy": "zuː",
+						  "meaning": "动物园",
+						  "type": ["名"]
+						},
+						{
+						  "word": "beach",
+						  "dy": "biːtʃ",
+						  "meaning": "海滩",
+						  "type": ["名"]
+						},
+						{
+						  "word": "airport",
+						  "dy": "ˈeəpɔːt",
+						  "meaning": "机场",
+						  "type": ["名"]
+						},
+						{
+						  "word": "office",
+						  "dy": "ˈɒfɪs",
+						  "meaning": "办公室",
+						  "type": ["名"]
+						},
+						{
+						  "word": "factory",
+						  "dy": "ˈfæktri",
+						  "meaning": "工厂",
+						  "type": ["名"]
+						},
+						{
+						  "word": "farm",
+						  "dy": "fɑːm",
+						  "meaning": "农场",
+						  "type": ["名"]
+						},
+						{
+						  "word": "playground",
+						  "dy": "ˈpleɪɡraʊnd",
+						  "meaning": "游乐场",
+						  "type": ["名"]
+						},
+						{
+						  "word": "kindergarten",
+						  "dy": "ˈkɪndəɡɑːtn",
+						  "meaning": "幼儿园",
+						  "type": ["名"]
+						},
+						{
+						  "word": "university",
+						  "dy": "juːnɪˈvɜːsəti",
+						  "meaning": "大学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "college",
+						  "dy": "ˈkɒlɪdʒ",
+						  "meaning": "学院",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bar",
+						  "dy": "bɑː",
+						  "meaning": "酒吧",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cafe",
+						  "dy": "ˈkæfeɪ",
+						  "meaning": "咖啡；咖啡馆",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "meals",
+                    "name": "三餐类",
+                    "words": [
+						 {
+						  "word": "meal",
+						  "dy": "miːl",
+						  "meaning": "餐，饭",
+						  "type": ["名"]
+						},
+						{
+						  "word": "breakfast",
+						  "dy": "ˈbrekfəst",
+						  "meaning": "早餐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lunch",
+						  "dy": "lʌntʃ",
+						  "meaning": "午餐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dinner",
+						  "dy": "ˈdɪnə",
+						  "meaning": "晚餐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "supper",
+						  "dy": "ˈsʌpə",
+						  "meaning": "晚餐（尤指家常便饭）",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "tablewares",
+                    "name": "餐具类",
+                    "words": [
+						{
+						  "word": "plate",
+						  "dy": "pleɪt",
+						  "meaning": "盘子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bowl",
+						  "dy": "bəʊl",
+						  "meaning": "碗",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cup",
+						  "dy": "kʌp",
+						  "meaning": "杯子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "glass",
+						  "dy": "ɡlɑːs",
+						  "meaning": "玻璃杯",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fork",
+						  "dy": "fɔːk",
+						  "meaning": "叉子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "knife",
+						  "dy": "naɪf",
+						  "meaning": "刀子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "spoon",
+						  "dy": "spuːn",
+						  "meaning": "勺子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chopsticks",
+						  "dy": "ˈtʃɒpstɪks",
+						  "meaning": "筷子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mug",
+						  "dy": "mʌɡ",
+						  "meaning": "马克杯",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "foods",
+                    "name": "饮食类",
+                    "words": [
+						{
+						  "word": "food",
+						  "dy": "fud",
+						  "meaning": "食物",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rice",
+						  "dy": "raɪs",
+						  "meaning": "米饭",
+						  "type": ["名"]
+						},
+						{
+						  "word": "noodle",
+						  "dy": "ˈnuːdl",
+						  "meaning": "面条(常用复数)",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bread",
+						  "dy": "bred",
+						  "meaning": "面包",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dumpling",
+						  "dy": "ˈdʌmplɪŋ",
+						  "meaning": "饺子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pork",
+						  "dy": "pɔːk",
+						  "meaning": "猪肉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "beef",
+						  "dy": "biːf",
+						  "meaning": "牛肉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chicken",
+						  "dy": "ˈtʃɪkɪn",
+						  "meaning": "鸡肉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fish",
+						  "dy": "fɪʃ",
+						  "meaning": "鱼",
+						  "type": ["名"]
+						},
+						{
+						  "word": "egg",
+						  "dy": "eɡ",
+						  "meaning": "鸡蛋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tofu",
+						  "dy": "ˈtəʊfuː",
+						  "meaning": "豆腐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "vegetable",
+						  "dy": "ˈvedʒtəbl",
+						  "meaning": "蔬菜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tomato",
+						  "dy": "təˈmɑːtəʊ",
+						  "meaning": "西红柿",
+						  "type": ["名"]
+						},
+						{
+						  "word": "potato",
+						  "dy": "pəˈteɪtəʊ",
+						  "meaning": "土豆",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cabbage",
+						  "dy": "ˈkæbɪdʒ",
+						  "meaning": "卷心菜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "carrot",
+						  "dy": "ˈkærət",
+						  "meaning": "胡萝卜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tea",
+						  "dy": "tiː",
+						  "meaning": "茶",
+						  "type": ["名"]
+						},
+						{
+						  "word": "coffee",
+						  "dy": "ˈkɒfi",
+						  "meaning": "咖啡",
+						  "type": ["名"]
+						},
+						{
+						  "word": "milk",
+						  "dy": "mɪlk",
+						  "meaning": "牛奶",
+						  "type": ["名"]
+						},
+						{
+						  "word": "juice",
+						  "dy": "dʒuːs",
+						  "meaning": "果汁",
+						  "type": ["名"]
+						},
+						{
+						  "word": "water",
+						  "dy": "ˈwɔːtə",
+						  "meaning": "水",
+						  "type": ["名"]
+						},
+						{
+						  "word": "beer",
+						  "dy": "bɪə",
+						  "meaning": "啤酒",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wine",
+						  "dy": "waɪn",
+						  "meaning": "葡萄酒",
+						  "type": ["名"]
+						},
+						{
+						  "word": "soup",
+						  "dy": "suːp",
+						  "meaning": "汤",
+						  "type": ["名"]
+						},
+						{
+						  "word": "salad",
+						  "dy": "ˈsæləd",
+						  "meaning": "沙拉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cake",
+						  "dy": "keɪk",
+						  "meaning": "蛋糕",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ice cream",
+						  "dy": "aɪs kriːm",
+						  "meaning": "冰淇淋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chocolate",
+						  "dy": "ˈtʃɒklət",
+						  "meaning": "巧克力",
+						  "type": ["名"]
+						},
+						{
+						  "word": "candy",
+						  "dy": "ˈkændi",
+						  "meaning": "糖果",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cookie",
+						  "dy": "ˈkʊki",
+						  "meaning": "饼干",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hamburger",
+						  "dy": "ˈhæmbɜːɡə",
+						  "meaning": "汉堡包",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pizza",
+						  "dy": "ˈpiːtsə",
+						  "meaning": "披萨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sandwich",
+						  "dy": "ˈsænwɪtʃ",
+						  "meaning": "三明治",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hot dog",
+						  "dy": "hɒt dɒɡ",
+						  "meaning": "热狗",
+						  "type": ["名"]
+						},
+						{
+						  "word": "oil",
+						  "dy": "ɔɪl",
+						  "meaning": "油",
+						  "type": ["名"]
+						},
+						{
+						  "word": "salt",
+						  "dy": "sɔːlt",
+						  "meaning": "盐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sugar",
+						  "dy": "ˈʃʊɡə",
+						  "meaning": "糖",
+						  "type": ["名"]
+						},
+						{
+						  "word": "vinegar",
+						  "dy": "ˈvɪnɪɡə",
+						  "meaning": "醋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "soy sauce",
+						  "dy": "sɔɪ sɔːs",
+						  "meaning": "酱油",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "fruits",
+                    "name": "水果类",
+                    "words": [
+						{
+						  "word": "apple",
+						  "dy": "ˈæpl",
+						  "meaning": "苹果",
+						  "type": ["名"]
+						},
+						{
+						  "word": "banana",
+						  "dy": "bəˈnɑːnə",
+						  "meaning": "香蕉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "orange",
+						  "dy": "ˈɒrɪndʒ",
+						  "meaning": "橙子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grape",
+						  "dy": "ɡreɪp",
+						  "meaning": "葡萄",
+						  "type": ["名"]
+						},
+						{
+						  "word": "strawberry",
+						  "dy": "ˈstrɔːbəri",
+						  "meaning": "草莓",
+						  "type": ["名"]
+						},
+						{
+						  "word": "watermelon",
+						  "dy": "ˈwɔːtəmelən",
+						  "meaning": "西瓜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pineapple",
+						  "dy": "ˈpaɪnæpl",
+						  "meaning": "菠萝",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mango",
+						  "dy": "ˈmæŋɡəʊ",
+						  "meaning": "芒果",
+						  "type": ["名"]
+						},
+						{
+						  "word": "peach",
+						  "dy": "piːtʃ",
+						  "meaning": "桃子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pear",
+						  "dy": "peə",
+						  "meaning": "梨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cherry",
+						  "dy": "ˈtʃeri",
+						  "meaning": "樱桃",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lemon",
+						  "dy": "ˈlemən",
+						  "meaning": "柠檬",
+						  "type": ["名"]
+						},
+						{
+						  "word": "coconut",
+						  "dy": "ˈkəʊkənʌt",
+						  "meaning": "椰子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "blueberry",
+						  "dy": "ˈbluːbəri",
+						  "meaning": "蓝莓",
+						  "type": ["名"]
+						},
+						{
+						  "word": "blackberry",
+						  "dy": "ˈblækbəri",
+						  "meaning": "黑莓",
+						  "type": ["名"]
+						},
+						{
+						  "word": "melon",
+						  "dy": "ˈmelən",
+						  "meaning": "甜瓜",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "furnitures",
+                    "name": "居家类",
+                    "words": [
+						{
+						  "word": "floor",
+						  "dy": "flɔːr",
+						  "meaning": "地板",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wall",
+						  "dy": "wɔːl",
+						  "meaning": "墙",
+						  "type": ["名"]
+						},
+						{
+						  "word": "window",
+						  "dy": "ˈwɪndoʊ",
+						  "meaning": "窗户",
+						  "type": ["名"]
+						},    
+						{
+						  "word": "bedroom",
+						  "dy": "ˈbedruːm",
+						  "meaning": "卧室",
+						  "type": ["名"]
+						},
+						{
+						  "word": "kitchen",
+						  "dy": "ˈkɪtʃɪn",
+						  "meaning": "厨房",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sofa",
+						  "dy": "ˈsəʊfə",
+						  "meaning": "沙发",
+						  "type": ["名"]
+						},
+						{
+						  "word": "table",
+						  "dy": "ˈteɪbl",
+						  "meaning": "桌子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chair",
+						  "dy": "tʃeə",
+						  "meaning": "椅子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bed",
+						  "dy": "bed",
+						  "meaning": "床",
+						  "type": ["名"]
+						},
+						{
+						  "word": "desk",
+						  "dy": "desk",
+						  "meaning": "书桌",
+						  "type": ["名"]
+						},
+						{
+						  "word": "light",
+						  "dy": "laɪt",
+						  "meaning": "灯；光",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lamp",
+						  "dy": "læmp",
+						  "meaning": "台灯",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bookcase",
+						  "dy": "ˈbʊkˌkes",
+						  "meaning": "书柜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "door",
+						  "dy": "dɔːr",
+						  "meaning": "门",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mirror",
+						  "dy": "ˈmɪrə",
+						  "meaning": "镜子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "clock",
+						  "dy": "klɒk",
+						  "meaning": "钟表",
+						  "type": ["名"]
+						},
+						{
+						  "word": "television",
+						  "dy": "ˈtelɪvɪʒn",
+						  "meaning": "电视",
+						  "type": ["名"]
+						},
+						{
+						  "word": "refrigerator",
+						  "dy": "rɪˈfrɪdʒəreɪtə",
+						  "meaning": "冰箱",
+						  "type": ["名"]
+						},
+						{
+						  "word": "washing machine",
+						  "dy": "ˈwɒʃɪŋ məʃiːn",
+						  "meaning": "洗衣机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "toilet",
+						  "dy": "ˈtɔɪlət",
+						  "meaning": "马桶",
+						  "type": ["名"]
+						},
+						{
+						  "word": "shower",
+						  "dy": "ˈʃaʊə",
+						  "meaning": "淋浴;阵雨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "broom",
+						  "dy": "bruːm",
+						  "meaning": "扫帚",
+						  "type": ["名"]
+						},
+						{
+						  "word": "toolbox",
+						  "dy": "ˈtuːlbɒks",
+						  "meaning": "工具箱",
+						  "type": ["名"]
+						},
+						{
+						  "word": "umbrella",
+						  "dy": "ʌmˈbrelə",
+						  "meaning": "雨伞",
+						  "type": ["名"]
+						},
+						{
+						  "word": "key",
+						  "dy": "kiː",
+						  "meaning": "钥匙",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lock",
+						  "dy": "lɒk",
+						  "meaning": "锁",
+						  "type": ["名"]
+						},
+						{
+						  "word": "flashlight",
+						  "dy": "ˈflæʃlaɪt",
+						  "meaning": "手电筒",
+						  "type": ["名"]
+						},
+						{
+						  "word": "battery",
+						  "dy": "ˈbætəri",
+						  "meaning": "电池",
+						  "type": ["名"]
+						},
+						{
+						  "word": "calendar",
+						  "dy": "ˈkælɪndə",
+						  "meaning": "日历",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "clothers",
+                    "name": "衣物类",
+                    "words": [
+						{
+						  "word": "clothing",
+						  "dy": "ˈkloʊðɪŋ",
+						  "meaning": "衣服，服装",
+						  "type": ["名"]
+						},
+						{
+						  "word": "shirt",
+						  "dy": "ʃɜːt",
+						  "meaning": "衬衫",
+						  "type": ["名"]
+						},
+						{
+						  "word": "T-shirt",
+						  "dy": "ˈtiːʃɜːt",
+						  "meaning": "T恤",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sweater",
+						  "dy": "ˈswetə",
+						  "meaning": "毛衣",
+						  "type": ["名"]
+						},
+						{
+						  "word": "jacket",
+						  "dy": "ˈdʒækɪt",
+						  "meaning": "夹克",
+						  "type": ["名"]
+						},
+						{
+						  "word": "coat",
+						  "dy": "kəʊt",
+						  "meaning": "外套",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dress",
+						  "dy": "dres",
+						  "meaning": "连衣裙",
+						  "type": ["名"]
+						},
+						{
+						  "word": "skirt",
+						  "dy": "skɜːt",
+						  "meaning": "裙子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pants",
+						  "dy": "pænts",
+						  "meaning": "裤子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "jeans",
+						  "dy": "dʒiːnz",
+						  "meaning": "牛仔裤",
+						  "type": ["名"]
+						},
+						{
+						  "word": "shorts",
+						  "dy": "ʃɔːts",
+						  "meaning": "短裤",
+						  "type": ["名"]
+						},
+						{
+						  "word": "underwear",
+						  "dy": "ˈʌndəweə",
+						  "meaning": "内衣",
+						  "type": ["名"]
+						},
+						{
+						  "word": "socks",
+						  "dy": "sɒks",
+						  "meaning": "袜子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "shoes",
+						  "dy": "ʃuːz",
+						  "meaning": "鞋子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "boots",
+						  "dy": "buːts",
+						  "meaning": "靴子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sandals",
+						  "dy": "ˈsændlz",
+						  "meaning": "凉鞋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hat",
+						  "dy": "hæt",
+						  "meaning": "帽子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tie",
+						  "dy": "taɪ",
+						  "meaning": "领带",
+						  "type": ["名"]
+						},
+						{
+						  "word": "suit",
+						  "dy": "suːt",
+						  "meaning": "西装",
+						  "type": ["名"]
+						},
+						{
+						  "word": "swimsuit",
+						  "dy": "ˈswɪmsuːt",
+						  "meaning": "泳衣",
+						  "type": ["名"]
+						},
+						{
+						  "word": "raincoat",
+						  "dy": "ˈreɪnkəʊt",
+						  "meaning": "雨衣",
+						  "type": ["名"]
+						},
+						{
+						  "word": "overcoat",
+						  "dy": "ˈəʊvəkəʊt",
+						  "meaning": "大衣",
+						  "type": ["名"]
+						},
+						{
+						  "word": "vest",
+						  "dy": "vest",
+						  "meaning": "背心",
+						  "type": ["名"]
+						},
+						{
+						  "word": "stockings",
+						  "dy": "ˈstɒkɪŋz",
+						  "meaning": "长袜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sunglasses",
+						  "dy": "ˈsʌnɡlɑːsɪz",
+						  "meaning": "太阳镜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "watch",
+						  "dy": "wɒtʃ",
+						  "meaning": "手表",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ring",
+						  "dy": "rɪŋ",
+						  "meaning": "戒指",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "natures",
+                    "name": "自然类",
+                    "words": [
+						{
+						  "word": "mountain",
+						  "dy": "ˈmaʊntɪn",
+						  "meaning": "山",
+						  "type": ["名"]
+						},
+						{
+						  "word": "river",
+						  "dy": "ˈrɪvə",
+						  "meaning": "河流",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lake",
+						  "dy": "leɪk",
+						  "meaning": "湖泊",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ocean",
+						  "dy": "ˈəʊʃn",
+						  "meaning": "海洋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sea",
+						  "dy": "siː",
+						  "meaning": "海",
+						  "type": ["名"]
+						},
+						{
+						  "word": "forest",
+						  "dy": "ˈfɒrɪst",
+						  "meaning": "森林",
+						  "type": ["名"]
+						},
+						{
+						  "word": "desert",
+						  "dy": "ˈdezət",
+						  "meaning": "沙漠",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hill",
+						  "dy": "hɪl",
+						  "meaning": "小山",
+						  "type": ["名"]
+						},
+						{
+						  "word": "waterfall",
+						  "dy": "ˈwɔːtəfɔːl",
+						  "meaning": "瀑布",
+						  "type": ["名"]
+						},
+						{
+						  "word": "island",
+						  "dy": "ˈaɪlənd",
+						  "meaning": "岛屿",
+						  "type": ["名"]
+						},
+						{
+						  "word": "beach",
+						  "dy": "biːtʃ",
+						  "meaning": "海滩",
+						  "type": ["名"]
+						},
+						{
+						  "word": "coast",
+						  "dy": "kəʊst",
+						  "meaning": "海岸",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sky",
+						  "dy": "skaɪ",
+						  "meaning": "天空",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cloud",
+						  "dy": "klaʊd",
+						  "meaning": "云",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rain",
+						  "dy": "reɪn",
+						  "meaning": "雨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "snow",
+						  "dy": "snəʊ",
+						  "meaning": "雪",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wind",
+						  "dy": "wɪnd",
+						  "meaning": "风",
+						  "type": ["名"]
+						},
+						{
+						  "word": "storm",
+						  "dy": "stɔːm",
+						  "meaning": "风暴",
+						  "type": ["名"]
+						},
+						{
+						  "word": "thunder",
+						  "dy": "ˈθʌndə",
+						  "meaning": "雷",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lightning",
+						  "dy": "ˈlaɪtnɪŋ",
+						  "meaning": "闪电",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rainbow",
+						  "dy": "ˈreɪnbəʊ",
+						  "meaning": "彩虹",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sun",
+						  "dy": "sʌn",
+						  "meaning": "太阳",
+						  "type": ["名"]
+						},
+						{
+						  "word": "moon",
+						  "dy": "muːn",
+						  "meaning": "月亮",
+						  "type": ["名"]
+						},
+						{
+						  "word": "star",
+						  "dy": "stɑː",
+						  "meaning": "星星",
+						  "type": ["名"]
+						},
+						{
+						  "word": "planet",
+						  "dy": "ˈplænɪt",
+						  "meaning": "行星",
+						  "type": ["名"]
+						},
+						{
+						  "word": "earth",
+						  "dy": "ɜːθ",
+						  "meaning": "地球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rock",
+						  "dy": "rɒk",
+						  "meaning": "岩石",
+						  "type": ["名"]
+						},
+						{
+						  "word": "stone",
+						  "dy": "stəʊn",
+						  "meaning": "石头",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sand",
+						  "dy": "sænd",
+						  "meaning": "沙子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "soil",
+						  "dy": "sɔɪl",
+						  "meaning": "土壤",
+						  "type": ["名"]
+						},
+						{
+						  "word": "animal",
+						  "dy": "ˈænɪməl",
+						  "meaning": "动物",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "weathers",
+                    "name": "天气类",
+                    "words": [
+						{
+						  "word": "sunny",
+						  "dy": "ˈsʌni",
+						  "meaning": "晴朗的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "cloudy",
+						  "dy": "ˈklaʊdi",
+						  "meaning": "多云的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "rainy",
+						  "dy": "ˈreɪni",
+						  "meaning": "下雨的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "snowy",
+						  "dy": "ˈsnəʊi",
+						  "meaning": "下雪的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "windy",
+						  "dy": "ˈwɪndi",
+						  "meaning": "有风的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "stormy",
+						  "dy": "ˈstɔːmi",
+						  "meaning": "暴风雨的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "clear",
+						  "dy": "klɪə",
+						  "meaning": "晴朗的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "overcast",
+						  "dy": "ˌəʊvəˈkɑːst",
+						  "meaning": "阴天的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "humid",
+						  "dy": "ˈhjuːmɪd",
+						  "meaning": "潮湿的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "dry",
+						  "dy": "draɪ",
+						  "meaning": "干燥的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "wet",
+						  "dy": "wet",
+						  "meaning": "潮湿的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "hot",
+						  "dy": "hɒt",
+						  "meaning": "热的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "cold",
+						  "dy": "kəʊld",
+						  "meaning": "冷的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "warm",
+						  "dy": "wɔːm",
+						  "meaning": "温暖的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "cool",
+						  "dy": "kuːl",
+						  "meaning": "凉爽的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "rain",
+						  "dy": "reɪn",
+						  "meaning": "雨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "snow",
+						  "dy": "snəʊ",
+						  "meaning": "雪",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wind",
+						  "dy": "wɪnd",
+						  "meaning": "风",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fog",
+						  "dy": "fɒɡ",
+						  "meaning": "雾",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cloud",
+						  "dy": "klaʊd",
+						  "meaning": "云",
+						  "type": ["名"]
+						},
+						{
+						  "word": "thunder",
+						  "dy": "ˈθʌndə",
+						  "meaning": "雷",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lightning",
+						  "dy": "ˈlaɪtnɪŋ",
+						  "meaning": "闪电",
+						  "type": ["名"]
+						},
+						{
+						  "word": "storm",
+						  "dy": "stɔːm",
+						  "meaning": "暴风雨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hurricane",
+						  "dy": "ˈhʌrɪkən",
+						  "meaning": "飓风",
+						  "type": ["名"]
+						},
+						{
+						  "word": "typhoon",
+						  "dy": "taɪˈfuːn",
+						  "meaning": "台风",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tornado",
+						  "dy": "tɔːˈneɪdəʊ",
+						  "meaning": "龙卷风",
+						  "type": ["名"]
+						},
+						{
+						  "word": "drizzle",
+						  "dy": "ˈdrɪzl",
+						  "meaning": "毛毛雨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "shower",
+						  "dy": "ˈʃaʊə",
+						  "meaning": "淋浴;阵雨",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hail",
+						  "dy": "heɪl",
+						  "meaning": "冰雹",
+						  "type": ["名"]
+						},
+						{
+						  "word": "frost",
+						  "dy": "frɒst",
+						  "meaning": "霜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ice",
+						  "dy": "aɪs",
+						  "meaning": "冰",
+						  "type": ["名"]
+						},
+						{
+						  "word": "temperature",
+						  "dy": "ˈtemprətʃə",
+						  "meaning": "温度",
+						  "type": ["名"]
+						},
+						{
+						  "word": "humidity",
+						  "dy": "hjuːˈmɪdəti",
+						  "meaning": "湿度",
+						  "type": ["名"]
+						},
+						{
+						  "word": "forecast",
+						  "dy": "ˈfɔːkɑːst",
+						  "meaning": "天气预报",
+						  "type": ["名"]
+						},
+						{
+						  "word": "climate",
+						  "dy": "ˈklaɪmət",
+						  "meaning": "气候",
+						  "type": ["名"]
+						},
+						{
+						  "word": "weather",
+						  "dy": "ˈweðə",
+						  "meaning": "天气",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sunshine",
+						  "dy": "ˈsʌnʃaɪn",
+						  "meaning": "阳光",
+						  "type": ["名"]
+						},
+						{
+						  "word": "breeze",
+						  "dy": "briːz",
+						  "meaning": "微风",
+						  "type": ["名"]
+						},
+						{
+						  "word": "drought",
+						  "dy": "draʊt",
+						  "meaning": "干旱",
+						  "type": ["名"]
+						},
+						{
+						  "word": "flood",
+						  "dy": "flʌd",
+						  "meaning": "洪水",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "positions",
+                    "name": "方位类",
+                    "words": [
+						{
+						  "word": "north",
+						  "dy": "nɔːθ",
+						  "meaning": "北",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "south",
+						  "dy": "saʊθ",
+						  "meaning": "南",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "east",
+						  "dy": "iːst",
+						  "meaning": "东",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "west",
+						  "dy": "west",
+						  "meaning": "西",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "northeast",
+						  "dy": "ˌnɔːθˈiːst",
+						  "meaning": "东北",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "northwest",
+						  "dy": "ˌnɔːθˈwest",
+						  "meaning": "西北",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "southeast",
+						  "dy": "ˌsaʊθˈiːst",
+						  "meaning": "东南",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "southwest",
+						  "dy": "ˌsaʊθˈwest",
+						  "meaning": "西南",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "up",
+						  "dy": "ʌp",
+						  "meaning": "向上",
+						  "type": ["副"]
+						},
+						{
+						  "word": "down",
+						  "dy": "daʊn",
+						  "meaning": "向下",
+						  "type": ["副"]
+						},
+						{
+						  "word": "left",
+						  "dy": "left",
+						  "meaning": "左边",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "right",
+						  "dy": "raɪt",
+						  "meaning": "右边",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "front",
+						  "dy": "frʌnt",
+						  "meaning": "前面",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "back",
+						  "dy": "bæk",
+						  "meaning": "后面",
+						  "type": ["名","形","副"]
+						},
+						{
+						  "word": "top",
+						  "dy": "tɒp",
+						  "meaning": "顶部",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "bottom",
+						  "dy": "ˈbɒtəm",
+						  "meaning": "底部",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "center",
+						  "dy": "ˈsentə",
+						  "meaning": "中心",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "middle",
+						  "dy": "ˈmɪdl",
+						  "meaning": "中间",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "side",
+						  "dy": "saɪd",
+						  "meaning": "侧面",
+						  "type": ["名"]
+						},
+						{
+						  "word": "inside",
+						  "dy": "ˌɪnˈsaɪd",
+						  "meaning": "里面",
+						  "type": ["名","副"]
+						},
+						{
+						  "word": "outside",
+						  "dy": "ˌaʊtˈsaɪd",
+						  "meaning": "外面",
+						  "type": ["名","副"]
+						},
+						{
+						  "word": "above",
+						  "dy": "əˈbʌv",
+						  "meaning": "在上面",
+						  "type": ["副"]
+						},
+						{
+						  "word": "below",
+						  "dy": "bɪˈləʊ",
+						  "meaning": "在下面",
+						  "type": ["副"]
+						},
+						{
+						  "word": "over",
+						  "dy": "ˈəʊvə",
+						  "meaning": "在...上方",
+						  "type": ["副"]
+						},
+						{
+						  "word": "on",
+						  "dy": "ɑːn",
+						  "meaning": "在...上方",
+						  "type": ["副"]
+						},
+						{
+						  "word": "in",
+						  "dy": "ɪn",
+						  "meaning": "在...里面",
+						  "type": ["副"]
+						},
+						{
+						  "word": "out",
+						  "dy": "ˈəut",
+						  "meaning": "在...外面",
+						  "type": ["副"]
+						},
+						{
+						  "word": "under",
+						  "dy": "ˈʌndə",
+						  "meaning": "在...下面",
+						  "type": ["副"]
+						},
+						{
+						  "word": "beside",
+						  "dy": "bɪˈsaɪd",
+						  "meaning": "在旁边",
+						  "type": ["介"]
+						},
+						{
+						  "word": "between",
+						  "dy": "bɪˈtwiːn",
+						  "meaning": "在...之间",
+						  "type": ["介"]
+						},
+						{
+						  "word": "among",
+						  "dy": "əˈmʌŋ",
+						  "meaning": "在...之中",
+						  "type": ["介"]
+						},
+						{
+						  "word": "around",
+						  "dy": "əˈraʊnd",
+						  "meaning": "围绕",
+						  "type": ["副"]
+						},
+						{
+						  "word": "through",
+						  "dy": "θruː",
+						  "meaning": "穿过",
+						  "type": ["介","副"]
+						},
+						{
+						  "word": "across",
+						  "dy": "əˈkrɒs",
+						  "meaning": "横过",
+						  "type": ["介","副"]
+						},
+						{
+						  "word": "along",
+						  "dy": "əˈlɒŋ",
+						  "meaning": "沿着",
+						  "type": ["介","副"]
+						},
+						{
+						  "word": "forward",
+						  "dy": "ˈfɔːwəd",
+						  "meaning": "向前",
+						  "type": ["副","介"]
+						},
+						{
+						  "word": "backward",
+						  "dy": "ˈbækwəd",
+						  "meaning": "向后",
+						  "type": ["副","介"]
+						},
+						{
+						  "word": "upward",
+						  "dy": "ˈʌpwəd",
+						  "meaning": "向上",
+						  "type": ["副","介"]
+						},
+						{
+						  "word": "downward",
+						  "dy": "ˈdaʊnwəd",
+						  "meaning": "向下",
+						  "type": ["副","介"]
+						},
+						{
+						  "word": "northern",
+						  "dy": "ˈnɔːðən",
+						  "meaning": "北方的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "southern",
+						  "dy": "ˈsʌðən",
+						  "meaning": "南方的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "eastern",
+						  "dy": "ˈiːstən",
+						  "meaning": "东方的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "western",
+						  "dy": "ˈwestən",
+						  "meaning": "西方的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "direction",
+						  "dy": "dɪˈrekʃn",
+						  "meaning": "方向",
+						  "type": ["名"]
+						},
+						{
+						  "word": "position",
+						  "dy": "pəˈzɪʃn",
+						  "meaning": "位置",
+						  "type": ["名"]
+						},
+						{
+						  "word": "location",
+						  "dy": "ləʊˈkeɪʃn",
+						  "meaning": "地点",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "verbs",
+                    "name": "动词类",
+                    "words": [
+
+					]
+				},
+				{
+                    "id": "antonyms",
+                    "name": "反义类",
+                    "words": [
+
+					]
+				},
+				{
+                    "id": "electrics",
+                    "name": "家电类",
+                    "words": [
+
+					]
+				},
+				{
+                    "id": "countrys",
+                    "name": "国家类",
+                    "words": [
+
+					]
+				},
+				{
+                    "id": "captions",
+                    "name": "首都类",
+                    "words": [
+
+					]
+				},
+				{
+                    "id": "numbers",
+                    "name": "数量词",
+                    "subcategories": [
+                        {
+                            "id": "numberss",
+                            "name": "基数词",
+                            "words": [
+								{
+								  "word": "zero",
+								  "dy": "ˈzɪərəʊ",
+								  "meaning": "零",
+								  "type": ["名","数"]
+								},
+								{
+								  "word": "one",
+								  "dy": "wʌn",
+								  "meaning": "一",
+								  "type": ["数"]
+								},
+								{
+								  "word": "two",
+								  "dy": "tuː",
+								  "meaning": "二",
+								  "type": ["数"]
+								},
+								{
+								  "word": "three",
+								  "dy": "θriː",
+								  "meaning": "三",
+								  "type": ["数"]
+								},
+								{
+								  "word": "four",
+								  "dy": "fɔː",
+								  "meaning": "四",
+								  "type": ["数"]
+								},
+								{
+								  "word": "five",
+								  "dy": "faɪv",
+								  "meaning": "五",
+								  "type": ["数"]
+								},
+								{
+								  "word": "six",
+								  "dy": "sɪks",
+								  "meaning": "六",
+								  "type": ["数"]
+								},
+								{
+								  "word": "seven",
+								  "dy": "ˈsevn",
+								  "meaning": "七",
+								  "type": ["数"]
+								},
+								{
+								  "word": "eight",
+								  "dy": "eɪt",
+								  "meaning": "八",
+								  "type": ["数"]
+								},
+								{
+								  "word": "nine",
+								  "dy": "naɪn",
+								  "meaning": "九",
+								  "type": ["数"]
+								},
+								{
+								  "word": "ten",
+								  "dy": "ten",
+								  "meaning": "十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "eleven",
+								  "dy": "ɪˈlevn",
+								  "meaning": "十一",
+								  "type": ["数"]
+								},
+								{
+								  "word": "twelve",
+								  "dy": "twelv",
+								  "meaning": "十二",
+								  "type": ["数"]
+								},
+								{
+								  "word": "thirteen",
+								  "dy": "ˌθɜːˈtiːn",
+								  "meaning": "十三",
+								  "type": ["数"]
+								},
+								{
+								  "word": "fourteen",
+								  "dy": "ˌfɔːˈtiːn",
+								  "meaning": "十四",
+								  "type": ["数"]
+								},
+								{
+								  "word": "fifteen",
+								  "dy": "ˌfɪfˈtiːn",
+								  "meaning": "十五",
+								  "type": ["数"]
+								},
+								{
+								  "word": "sixteen",
+								  "dy": "ˌsɪkˈstiːn",
+								  "meaning": "十六",
+								  "type": ["数"]
+								},
+								{
+								  "word": "seventeen",
+								  "dy": "ˌsevnˈtiːn",
+								  "meaning": "十七",
+								  "type": ["数"]
+								},
+								{
+								  "word": "eighteen",
+								  "dy": "ˌeɪˈtiːn",
+								  "meaning": "十八",
+								  "type": ["数"]
+								},
+								{
+								  "word": "nineteen",
+								  "dy": "ˌnaɪnˈtiːn",
+								  "meaning": "十九",
+								  "type": ["数"]
+								},
+								{
+								  "word": "twenty",
+								  "dy": "ˈtwenti",
+								  "meaning": "二十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "thirty",
+								  "dy": "ˈθɜːti",
+								  "meaning": "三十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "forty",
+								  "dy": "ˈfɔːti",
+								  "meaning": "四十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "fifty",
+								  "dy": "ˈfɪfti",
+								  "meaning": "五十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "sixty",
+								  "dy": "ˈsɪksti",
+								  "meaning": "六十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "seventy",
+								  "dy": "ˈsevnti",
+								  "meaning": "七十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "eighty",
+								  "dy": "ˈeɪti",
+								  "meaning": "八十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "ninety",
+								  "dy": "ˈnaɪnti",
+								  "meaning": "九十",
+								  "type": ["数"]
+								},
+								{
+								  "word": "hundred",
+								  "dy": "ˈhʌndrəd",
+								  "meaning": "百",
+								  "type": ["数"]
+								},
+								{
+								  "word": "thousand",
+								  "dy": "ˈθaʊznd",
+								  "meaning": "千",
+								  "type": ["数"]
+								},
+								{
+								  "word": "million",
+								  "dy": "ˈmɪljən",
+								  "meaning": "百万",
+								  "type": ["数"]
+								},
+								{
+								  "word": "billion",
+								  "dy": "ˈbɪljən",
+								  "meaning": "十亿",
+								  "type": ["数"]
+								}
+							]
+						},
+						{
+                            "id": "xsc",
+                            "name": "序数词",
+                            "words": [
+								{
+								  "word": "first",
+								  "dy": "fɜːst",
+								  "meaning": "第一",
+								  "type": ["形"]
+								},
+								{
+								  "word": "second",
+								  "dy": "ˈsekənd",
+								  "meaning": "第二",
+								  "type": ["形"]
+								},
+								{
+								  "word": "third",
+								  "dy": "θɜːd",
+								  "meaning": "第三",
+								  "type": ["形"]
+								},
+								{
+								  "word": "fourth",
+								  "dy": "fɔːθ",
+								  "meaning": "第四",
+								  "type": ["形"]
+								},
+								{
+								  "word": "fifth",
+								  "dy": "fɪfθ",
+								  "meaning": "第五",
+								  "type": ["形"]
+								},
+								{
+								  "word": "sixth",
+								  "dy": "sɪksθ",
+								  "meaning": "第六",
+								  "type": ["形"]
+								},
+								{
+								  "word": "seventh",
+								  "dy": "ˈsevnθ",
+								  "meaning": "第七",
+								  "type": ["形"]
+								},
+								{
+								  "word": "eighth",
+								  "dy": "eɪtθ",
+								  "meaning": "第八",
+								  "type": ["形"]
+								},
+								{
+								  "word": "ninth",
+								  "dy": "naɪnθ",
+								  "meaning": "第九",
+								  "type": ["形"]
+								},
+								{
+								  "word": "tenth",
+								  "dy": "tenθ",
+								  "meaning": "第十",
+								  "type": ["形"]
+								}
+							]
+						},
+						{
+                            "id": "othern",
+                            "name": "其它",
+                            "words": [
+								{
+								  "word": "half",
+								  "dy": "hɑːf",
+								  "meaning": "一半",
+								  "type": ["名","形"]
+								},
+								{
+								  "word": "quarter",
+								  "dy": "ˈkwɔːtə",
+								  "meaning": "四分之一",
+								  "type": ["名"]
+								},
+								{
+								  "word": "double",
+								  "dy": "ˈdʌbl",
+								  "meaning": "双倍",
+								  "type": ["形","动"]
+								},
+								{
+								  "word": "triple",
+								  "dy": "ˈtrɪpl",
+								  "meaning": "三倍",
+								  "type": ["形","动"]
+								},
+								{
+								  "word": "single",
+								  "dy": "ˈsɪŋɡl",
+								  "meaning": "单个",
+								  "type": ["形"]
+								},
+								{
+								  "word": "pair",
+								  "dy": "peə",
+								  "meaning": "一对",
+								  "type": ["名"]
+								},
+								{
+								  "word": "number",
+								  "dy": "ˈnʌmbə",
+								  "meaning": "数字",
+								  "type": ["名"]
+								},
+								{
+								  "word": "amount",
+								  "dy": "əˈmaʊnt",
+								  "meaning": "数量",
+								  "type": ["名"]
+								},
+								{
+								  "word": "quantity",
+								  "dy": "ˈkwɒntəti",
+								  "meaning": "数量",
+								  "type": ["名"]
+								},
+								{
+								  "word": "total",
+								  "dy": "ˈtəʊtl",
+								  "meaning": "总数",
+								  "type": ["名","形"]
+								},
+								{
+								  "word": "sum",
+								  "dy": "sʌm",
+								  "meaning": "总和",
+								  "type": ["名"]
+								},
+								{
+								  "word": "add",
+								  "dy": "æd",
+								  "meaning": "加",
+								  "type": ["动"]
+								},
+								{
+								  "word": "subtract",
+								  "dy": "səbˈtrækt",
+								  "meaning": "减",
+								  "type": ["动"]
+								},
+								{
+								  "word": "multiply",
+								  "dy": "ˈmʌltɪplaɪ",
+								  "meaning": "乘",
+								  "type": ["动"]
+								},
+								{
+								  "word": "divide",
+								  "dy": "dɪˈvaɪd",
+								  "meaning": "除",
+								  "type": ["动"]
+								},
+								{
+								  "word": "equal",
+								  "dy": "ˈiːkwəl",
+								  "meaning": "等于",
+								  "type": ["形","动"]
+								},
+								{
+								  "word": "plus",
+								  "dy": "plʌs",
+								  "meaning": "加",
+								  "type": ["介"]
+								},
+								{
+								  "word": "minus",
+								  "dy": "ˈmaɪnəs",
+								  "meaning": "减",
+								  "type": ["介"]
+								},
+								{
+								  "word": "times",
+								  "dy": "taɪmz",
+								  "meaning": "乘以",
+								  "type": ["介"]
+								},
+								{
+								  "word": "percent",
+								  "dy": "pəˈsent",
+								  "meaning": "百分比",
+								  "type": ["名"]
+								}
+							]
+						}
+					]
+				},
+				{
+                    "id": "plants",
+                    "name": "植物类",
+                    "words": [
+						{
+						  "word": "plant",
+						  "dy": "plænt",
+						  "meaning": "植物；种植",
+						  "type": ["名","动"]
+						},
+						{
+						  "word": "tree",
+						  "dy": "triː",
+						  "meaning": "树",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rose",
+						  "dy": "rəʊz",
+						  "meaning": "玫瑰",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sunflower",
+						  "dy": "ˈsʌnflaʊə",
+						  "meaning": "向日葵",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bamboo",
+						  "dy": "bæmˈbuː",
+						  "meaning": "竹子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grass",
+						  "dy": "ɡrɑːs",
+						  "meaning": "草",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wheat",
+						  "dy": "wiːt",
+						  "meaning": "小麦",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rice",
+						  "dy": "raɪs",
+						  "meaning": "水稻",
+						  "type": ["名"]
+						},
+						{
+						  "word": "corn",
+						  "dy": "kɔːn",
+						  "meaning": "玉米",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cotton",
+						  "dy": "ˈkɒtn",
+						  "meaning": "棉花",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wood",
+						  "dy": "wʊd",
+						  "meaning": "木头",
+						  "type": ["名"]
+						}
+					]
+				},
 				{
                     "id": "animals",
                     "name": "动物",
                     "subcategories": [
                         {
                             "id": "farm_animals",
-                            "name": "农场动物",
+                            "name": "家养动物",
                             "words": [
                                 {
 								  "word": "dog",
@@ -615,6 +3792,12 @@
 								  "word": "ox",
 								  "dy": "ɑːks",
 								  "meaning": "牛，公牛",
+								  "type": ["名"]
+								},
+								{
+								  "word": "bull",
+								  "dy": "bʊl",
+								  "meaning": "公牛",
 								  "type": ["名"]
 								},
 								{
@@ -1037,6 +4220,12 @@
 							"id":"season",
 							"name":"四季",
 							"words":[
+								{
+								  "word": "season",
+								  "dy": "ˈsiːzn",
+								  "meaning": "季节",
+								  "type": ["名"]
+								},
 								{
 								  "word": "spring",
 								  "dy": "sprɪŋ",
