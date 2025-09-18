@@ -394,10 +394,143 @@
                 font-size: 0.95rem;
             }
         }
+
+/*以下样式是数据处理的*/
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+        .description {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .input-section, .output-section {
+            margin-bottom: 30px;
+			display:none;
+        }
+		.dodata{
+			display:none;
+		}
+        h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .output {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 100px;
+        }
+        .result-item {
+            background-color: #e8f4fc;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+        .result-item:nth-child(even) {
+            background-color: #d1edff;
+        }
+        .index {
+            background-color: #3498db;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+	<!-- 开始数据处理代码 -->
+	<div class="input-section">
+            <h2>输入数据</h2>
+            <textarea id="inputData" placeholder="请输入数据，每行一条，格式为：序号.数据1-数据2">
+				1.pencil-铅笔
+				2.book-书
+				3.eraser-橡皮
+				4.notebook-笔记本
+				5.Chinese book-语文书
+				6.Englishbook-英语书
+				7.Mathsbook-数学书
+				8.comicbook-漫画书
+				9.pencilcase-铅笔盒
+				10.ruler-尺子
+				11.schoolbag-书包
+				12.crayon-蜡笔
+				13.paper-纸张
+				14.scissors-剪刀
+				15.glue-胶水
+				16.bag-包
+				17.pen-钢笔
+				18.calculator-计算器
+				19.binder-文件夹
+				20.sharpener-卷笔刀
+				21.marker-记号笔
+				22.compass-圆规
+				23.board-写字板
+				24.textbook-教科书
+				25.dictionary-词典
+				26.Ball pen-圆珠笔
+				27.ink-墨水
+				28.map-地图
+			</textarea>
+        </div>
+		<div class="dodata">
+			一级分类：<select id="firstClass" style="width:300px"></select>二级分类<select id="secondClass" style="width:300px"></select>
+			<button id="extractBtn">提取数据</button>
+        </div>
+        <div class="output-section">
+            <h2>提取结果</h2>
+            <div class="output" id="outputResultds">
+            </div>
+			<div class="output" id="outputResult">
+                <p style="color: #7f8c8d; text-align: center;">提取结果将显示在这里</p>
+            </div>
+        </div>
+		<!-- 结束数据处理代码 -->
+
         <div class="content-area">
             <div class="breadcrumb" id="breadcrumb">
                 <a data-id="root">
@@ -439,6 +572,9 @@
     </footer>
 
     <script>
+	
+
+
         // 模拟单词数据（实际应用中可以从JSON文件加载）
         const wordData = {
             "categories": [
@@ -1091,12 +1227,6 @@
 								  "dy": "/wʌt ˈkʌlər/",
 								  "meaning": "什么颜色",
 								  "type": ["代"]
-								},
-								{
-								  "word": "what size",
-								  "dy": "/wʌt saɪz/",
-								  "meaning": "什么尺寸",
-								  "type": ["代"]
 								}
 							]
 						}
@@ -1104,7 +1234,7 @@
 				},
 				{
                     "id": "courses",
-                    "name": "课程类",
+                    "name": "科目类",
                     "words": [
 						{
 						  "word": "mathematics",
@@ -1219,96 +1349,510 @@
 						  "dy": "ˈmedsn",
 						  "meaning": "医学",
 						  "type": ["名"]
+						},
+						{
+						  "word": "science",
+						  "dy": "/ˈsaɪəns/",
+						  "meaning": "科学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "language arts",
+						  "dy": "/ˈlæŋɡwɪdʒ ɑːrts/",
+						  "meaning": "语言艺术",
+						  "type": [""]
+						},
+						{
+						  "word": "literature",
+						  "dy": "/ˈlɪtərətʃər/",
+						  "meaning": "文学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "social studies",
+						  "dy": "/ˈsoʊʃəl ˈstʌdiz/",
+						  "meaning": "社会研究",
+						  "type": [""]
+						},
+						{
+						  "word": "health",
+						  "dy": "/hɛlθ/",
+						  "meaning": "健康",
+						  "type": ["名"]
+						},
+						{
+						  "word": "civics",
+						  "dy": "/ˈsɪvɪks/",
+						  "meaning": "公民学",
+						  "type": ["名"]
+						},
+						{
+						  "word": "drama",
+						  "dy": "/ˈdrɑːmə/",
+						  "meaning": "戏剧",
+						  "type": ["名"]
+						},
+						{
+						  "word": "French",
+						  "dy": "/frɛntʃ/",
+						  "meaning": "法语",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "erhu",
+						  "dy": "/ˈɜːrhuː/",
+						  "meaning": "二胡",
+						  "type": ["名"]
+						},
+						{
+						  "word": "guitar",
+						  "dy": "/ɡɪˈtɑːr/",
+						  "meaning": "吉他",
+						  "type": ["名"]
+						},
+						{
+						  "word": "drum",
+						  "dy": "/drʌm/",
+						  "meaning": "鼓",
+						  "type": ["名"]
+						},
+						{
+						  "word": "zither",
+						  "dy": "/ˈzɪðər/",
+						  "meaning": "古筝",
+						  "type": ["名"]
+						},
+						{
+						  "word": "flute",
+						  "dy": "/fluːt/",
+						  "meaning": "长笛",
+						  "type": ["名"]
+						},
+						{
+						  "word": "horn",
+						  "dy": "/hɔːrn/",
+						  "meaning": "号角",
+						  "type": ["名"]
+						},
+						{
+						  "word": "violin",
+						  "dy": "/ˌvaɪəˈlɪn/",
+						  "meaning": "小提琴",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dancing",
+						  "dy": "/ˈdænsɪŋ/",
+						  "meaning": "舞蹈",
+						  "type": ["名"]
+						},
+						{
+						  "word": "piano",
+						  "dy": "/piˈænoʊ/",
+						  "meaning": "钢琴",
+						  "type": ["名"]
+						},
+						{
+						  "word": "trumpet",
+						  "dy": "/ˈtrʌmpɪt/",
+						  "meaning": "小号",
+						  "type": ["名"]
+						},
+						{
+						  "word": "song",
+						  "dy": "/sɔːŋ/",
+						  "meaning": "歌曲",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pop music",
+						  "dy": "/ˈpɑːp ˈmjuːzɪk/",
+						  "meaning": "流行音乐",
+						  "type": [""]
+						},
+						{
+						  "word": "classical music",
+						  "dy": "/ˈklæsɪkl ˈmjuːzɪk/",
+						  "meaning": "古典音乐",
+						  "type": [""]
 						}
 					]
 				},
 				{
-                    "id": "studtytools",
-                    "name": "文具类",
-                    "words": [
+                    "id": "studtyschooltools",
+                    "name": "学校学习类",
+					"subcategories":[
 						{
-						  "word": "pen",
-						  "dy": "pen",
-						  "meaning": "钢笔",
-						  "type": ["名"]
+							"id": "studtytools",
+							"name": "文具类",
+							"words": [
+								{
+								  "word": "pen",
+								  "dy": "pen",
+								  "meaning": "钢笔",
+								  "type": ["名"]
+								},
+								{
+								  "word": "pencil",
+								  "dy": "ˈpensl",
+								  "meaning": "铅笔",
+								  "type": ["名"]
+								},
+								{
+								  "word": "eraser",
+								  "dy": "ɪˈreɪzə",
+								  "meaning": "橡皮擦",
+								  "type": ["名"]
+								},
+								{
+								  "word": "ruler",
+								  "dy": "ˈruːlə",
+								  "meaning": "尺子",
+								  "type": ["名"]
+								},
+								{
+								  "word": "notebook",
+								  "dy": "ˈnəʊtbʊk",
+								  "meaning": "笔记本",
+								  "type": ["名"]
+								},
+								{
+								  "word": "paper",
+								  "dy": "ˈpeɪpə",
+								  "meaning": "纸",
+								  "type": ["名"]
+								},
+								{
+								  "word": "folder",
+								  "dy": "ˈfəʊldə",
+								  "meaning": "文件夹",
+								  "type": ["名"]
+								},
+								{
+								  "word": "book",
+								  "dy": "bʊk",
+								  "meaning": "书本",
+								  "type": ["名"]
+								},
+								{
+								  "word": "Chinese book",
+								  "dy": "/ˌtʃaɪˈniːz bʊk/",
+								  "meaning": "语文书",
+								  "type": [""]
+								},
+								{
+								  "word": "English book",
+								  "dy": "/ˈɪŋɡlɪʃ bʊk/",
+								  "meaning": "英语书",
+								  "type": [""]
+								},
+								{
+								  "word": "Maths book",
+								  "dy": "/mæθs bʊk/",
+								  "meaning": "数学书",
+								  "type": [""]
+								},
+								{
+								  "word": "comic book",
+								  "dy": "/ˈkɒmɪk bʊk/",
+								  "meaning": "漫画书",
+								  "type": [""]
+								},
+								{
+								  "word": "pencil case",
+								  "dy": "/ˈpensl keɪs/",
+								  "meaning": "铅笔盒",
+								  "type": [""]
+								},
+								{
+								  "word": "crayon",
+								  "dy": "/ˈkreɪən/",
+								  "meaning": "蜡笔",
+								  "type": ["名"]
+								},
+								{
+								  "word": "scissors",
+								  "dy": "/ˈsɪzərz/",
+								  "meaning": "剪刀",
+								  "type": ["名"]
+								},
+								{
+								  "word": "glue",
+								  "dy": "/ɡluː/",
+								  "meaning": "胶水",
+								  "type": ["名"]
+								},
+								{
+								  "word": "calculator",
+								  "dy": "/ˈkælkjuleɪtər/",
+								  "meaning": "计算器",
+								  "type": ["名"]
+								},
+								{
+								  "word": "binder",
+								  "dy": "/ˈbaɪndər/",
+								  "meaning": "活页夹",
+								  "type": ["名"]
+								},
+								{
+								  "word": "sharpener",
+								  "dy": "/ˈʃɑːrpənər/",
+								  "meaning": "削笔刀",
+								  "type": ["名"]
+								},
+								{
+								  "word": "marker",
+								  "dy": "/ˈmɑːrkər/",
+								  "meaning": "马克笔",
+								  "type": ["名"]
+								},
+								{
+								  "word": "compass",
+								  "dy": "/ˈkʌmpəs/",
+								  "meaning": "圆规",
+								  "type": ["名"]
+								},
+								{
+								  "word": "board",
+								  "dy": "/bɔːrd/",
+								  "meaning": "板，写字板",
+								  "type": ["名"]
+								},
+								{
+								  "word": "textbook",
+								  "dy": "/ˈtekstbʊk/",
+								  "meaning": "教科书",
+								  "type": ["名"]
+								},
+								{
+								  "word": "Ball pen",
+								  "dy": "/bɔːl pen/",
+								  "meaning": "圆珠笔",
+								  "type": [""]
+								},
+								{
+								  "word": "ink",
+								  "dy": "/ɪŋk/",
+								  "meaning": "墨水",
+								  "type": ["名"]
+								},
+								{
+								  "word": "map",
+								  "dy": "/mæp/",
+								  "meaning": "地图",
+								  "type": ["名"]
+								},
+								{
+								  "word": "bag",
+								  "dy": "bæɡ",
+								  "meaning": "书包",
+								  "type": ["名"]
+								},
+								{
+								  "word": "schoolbag",
+								  "dy": "ˈskulˌbæɡ",
+								  "meaning": "书包",
+								  "type": ["名"]
+								},
+								{
+								  "word": "desk",
+								  "dy": "desk",
+								  "meaning": "书桌",
+								  "type": ["名"]
+								},
+								{
+								  "word": "chair",
+								  "dy": "tʃeə",
+								  "meaning": "椅子",
+								  "type": ["名"]
+								},
+								{
+								  "word": "dictionary",
+								  "dy": "ˈdɪkʃəneri",
+								  "meaning": "字典",
+								  "type": ["名"]
+								}
+							]
 						},
 						{
-						  "word": "pencil",
-						  "dy": "ˈpensl",
-						  "meaning": "铅笔",
-						  "type": ["名"]
-						},
-						{
-						  "word": "eraser",
-						  "dy": "ɪˈreɪzə",
-						  "meaning": "橡皮擦",
-						  "type": ["名"]
-						},
-						{
-						  "word": "ruler",
-						  "dy": "ˈruːlə",
-						  "meaning": "尺子",
-						  "type": ["名"]
-						},
-						{
-						  "word": "notebook",
-						  "dy": "ˈnəʊtbʊk",
-						  "meaning": "笔记本",
-						  "type": ["名"]
-						},
-						{
-						  "word": "paper",
-						  "dy": "ˈpeɪpə",
-						  "meaning": "纸",
-						  "type": ["名"]
-						},
-						{
-						  "word": "folder",
-						  "dy": "ˈfəʊldə",
-						  "meaning": "文件夹",
-						  "type": ["名"]
-						},
-						{
-						  "word": "book",
-						  "dy": "bʊk",
-						  "meaning": "书本",
-						  "type": ["名"]
-						},
-						{
-						  "word": "bag",
-						  "dy": "bæɡ",
-						  "meaning": "书包",
-						  "type": ["名"]
-						},
-						{
-						  "word": "schoolbag",
-						  "dy": "ˈskulˌbæɡ",
-						  "meaning": "书包",
-						  "type": ["名"]
-						},
-						{
-						  "word": "desk",
-						  "dy": "desk",
-						  "meaning": "书桌",
-						  "type": ["名"]
-						},
-						{
-						  "word": "chair",
-						  "dy": "tʃeə",
-						  "meaning": "椅子",
-						  "type": ["名"]
-						},
-						{
-						  "word": "dictionary",
-						  "dy": "ˈdɪkʃəneri",
-						  "meaning": "字典",
-						  "type": ["名"]
+							"id": "schooltools",
+							"name": "学校类",
+							"words": [
+								{
+								  "word": "classroom",
+								  "dy": "/ˈklæsruːm/",
+								  "meaning": "教室",
+								  "type": ["名"]
+								},
+								{
+								  "word": "teacher",
+								  "dy": "/ˈtiːtʃər/",
+								  "meaning": "老师",
+								  "type": ["名"]
+								},
+								{
+								  "word": "student",
+								  "dy": "/ˈstuːdnt/",
+								  "meaning": "学生",
+								  "type": ["名"]
+								},
+								{
+								  "word": "principal",
+								  "dy": "/ˈprɪnsəpl/",
+								  "meaning": "校长",
+								  "type": ["名"]
+								},
+								{
+								  "word": "story-book",
+								  "dy": "/ˈstɔːri bʊk/",
+								  "meaning": "故事书",
+								  "type": ["名"]
+								},
+								{
+								  "word": "blackboard",
+								  "dy": "/ˈblækbɔːrd/",
+								  "meaning": "黑板",
+								  "type": ["名"]
+								},
+								{
+								  "word": "chalk",
+								  "dy": "/tʃɔːk/",
+								  "meaning": "粉笔",
+								  "type": ["名"]
+								},
+								{
+								  "word": "desk",
+								  "dy": "/desk/",
+								  "meaning": "书桌",
+								  "type": ["名"]
+								},
+								{
+								  "word": "chair",
+								  "dy": "/tʃer/",
+								  "meaning": "椅子",
+								  "type": ["名"]
+								},
+								{
+								  "word": "library",
+								  "dy": "/ˈlaɪbreri/",
+								  "meaning": "图书馆",
+								  "type": ["名"]
+								},
+								{
+								  "word": "playground",
+								  "dy": "/ˈpleɪɡraʊnd/",
+								  "meaning": "操场",
+								  "type": ["名"]
+								},
+								{
+								  "word": "cafeteria",
+								  "dy": "/ˌkæfəˈtɪriə/",
+								  "meaning": "食堂",
+								  "type": ["名"]
+								},
+								{
+								  "word": "laboratory",
+								  "dy": "/ˈlæbrətɔːri/",
+								  "meaning": "实验室",
+								  "type": ["名"]
+								},
+								{
+								  "word": "shelf",
+								  "dy": "/ʃelf/",
+								  "meaning": "架子",
+								  "type": ["名"]
+								},
+								{
+								  "word": "homework",
+								  "dy": "/ˈhoʊmwɜːrk/",
+								  "meaning": "家庭作业",
+								  "type": ["名"]
+								},
+								{
+								  "word": "bell",
+								  "dy": "/bel/",
+								  "meaning": "铃铛",
+								  "type": ["名"]
+								},
+								{
+								  "word": "locker",
+								  "dy": "/ˈlɑːkər/",
+								  "meaning": "储物柜",
+								  "type": ["名"]
+								},
+								{
+								  "word": "grade",
+								  "dy": "/ɡreɪd/",
+								  "meaning": "年级；成绩",
+								  "type": ["名"]
+								},
+								{
+								  "word": "school bus",
+								  "dy": "/skuːl bʌs/",
+								  "meaning": "校车",
+								  "type": ["名"]
+								},
+								{
+								  "word": "office",
+								  "dy": "/ˈɔːfɪs/",
+								  "meaning": "办公室",
+								  "type": ["名"]
+								},
+								{
+								  "word": "newspaper",
+								  "dy": "/ˈnuːzpeɪpər/",
+								  "meaning": "报纸",
+								  "type": ["名"]
+								},
+								{
+								  "word": "postcard",
+								  "dy": "/ˈpoʊstkɑːrd/",
+								  "meaning": "明信片",
+								  "type": ["名"]
+								},
+								{
+								  "word": "magazine",
+								  "dy": "/ˈmæɡəziːn/",
+								  "meaning": "杂志",
+								  "type": ["名"]
+								},
+								{
+								  "word": "tape",
+								  "dy": "/teɪp/",
+								  "meaning": "胶带；磁带",
+								  "type": ["名"]
+								},
+								{
+								  "word": "library card",
+								  "dy": "/ˈlaɪbreri kɑːrd/",
+								  "meaning": "借书卡",
+								  "type": ["名"]
+								},
+								{
+								  "word": "recorder",
+								  "dy": "/rɪˈkɔːrdər/",
+								  "meaning": "录音机；竖笛",
+								  "type": ["名"]
+								},
+								{
+								  "word": "letter",
+								  "dy": "/ˈletər/",
+								  "meaning": "信件；字母",
+								  "type": ["名"]
+								},
+								{
+								  "word": "word",
+								  "dy": "/wɜːrd/",
+								  "meaning": "单词",
+								  "type": ["名"]
+								}
+							]
 						}
 					]
 				},
 				{
                     "id": "balls",
-                    "name": "体育类",
+                    "name": "运动类",
                     "words": [
 						{
 						  "word": "game",
@@ -1411,6 +1955,72 @@
 						  "dy": "ˈhændbɔːl",
 						  "meaning": "手球",
 						  "type": ["名"]
+						},
+						{
+						  "word": "sports",
+						  "dy": "/spɔːrts/",
+						  "meaning": "体育运动",
+						  "type": ["名"]
+						},
+						{
+						  "word": "swimming",
+						  "dy": "/ˈswɪmɪŋ/",
+						  "meaning": "游泳",
+						  "type": ["名"]
+						},
+						{
+						  "word": "running",
+						  "dy": "/ˈrʌnɪŋ/",
+						  "meaning": "跑步",
+						  "type": ["名"]
+						},
+						{
+						  "word": "gymnastics",
+						  "dy": "/dʒɪmˈnæstɪks/",
+						  "meaning": "体操",
+						  "type": ["名"]
+						},
+						{
+						  "word": "martial arts",
+						  "dy": "/ˌmɑːrʃl ˈɑːrts/",
+						  "meaning": "武术",
+						  "type": [""]
+						},
+						{
+						  "word": "boxing",
+						  "dy": "/ˈbɑːksɪŋ/",
+						  "meaning": "拳击",
+						  "type": ["名"]
+						},
+						{
+						  "word": "jump rope",
+						  "dy": "/ˈdʒʌmp ˌroʊp/",
+						  "meaning": "跳绳",
+						  "type": [""]
+						},
+						{
+						  "word": "skating",
+						  "dy": "/ˈskeɪtɪŋ/",
+						  "meaning": "滑冰",
+						  "type": ["名"]
+						},
+						{
+						  "word": "wrestling",
+						  "dy": "/ˈreslɪŋ/",
+						  "meaning": "摔跤",
+						  "type": ["名"]
+						},
+						{
+						  "word": "archery",
+						  "dy": "/ˈɑːrtʃəri/",
+						  "meaning": "射箭",
+						  "type": ["名"]
+						},
+						{
+						  "word": "high jump",
+						  "dy": "/ˈhaɪ ˌdʒʌmp/",
+						  "meaning": "跳高",
+						  "type": [""]
 						}
 					]
 				},
@@ -1458,6 +2068,72 @@
 						  "word": "line",
 						  "dy": "laɪn",
 						  "meaning": "直线",
+						  "type": ["名"]
+						},
+						{
+						  "word": "shape",
+						  "dy": "/ʃeɪp/",
+						  "meaning": "形状",
+						  "type": ["名"]
+						},
+						{
+						  "word": "oval",
+						  "dy": "/ˈoʊvəl/",
+						  "meaning": "椭圆形",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "diamond",
+						  "dy": "/ˈdaɪəmənd/",
+						  "meaning": "菱形；钻石",
+						  "type": ["名"]
+						},
+						{
+						  "word": "polygon",
+						  "dy": "/ˈpɑːliɡɑːn/",
+						  "meaning": "多边形",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cylinder",
+						  "dy": "/ˈsɪlɪndər/",
+						  "meaning": "圆柱体",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sphere",
+						  "dy": "/sfɪr/",
+						  "meaning": "球体",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cube",
+						  "dy": "/kjuːb/",
+						  "meaning": "立方体",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cone",
+						  "dy": "/koʊn/",
+						  "meaning": "圆锥体",
+						  "type": ["名"]
+						},
+						{
+						  "word": "spiral",
+						  "dy": "/ˈspaɪrəl/",
+						  "meaning": "螺旋形,螺旋形的",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "crescent",
+						  "dy": "/ˈkresnt/",
+						  "meaning": "新月形,新月形的",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "hexagon",
+						  "dy": "/ˈheksəɡɑːn/",
+						  "meaning": "六边形",
 						  "type": ["名"]
 						}
 					]
@@ -1626,6 +2302,138 @@
 						  "word": "neighbor",
 						  "dy": "ˈneɪbə",
 						  "meaning": "邻居",
+						  "type": ["名"]
+						},
+						{
+						  "word": "boy",
+						  "dy": "/bɔɪ/",
+						  "meaning": "男孩",
+						  "type": ["名"]
+						},
+						{
+						  "word": "girl",
+						  "dy": "/ɡɜːrl/",
+						  "meaning": "女孩",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grandma",
+						  "dy": "/ˈɡrænmɑː/",
+						  "meaning": "奶奶；外婆",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grandpa",
+						  "dy": "/ˈɡrænpɑː/",
+						  "meaning": "爷爷；外公",
+						  "type": ["名"]
+						},
+						{
+						  "word": "man",
+						  "dy": "/mæn/",
+						  "meaning": "男人",
+						  "type": ["名"]
+						},
+						{
+						  "word": "woman",
+						  "dy": "/ˈwʊmən/",
+						  "meaning": "女人",
+						  "type": ["名"]
+						},
+						{
+						  "word": "nephew",
+						  "dy": "/ˈnefjuː/",
+						  "meaning": "侄子；外甥",
+						  "type": ["名"]
+						},
+						{
+						  "word": "niece",
+						  "dy": "/niːs/",
+						  "meaning": "侄女；外甥女",
+						  "type": ["名"]
+						},
+						{
+						  "word": "baby",
+						  "dy": "/ˈbeɪbi/",
+						  "meaning": "婴儿",
+						  "type": ["名"]
+						},
+						{
+						  "word": "parents",
+						  "dy": "/ˈpeərənts/",
+						  "meaning": "父母",
+						  "type": ["名"]
+						},
+						{
+						  "word": "Miss",
+						  "dy": "/mɪs/",
+						  "meaning": "小姐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lady",
+						  "dy": "/ˈleɪdi/",
+						  "meaning": "女士",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mum",
+						  "dy": "/mʌm/",
+						  "meaning": "妈妈",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dad",
+						  "dy": "/dæd/",
+						  "meaning": "爸爸",
+						  "type": ["名"]
+						},
+						{
+						  "word": "kid",
+						  "dy": "/kɪd/",
+						  "meaning": "小孩",
+						  "type": ["名"]
+						},
+						{
+						  "word": "visitor",
+						  "dy": "/ˈvɪzɪtər/",
+						  "meaning": "访客",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pen pal",
+						  "dy": "/ˈpen pæl/",
+						  "meaning": "笔友",
+						  "type": ["名"]
+						},
+						{
+						  "word": "tourist",
+						  "dy": "/ˈtʊərɪst/",
+						  "meaning": "游客",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sir",
+						  "dy": "/sɜːr/",
+						  "meaning": "先生",
+						  "type": ["名"]
+						},
+						{
+						  "word": "madam",
+						  "dy": "/ˈmædəm/",
+						  "meaning": "夫人；女士",
+						  "type": ["名"]
+						},
+						{
+						  "word": "robot",
+						  "dy": "/ˈroʊbɑːt/",
+						  "meaning": "机器人",
+						  "type": ["名"]
+						},
+						{
+						  "word": "people",
+						  "dy": "/ˈpiːpl/",
+						  "meaning": "人们",
 						  "type": ["名"]
 						}
 					]
@@ -1807,6 +2615,60 @@
 						  "dy": "prəˈfesər",
 						  "meaning": "教授",
 						  "type": ["名"]
+						},
+						{
+						  "word": "dentist",
+						  "dy": "/ˈdentɪst/",
+						  "meaning": "牙医",
+						  "type": ["名"]
+						},
+						{
+						  "word": "salesperson",
+						  "dy": "/ˈseɪlzpɜːrsn/",
+						  "meaning": "销售员",
+						  "type": ["名"]
+						},
+						{
+						  "word": "banker",
+						  "dy": "/ˈbæŋkər/",
+						  "meaning": "银行家",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mechanic",
+						  "dy": "/məˈkænɪk/",
+						  "meaning": "机械师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "architect",
+						  "dy": "/ˈɑːrkɪtekt/",
+						  "meaning": "建筑师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "accountant",
+						  "dy": "/əˈkaʊntənt/",
+						  "meaning": "会计师",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cleaner",
+						  "dy": "/ˈkliːnər/",
+						  "meaning": "清洁工",
+						  "type": ["名"]
+						},
+						{
+						  "word": "assistant",
+						  "dy": "/əˈsɪstənt/",
+						  "meaning": "助手",
+						  "type": ["名"]
+						},
+						{
+						  "word": "postman",
+						  "dy": "/ˈpoʊstmən/",
+						  "meaning": "邮递员",
+						  "type": ["名"]
 						}
 					]
 				},
@@ -1920,6 +2782,132 @@
 						  "word": "tractor",
 						  "dy": "ˈtræktə",
 						  "meaning": "拖拉机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "truck",
+						  "dy": "/trʌk/",
+						  "meaning": "卡车",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ferry",
+						  "dy": "/ˈferi/",
+						  "meaning": "渡轮",
+						  "type": ["名"]
+						},
+						{
+						  "word": "yacht",
+						  "dy": "/jɑːt/",
+						  "meaning": "游艇",
+						  "type": ["名"]
+						},
+						{
+						  "word": "jeep",
+						  "dy": "/dʒiːp/",
+						  "meaning": "吉普车",
+						  "type": ["名"]
+						}
+					]
+				},
+				{
+                    "id": "festivals",
+                    "name": "节日类",
+                    "words": [
+						{
+						  "word": "Spring Festival",
+						  "dy": "/sprɪŋ ˈfestɪvəl/",
+						  "meaning": "春节",
+						  "type": [""]
+						},
+						{
+						  "word": "New Year",
+						  "dy": "/njuː jɪər/",
+						  "meaning": "新年",
+						  "type": [""]
+						},
+						{
+						  "word": "Mid-Autumn Festival",
+						  "dy": "/mɪd ˈɔːtəm ˈfestɪvəl/",
+						  "meaning": "中秋节",
+						  "type": [""]
+						},
+						{
+						  "word": "Christmas",
+						  "dy": "/ˈkrɪsməs/",
+						  "meaning": "圣诞节",
+						  "type": [""]
+						},
+						{
+						  "word": "Thanksgiving",
+						  "dy": "/ˌθæŋksˈɡɪvɪŋ/",
+						  "meaning": "感恩节",
+						  "type": [""]
+						},
+						{
+						  "word": "Valentine's Day",
+						  "dy": "/ˈvæləntaɪnz deɪ/",
+						  "meaning": "情人节",
+						  "type": [""]
+						},
+						{
+						  "word": "Lantern Festival",
+						  "dy": "/ˈlæntərn ˈfestɪvəl/",
+						  "meaning": "元宵节",
+						  "type": [""]
+						},
+						{
+						  "word": "Teachers' Day",
+						  "dy": "/ˈtiːtʃərz deɪ/",
+						  "meaning": "教师节",
+						  "type": [""]
+						},
+						{
+						  "word": "National Day",
+						  "dy": "/ˈnæʃnəl deɪ/",
+						  "meaning": "国庆节",
+						  "type": [""]
+						},
+						{
+						  "word": "Labor Day",
+						  "dy": "/ˈleɪbər deɪ/",
+						  "meaning": "劳动节",
+						  "type": [""]
+						},
+						{
+						  "word": "Children's Day",
+						  "dy": "/ˈtʃɪldrənz deɪ/",
+						  "meaning": "儿童节",
+						  "type": [""]
+						},
+						{
+						  "word": "Women's Day",
+						  "dy": "/ˈwɪmɪnz deɪ/",
+						  "meaning": "妇女节",
+						  "type": [""]
+						},
+						{
+						  "word": "Mother's Day",
+						  "dy": "/ˈmʌðərz deɪ/",
+						  "meaning": "母亲节",
+						  "type": [""]
+						},
+						{
+						  "word": "Father's Day",
+						  "dy": "/ˈfɑːðərz deɪ/",
+						  "meaning": "父亲节",
+						  "type": [""]
+						},
+						{
+						  "word": "Easter",
+						  "dy": "/ˈiːstər/",
+						  "meaning": "复活节",
+						  "type": [""]
+						},
+						{
+						  "word": "holiday",
+						  "dy": "/ˈhɒlədeɪ/",
+						  "meaning": "假日，节日",
 						  "type": ["名"]
 						}
 					]
@@ -2193,6 +3181,12 @@
 						  "type": ["名"]
 						},
 						{
+						  "word": "noodles",
+						  "dy": "/ˈnuːdlz/",
+						  "meaning": "面条",
+						  "type": ["名"]
+						},
+						{
 						  "word": "bread",
 						  "dy": "bred",
 						  "meaning": "面包",
@@ -2407,13 +3401,7 @@
 						  "dy": "sɔɪ sɔːs",
 						  "meaning": "酱油",
 						  "type": ["名"]
-						}
-					]
-				},
-				{
-                    "id": "fruits",
-                    "name": "水果类",
-                    "words": [
+						},
 						{
 						  "word": "apple",
 						  "dy": "ˈæpl",
@@ -2508,6 +3496,198 @@
 						  "word": "melon",
 						  "dy": "ˈmelən",
 						  "meaning": "甜瓜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "kiwifruit",
+						  "dy": "/ˈkiːwiːfruːt/",
+						  "meaning": "猕猴桃",
+						  "type": ["名"]
+						},
+						{
+						  "word": "durian",
+						  "dy": "/ˈdʊəriən/",
+						  "meaning": "榴莲",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pomelo",
+						  "dy": "/ˈpɒmɪləʊ/",
+						  "meaning": "柚子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "green beans",
+						  "dy": "/ɡriːn biːnz/",
+						  "meaning": "青豆，四季豆",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pea",
+						  "dy": "/piː/",
+						  "meaning": "豌豆",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pumpkin",
+						  "dy": "/ˈpʌmpkɪn/",
+						  "meaning": "南瓜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "onion",
+						  "dy": "/ˈʌnjən/",
+						  "meaning": "洋葱",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cucumber",
+						  "dy": "/ˈkjuːkʌmbər/",
+						  "meaning": "黄瓜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "eggplant",
+						  "dy": "/ˈeɡplænt/",
+						  "meaning": "茄子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sweet potato",
+						  "dy": "/swiːt pəˈteɪtəʊ/",
+						  "meaning": "红薯，甘薯",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ice",
+						  "dy": "/aɪs/",
+						  "meaning": "冰",
+						  "type": ["名"]
+						},
+						{
+						  "word": "biscuit",
+						  "dy": "/ˈbɪskɪt/",
+						  "meaning": "饼干",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cola",
+						  "dy": "/ˈkoʊlə/",
+						  "meaning": "可乐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cheese",
+						  "dy": "/tʃiːz/",
+						  "meaning": "奶酪",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sausage",
+						  "dy": "/ˈsɔːsɪdʒ/",
+						  "meaning": "香肠",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ice-cream",
+						  "dy": "/ˌaɪs ˈkriːm/",
+						  "meaning": "冰淇淋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mutton",
+						  "dy": "/ˈmʌtn/",
+						  "meaning": "羊肉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "french fries",
+						  "dy": "/ˌfrentʃ ˈfraɪz/",
+						  "meaning": "炸薯条",
+						  "type": [""]
+						},
+						{
+						  "word": "jam",
+						  "dy": "/dʒæm/",
+						  "meaning": "果酱",
+						  "type": ["名"]
+						},
+						{
+						  "word": "meat",
+						  "dy": "/miːt/",
+						  "meaning": "肉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "yogurt",
+						  "dy": "/ˈjoʊɡərt/",
+						  "meaning": "酸奶",
+						  "type": ["名"]
+						},
+						{
+						  "word": "flour",
+						  "dy": "/ˈflaʊər/",
+						  "meaning": "面粉",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dessert",
+						  "dy": "/dɪˈzɜːrt/",
+						  "meaning": "甜点",
+						  "type": ["名"]
+						},
+						{
+						  "word": "ham",
+						  "dy": "/hæm/",
+						  "meaning": "火腿",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lemonade",
+						  "dy": "/ˌleməˈneɪd/",
+						  "meaning": "柠檬水",
+						  "type": ["名"]
+						},
+						{
+						  "word": "corn",
+						  "dy": "/kɔːrn/",
+						  "meaning": "玉米",
+						  "type": ["名"]
+						},
+						{
+						  "word": "peanut",
+						  "dy": "/ˈpiːnʌt/",
+						  "meaning": "花生",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sweets",
+						  "dy": "/swiːts/",
+						  "meaning": "糖果",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fast food",
+						  "dy": "/ˌfæst ˈfuːd/",
+						  "meaning": "快餐",
+						  "type": [""]
+						},
+						{
+						  "word": "breakfast",
+						  "dy": "/ˈbrekfəst/",
+						  "meaning": "早餐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lunch",
+						  "dy": "/lʌntʃ/",
+						  "meaning": "午餐",
+						  "type": ["名"]
+						},
+						{
+						  "word": "dinner",
+						  "dy": "/ˈdɪnər/",
+						  "meaning": "晚餐",
 						  "type": ["名"]
 						}
 					]
@@ -2689,6 +3869,342 @@
 						  "dy": "ˈkælɪndə",
 						  "meaning": "日历",
 						  "type": ["名"]
+						},
+						{
+						  "word": "house",
+						  "dy": "/haʊs/",
+						  "meaning": "房子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "bathroom",
+						  "dy": "/ˈbæθruːm/",
+						  "meaning": "浴室",
+						  "type": ["名"]
+						},
+						{
+						  "word": "restaurant",
+						  "dy": "/ˈrestərɑːnt/",
+						  "meaning": "餐厅",
+						  "type": ["名"]
+						},
+						{
+						  "word": "air-conditioner",
+						  "dy": "/ˈeər kəndɪʃənər/",
+						  "meaning": "空调",
+						  "type": ["名"]
+						},
+						{
+						  "word": "curtains",
+						  "dy": "/ˈkɜːrtnz/",
+						  "meaning": "窗帘",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fan",
+						  "dy": "/fæn/",
+						  "meaning": "风扇",
+						  "type": ["名"]
+						},
+						{
+						  "word": "closet",
+						  "dy": "/ˈklɑːzɪt/",
+						  "meaning": "衣柜",
+						  "type": ["名"]
+						},
+						{
+						  "word": "trashbin",
+						  "dy": "/ˈtræʃbɪn/",
+						  "meaning": "垃圾桶",
+						  "type": ["名"]
+						},
+						{
+						  "word": "phone",
+						  "dy": "/foʊn/",
+						  "meaning": "电话",
+						  "type": ["名"]
+						},
+						{
+						  "word": "TV",
+						  "dy": "/ˌtiːˈviː/",
+						  "meaning": "电视",
+						  "type": ["名"]
+						},
+						{
+						  "word": "toothbrush",
+						  "dy": "/ˈtuːθbrʌʃ/",
+						  "meaning": "牙刷",
+						  "type": ["名"]
+						},
+						{
+						  "word": "knife",
+						  "dy": "/naɪf/",
+						  "meaning": "刀",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fork",
+						  "dy": "/fɔːrk/",
+						  "meaning": "叉子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chopsticks",
+						  "dy": "/ˈtʃɑːpstɪks/",
+						  "meaning": "筷子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pot",
+						  "dy": "/pɑːt/",
+						  "meaning": "锅",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fridge",
+						  "dy": "/frɪdʒ/",
+						  "meaning": "冰箱",
+						  "type": ["名"]
+						},
+						{
+						  "word": "plate",
+						  "dy": "/pleɪt/",
+						  "meaning": "盘子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "spoon",
+						  "dy": "/spuːn/",
+						  "meaning": "勺子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cup",
+						  "dy": "/kʌp/",
+						  "meaning": "杯子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "hammer",
+						  "dy": "/ˈhæmər/",
+						  "meaning": "锤子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "shelf",
+						  "dy": "/ʃelf/",
+						  "meaning": "架子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "parcel",
+						  "dy": "/ˈpɑːrsl/",
+						  "meaning": "包裹",
+						  "type": ["名"]
+						},
+						{
+						  "word": "menu",
+						  "dy": "/ˈmenjuː/",
+						  "meaning": "菜单",
+						  "type": ["名"]
+						},
+						{
+						  "word": "vase",
+						  "dy": "/veɪs/",
+						  "meaning": "花瓶",
+						  "type": ["名"]
+						},
+						{
+						  "word": "box",
+						  "dy": "/bɑːks/",
+						  "meaning": "盒子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "doorbell",
+						  "dy": "/ˈdɔːrbel/",
+						  "meaning": "门铃",
+						  "type": ["名"]
+						},
+						{
+						  "word": "stairs",
+						  "dy": "/sterz/",
+						  "meaning": "楼梯",
+						  "type": ["名"]
+						},
+						{
+						  "word": "lantern",
+						  "dy": "/ˈlæntərn/",
+						  "meaning": "灯笼",
+						  "type": ["名"]
+						},
+						{
+						  "word": "photo",
+						  "dy": "/ˈfoʊtoʊ/",
+						  "meaning": "照片",
+						  "type": ["名"]
+						},
+						{
+						  "word": "stamp",
+						  "dy": "/stæmp/",
+						  "meaning": "邮票",
+						  "type": ["名"]
+						},
+						{
+						  "word": "study",
+						  "dy": "/ˈstʌdi/",
+						  "meaning": "书房；学习",
+						  "type": ["名","动"]
+						},
+						{
+						  "word": "toy",
+						  "dy": "/tɔɪ/",
+						  "meaning": "玩具",
+						  "type": ["名"]
+						},
+						{
+						  "word": "doll",
+						  "dy": "/dɑːl/",
+						  "meaning": "洋娃娃",
+						  "type": ["名"]
+						},
+						{
+						  "word": "balloon",
+						  "dy": "/bəˈluːn/",
+						  "meaning": "气球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "kite",
+						  "dy": "/kaɪt/",
+						  "meaning": "风筝",
+						  "type": ["名"]
+						},
+						{
+						  "word": "camera",
+						  "dy": "/ˈkæmərə/",
+						  "meaning": "相机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "radio",
+						  "dy": "/ˈreɪdioʊ/",
+						  "meaning": "收音机",
+						  "type": ["名"]
+						},
+						{
+						  "word": "gift",
+						  "dy": "/ɡɪft/",
+						  "meaning": "礼物",
+						  "type": ["名"]
+						},
+						{
+						  "word": "zipper",
+						  "dy": "/ˈzɪpər/",
+						  "meaning": "拉链",
+						  "type": ["名"]
+						},
+						{
+						  "word": "money",
+						  "dy": "/ˈmʌni/",
+						  "meaning": "钱",
+						  "type": ["名"]
+						},
+						{
+						  "word": "card",
+						  "dy": "/kɑːrd/",
+						  "meaning": "卡片",
+						  "type": ["名"]
+						},
+						{
+						  "word": "pet",
+						  "dy": "/pet/",
+						  "meaning": "宠物",
+						  "type": ["名"]
+						},
+						{
+						  "word": "magazine",
+						  "dy": "/ˈmæɡəziːn/",
+						  "meaning": "杂志",
+						  "type": ["名"]
+						},
+						{
+						  "word": "game",
+						  "dy": "/ɡeɪm/",
+						  "meaning": "游戏",
+						  "type": ["名"]
+						},
+						{
+						  "word": "chess",
+						  "dy": "/tʃes/",
+						  "meaning": "国际象棋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "swing",
+						  "dy": "/swɪŋ/",
+						  "meaning": "秋千",
+						  "type": ["名"]
+						},
+						{
+						  "word": "slide",
+						  "dy": "/slaɪd/",
+						  "meaning": "滑梯",
+						  "type": ["名"]
+						},
+						{
+						  "word": "jigsaw",
+						  "dy": "/ˈdʒɪɡsɔː/",
+						  "meaning": "拼图",
+						  "type": ["名"]
+						},
+						{
+						  "word": "yo-yo",
+						  "dy": "/ˈjoʊ joʊ/",
+						  "meaning": "溜溜球",
+						  "type": ["名"]
+						},
+						{
+						  "word": "Teddy bear",
+						  "dy": "/ˈtedi ber/",
+						  "meaning": "泰迪熊",
+						  "type": ["名"]
+						},
+						{
+						  "word": "computer",
+						  "dy": "/kəmˈpjuːtər/",
+						  "meaning": "电脑",
+						  "type": ["名"]
+						},
+						{
+						  "word": "keyboard",
+						  "dy": "/ˈkiːbɔːrd/",
+						  "meaning": "键盘",
+						  "type": ["名"]
+						},
+						{
+						  "word": "monitor",
+						  "dy": "/ˈmɑːnɪtər/",
+						  "meaning": "显示器",
+						  "type": ["名"]
+						},
+						{
+						  "word": "mouse",
+						  "dy": "/maʊs/",
+						  "meaning": "鼠标",
+						  "type": ["名"]
+						},
+						{
+						  "word": "message",
+						  "dy": "/ˈmesɪdʒ/",
+						  "meaning": "消息",
+						  "type": ["名"]
+						},
+						{
+						  "word": "E-mail",
+						  "dy": "/ˈiː meɪl/",
+						  "meaning": "电子邮件",
+						  "type": ["名"]
 						}
 					]
 				},
@@ -2856,6 +4372,48 @@
 						  "word": "ring",
 						  "dy": "rɪŋ",
 						  "meaning": "戒指",
+						  "type": ["名"]
+						},
+						{
+						  "word": "cap",
+						  "dy": "/kæp/",
+						  "meaning": "帽子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "scarf",
+						  "dy": "/skɑːrf/",
+						  "meaning": "围巾",
+						  "type": ["名"]
+						},
+						{
+						  "word": "gloves",
+						  "dy": "/ɡlʌvz/",
+						  "meaning": "手套",
+						  "type": ["名"]
+						},
+						{
+						  "word": "slippers",
+						  "dy": "/ˈslɪpərz/",
+						  "meaning": "拖鞋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "blouse",
+						  "dy": "/blaʊs/",
+						  "meaning": "女式衬衫",
+						  "type": ["名"]
+						},
+						{
+						  "word": "sneakers",
+						  "dy": "/ˈsniːkərz/",
+						  "meaning": "运动鞋",
+						  "type": ["名"]
+						},
+						{
+						  "word": "trousers",
+						  "dy": "/ˈtraʊzərz/",
+						  "meaning": "裤子",
 						  "type": ["名"]
 						}
 					]
@@ -3049,6 +4607,60 @@
 						  "dy": "ˈænɪməl",
 						  "meaning": "动物",
 						  "type": ["名"]
+						},
+						{
+						  "word": "tree",
+						  "dy": "/triː/",
+						  "meaning": "树",
+						  "type": ["名"]
+						},
+						{
+						  "word": "flower",
+						  "dy": "/ˈflaʊər/",
+						  "meaning": "花",
+						  "type": ["名"]
+						},
+						{
+						  "word": "grass",
+						  "dy": "/ɡræs/",
+						  "meaning": "草",
+						  "type": ["名"]
+						},
+						{
+						  "word": "seed",
+						  "dy": "/siːd/",
+						  "meaning": "种子",
+						  "type": ["名"]
+						},
+						{
+						  "word": "air",
+						  "dy": "/er/",
+						  "meaning": "空气",
+						  "type": ["名"]
+						},
+						{
+						  "word": "water",
+						  "dy": "/ˈwɔːtər/",
+						  "meaning": "水",
+						  "type": ["名"]
+						},
+						{
+						  "word": "fire",
+						  "dy": "/ˈfaɪər/",
+						  "meaning": "火",
+						  "type": ["名"]
+						},
+						{
+						  "word": "stream",
+						  "dy": "/striːm/",
+						  "meaning": "小溪",
+						  "type": ["名"]
+						},
+						{
+						  "word": "rose",
+						  "dy": "/roʊz/",
+						  "meaning": "玫瑰",
+						  "type": ["名"]
 						}
 					]
 				},
@@ -3126,6 +4738,12 @@
 						  "word": "hot",
 						  "dy": "hɒt",
 						  "meaning": "热的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "icy",
+						  "dy": "ˈaɪsi",
+						  "meaning": "寒冷的，冰冷的; 结冰的; 冷冰冰的，不友好的",
 						  "type": ["形"]
 						},
 						{
@@ -3782,474 +5400,1032 @@
                     "id": "antonyms",
                     "name": "反义类",
                     "words": [
-						{
-						  "word": "big",
-						  "dy": "/bɪɡ/",
-						  "meaning": "大的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "small",
-						  "dy": "/smɔːl/",
-						  "meaning": "小的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "tall",
-						  "dy": "/tɔːl/",
-						  "meaning": "高的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "short",
-						  "dy": "/ʃɔːt/",
-						  "meaning": "矮的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "long",
-						  "dy": "/lɒŋ/",
-						  "meaning": "长的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "short",
-						  "dy": "/ʃɔːt/",
-						  "meaning": "短的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "fast",
-						  "dy": "/fɑːst/",
-						  "meaning": "快的",
-						  "type": ["形","副"]
-						},
-						{
-						  "word": "slow",
-						  "dy": "/sləʊ/",
-						  "meaning": "慢的",
-						  "type": ["形","副"]
-						},
-						{
-						  "word": "hot",
-						  "dy": "/hɒt/",
-						  "meaning": "热的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "cold",
-						  "dy": "/kəʊld/",
-						  "meaning": "冷的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "new",
-						  "dy": "/njuː/",
-						  "meaning": "新的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "old",
-						  "dy": "/əʊld/",
-						  "meaning": "旧的； 年纪大的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "young",
-						  "dy": "/jʌŋ/",
-						  "meaning": "年轻的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "old",
-						  "dy": "/əʊld/",
-						  "meaning": "旧的；年老的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "good",
-						  "dy": "/ɡʊd/",
-						  "meaning": "好的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "bad",
-						  "dy": "/bæd/",
-						  "meaning": "坏的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "beautiful",
-						  "dy": "/ˈbjuːtɪfl/",
-						  "meaning": "美丽的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "ugly",
-						  "dy": "/ˈʌɡli/",
-						  "meaning": "丑陋的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "rich",
-						  "dy": "/rɪtʃ/",
-						  "meaning": "富有的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "poor",
-						  "dy": "/pʊə/",
-						  "meaning": "贫穷的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "strong",
-						  "dy": "/strɒŋ/",
-						  "meaning": "强壮的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "weak",
-						  "dy": "/wiːk/",
-						  "meaning": "虚弱的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "hard",
-						  "dy": "/hɑːd/",
-						  "meaning": "硬的；困难的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "soft",
-						  "dy": "/sɒft/",
-						  "meaning": "软的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "heavy",
-						  "dy": "/ˈhevi/",
-						  "meaning": "重的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "light",
-						  "dy": "/laɪt/",
-						  "meaning": "轻的;光;照亮",
-						  "type": ["形"]
-						},
-						{
-						  "word": "clean",
-						  "dy": "/kliːn/",
-						  "meaning": "干净的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "dirty",
-						  "dy": "/ˈdɜːti/",
-						  "meaning": "脏的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "wet",
-						  "dy": "/wet/",
-						  "meaning": "湿的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "dry",
-						  "dy": "/draɪ/",
-						  "meaning": "干的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "full",
-						  "dy": "/fʊl/",
-						  "meaning": "满的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "empty",
-						  "dy": "/ˈempti/",
-						  "meaning": "空的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "open",
-						  "dy": "/ˈəʊpən/",
-						  "meaning": "开的",
-						  "type": ["形","动"]
-						},
-						{
-						  "word": "closed",
-						  "dy": "/kləʊzd/",
-						  "meaning": "关的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "bright",
-						  "dy": "/braɪt/",
-						  "meaning": "明亮的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "dark",
-						  "dy": "/dɑːk/",
-						  "meaning": "黑暗的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "day",
-						  "dy": "/deɪ/",
-						  "meaning": "白天；一天；天",
-						  "type": ["名"]
-						},
-						{
-						  "word": "night",
-						  "dy": "/naɪt/",
-						  "meaning": "夜晚",
-						  "type": ["名"]
-						},
-						{
-						  "word": "love",
-						  "dy": "/lʌv/",
-						  "meaning": "爱",
-						  "type": ["名","动"]
-						},
-						{
-						  "word": "hate",
-						  "dy": "/heɪt/",
-						  "meaning": "恨",
-						  "type": ["名","动"]
-						},
-						{
-						  "word": "happy",
-						  "dy": "/ˈhæpi/",
-						  "meaning": "快乐的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "sad",
-						  "dy": "/sæd/",
-						  "meaning": "悲伤的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "easy",
-						  "dy": "/ˈiːzi/",
-						  "meaning": "容易的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "difficult",
-						  "dy": "/ˈdɪfɪkəlt/",
-						  "meaning": "困难的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "hard",
-						  "dy": "/hɑːd/",
-						  "meaning": "硬的；困难的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "simple",
-						  "dy": "/ˈsɪmpl/",
-						  "meaning": "简单的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "complex",
-						  "dy": "/ˈkɒmpleks/",
-						  "meaning": "复杂的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "begin",
-						  "dy": "/bɪˈɡɪn/",
-						  "meaning": "开始",
-						  "type": ["动"]
-						},
-						{
-						  "word": "end",
-						  "dy": "/end/",
-						  "meaning": "结束",
-						  "type": ["名","动"]
-						},
-						{
-						  "word": "start",
-						  "dy": "/stɑːt/",
-						  "meaning": "开始",
-						  "type": ["名","动"]
-						},
-						{
-						  "word": "finish",
-						  "dy": "/ˈfɪnɪʃ/",
-						  "meaning": "完成",
-						  "type": ["动"]
-						},
-						{
-						  "word": "come",
-						  "dy": "/kʌm/",
-						  "meaning": "来",
-						  "type": ["动"]
-						},
-						{
-						  "word": "go",
-						  "dy": "/ɡəʊ/",
-						  "meaning": "去",
-						  "type": ["动"]
-						},
-						{
-						  "word": "arrive",
-						  "dy": "/əˈraɪv/",
-						  "meaning": "到达",
-						  "type": ["动"]
-						},
-						{
-						  "word": "depart",
-						  "dy": "/dɪˈpɑːt/",
-						  "meaning": "离开",
-						  "type": ["动"]
-						},
-						{
-						  "word": "enter",
-						  "dy": "/ˈentə/",
-						  "meaning": "进入",
-						  "type": ["动"]
-						},
-						{
-						  "word": "exit",
-						  "dy": "/ˈeksɪt/",
-						  "meaning": "退出",
-						  "type": ["名","动"]
-						},
-						{
-						  "word": "buy",
-						  "dy": "/baɪ/",
-						  "meaning": "买",
-						  "type": ["动"]
-						},
-						{
-						  "word": "sell",
-						  "dy": "/sel/",
-						  "meaning": "卖",
-						  "type": ["动"]
-						},
-						{
-						  "word": "give",
-						  "dy": "/ɡɪv/",
-						  "meaning": "给",
-						  "type": ["动"]
-						},
-						{
-						  "word": "take",
-						  "dy": "/teɪk/",
-						  "meaning": "拿",
-						  "type": ["动"]
-						},
-						{
-						  "word": "push",
-						  "dy": "/pʊʃ/",
-						  "meaning": "推",
-						  "type": ["动"]
-						},
-						{
-						  "word": "pull",
-						  "dy": "/pʊl/",
-						  "meaning": "拉",
-						  "type": ["动"]
-						},
-						{
-						  "word": "up",
-						  "dy": "/ʌp/",
-						  "meaning": "向上",
-						  "type": ["副"]
-						},
-						{
-						  "word": "down",
-						  "dy": "/daʊn/",
-						  "meaning": "向下",
-						  "type": ["副"]
-						},
-						{
-						  "word": "in",
-						  "dy": "/ɪn/",
-						  "meaning": "在里面",
-						  "type": ["介","副"]
-						},
-						{
-						  "word": "out",
-						  "dy": "/aʊt/",
-						  "meaning": "在外面",
-						  "type": ["介","副"]
-						},
-						{
-						  "word": "off",
-						  "dy": "/ɒf/",
-						  "meaning": "离开",
-						  "type": ["介","副"]
-						},
-						{
-						  "word": "yes",
-						  "dy": "/jes/",
-						  "meaning": "是的",
-						  "type": ["副"]
-						},
-						{
-						  "word": "no",
-						  "dy": "/nəʊ/",
-						  "meaning": "不是",
-						  "type": ["副"]
-						},
-						{
-						  "word": "true",
-						  "dy": "/truː/",
-						  "meaning": "真实的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "false",
-						  "dy": "/fɔːls/",
-						  "meaning": "虚假的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "right",
-						  "dy": "/raɪt/",
-						  "meaning": "正确的；右边",
-						  "type": ["形"]
-						},
-						{
-						  "word": "wrong",
-						  "dy": "/rɒŋ/",
-						  "meaning": "错误的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "alive",
-						  "dy": "/əˈlaɪv/",
-						  "meaning": "活着的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "dead",
-						  "dy": "/ded/",
-						  "meaning": "死的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "asleep",
-						  "dy": "/əˈsliːp/",
-						  "meaning": "睡着的",
-						  "type": ["形"]
-						},
-						{
-						  "word": "awake",
-						  "dy": "/əˈweɪk/",
-						  "meaning": "醒着的",
-						  "type": ["形"]
-						}
+						  {
+							"dy": "bɪɡ smɔːl",
+							"meaning": "大的; 小的",
+							"word": "big small",
+							"type": []
+						  },
+						  {
+							"dy": "tɔːl ʃɔːt",
+							"meaning": "高的; 矮的",
+							"word": "tall short",
+							"type": []
+						  },
+						  {
+							"dy": "lɒŋ ʃɔːt",
+							"meaning": "长的; 短的",
+							"word": "long short",
+							"type": []
+						  },
+						  {
+							"dy": "fɑːst sləʊ",
+							"meaning": "快的; 慢的",
+							"word": "fast slow",
+							"type": []
+						  },
+						  {
+							"dy": "hɒt kəʊld",
+							"meaning": "热的; 冷的",
+							"word": "hot cold",
+							"type": []
+						  },
+						  {
+							"dy": "njuː əʊld",
+							"meaning": "新的; 旧的； 年纪大的",
+							"word": "new old",
+							"type": []
+						  },
+						  {
+							"dy": "jʌŋ əʊld",
+							"meaning": "年轻的; 旧的；年老的",
+							"word": "young old",
+							"type": []
+						  },
+						  {
+							"dy": "ɡʊd bæd",
+							"meaning": "好的; 坏的",
+							"word": "good bad",
+							"type": []
+						  },
+						  {
+							"dy": "ˈbjuːtɪfl ˈʌɡli",
+							"meaning": "美丽的; 丑陋的",
+							"word": "beautiful ugly",
+							"type": []
+						  },
+						  {
+							"dy": "rɪtʃ pʊə",
+							"meaning": "富有的; 贫穷的",
+							"word": "rich poor",
+							"type": []
+						  },
+						  {
+							"dy": "strɒŋ wiːk",
+							"meaning": "强壮的; 虚弱的",
+							"word": "strong weak",
+							"type": []
+						  },
+						  {
+							"dy": "hɑːd sɒft",
+							"meaning": "硬的；困难的; 软的",
+							"word": "hard soft",
+							"type": []
+						  },
+						  {
+							"dy": "ˈhevi laɪt",
+							"meaning": "重的; 轻的;光;照亮",
+							"word": "heavy light",
+							"type": []
+						  },
+						  {
+							"dy": "kliːn ˈdɜːti",
+							"meaning": "干净的; 脏的",
+							"word": "clean dirty",
+							"type": []
+						  },
+						  {
+							"dy": "wet draɪ",
+							"meaning": "湿的; 干的",
+							"word": "wet dry",
+							"type": []
+						  },
+						  {
+							"dy": "fʊl ˈempti",
+							"meaning": "满的; 空的",
+							"word": "full empty",
+							"type": []
+						  },
+						  {
+							"dy": "ˈəʊpən kləʊzd",
+							"meaning": "开的; 关的",
+							"word": "open closed",
+							"type": []
+						  },
+						  {
+							"dy": "braɪt dɑːk",
+							"meaning": "明亮的; 黑暗的",
+							"word": "bright dark",
+							"type": []
+						  },
+						  {
+							"dy": "deɪ naɪt",
+							"meaning": "白天；一天；天; 夜晚",
+							"word": "day night",
+							"type": []
+						  },
+						  {
+							"dy": "lʌv heɪt",
+							"meaning": "爱; 恨",
+							"word": "love hate",
+							"type": []
+						  },
+						  {
+							"dy": "ˈhæpi sæd",
+							"meaning": "快乐的; 悲伤的",
+							"word": "happy sad",
+							"type": []
+						  },
+						  {
+							"dy": "ˈiːzi ˈdɪfɪkəlt",
+							"meaning": "容易的; 困难的",
+							"word": "easy difficult",
+							"type": []
+						  },
+						  {
+							"dy": "hɑːd ˈsɪmpl",
+							"meaning": "硬的；困难的; 简单的",
+							"word": "hard simple",
+							"type": []
+						  },
+						  {
+							"dy": "ˈkɒmpleks bɪˈɡɪn",
+							"meaning": "复杂的; 开始",
+							"word": "complex begin",
+							"type": []
+						  },
+						  {
+							"dy": "end stɑːt",
+							"meaning": "结束; 开始",
+							"word": "end start",
+							"type": []
+						  },
+						  {
+							"dy": "ˈfɪnɪʃ kʌm",
+							"meaning": "完成; 来",
+							"word": "finish come",
+							"type": []
+						  },
+						  {
+							"dy": "ɡəʊ əˈraɪv",
+							"meaning": "去; 到达",
+							"word": "go arrive",
+							"type": []
+						  },
+						  {
+							"dy": "dɪˈpɑːt ˈentə",
+							"meaning": "离开; 进入",
+							"word": "depart enter",
+							"type": []
+						  },
+						  {
+							"dy": "ˈeksɪt baɪ",
+							"meaning": "退出; 买",
+							"word": "exit buy",
+							"type": []
+						  },
+						  {
+							"dy": "sel ɡɪv",
+							"meaning": "卖; 给",
+							"word": "sell give",
+							"type": []
+						  },
+						  {
+							"dy": "teɪk pʊʃ",
+							"meaning": "拿; 推",
+							"word": "take push",
+							"type": []
+						  },
+						  {
+							"dy": "pʊl ʌp",
+							"meaning": "拉; 向上",
+							"word": "pull up",
+							"type": []
+						  },
+						  {
+							"dy": "daʊn ɪn",
+							"meaning": "向下; 在里面",
+							"word": "down in",
+							"type": []
+						  },
+						  {
+							"dy": "aʊt ɒf",
+							"meaning": "在外面; 离开",
+							"word": "out off",
+							"type": []
+						  },
+						  {
+							"dy": "jes nəʊ",
+							"meaning": "是的; 不是",
+							"word": "yes no",
+							"type": []
+						  },
+						  {
+							"dy": "truː fɔːls",
+							"meaning": "真实的; 虚假的",
+							"word": "true false",
+							"type": []
+						  },
+						  {
+							"dy": "raɪt rɒŋ",
+							"meaning": "正确的；右边; 错误的",
+							"word": "right wrong",
+							"type": []
+						  },
+						  {
+							"dy": "əˈlaɪv ded",
+							"meaning": "活着的; 死的",
+							"word": "alive dead",
+							"type": []
+						  },
+						  {
+							"dy": "əˈsliːp əˈweɪk",
+							"meaning": "睡着的; 醒着的",
+							"word": "asleep awake",
+							"type": []
+						  },
+						  {
+							"dy": "ɔːl nʌn",
+							"meaning": "所有，全部; 没有任何，全无",
+							"word": "all none",
+							"type": []
+						  },
+						  {
+							"dy": "əˈloʊn təˈɡeðər",
+							"meaning": "独自的，单独的; 一起，共同",
+							"word": "alone together",
+							"type": []
+						  },
+						  {
+							"dy": "ˈɔːlweɪz ˈsʌmtaɪmz",
+							"meaning": "总是，始终; 有时，偶尔",
+							"word": "always sometimes",
+							"type": []
+						  },
+						  {
+							"dy": "ˈænsər ˈkwestʃən",
+							"meaning": "回答，答案; 问题，疑问",
+							"word": "answer question",
+							"type": []
+						  },
+						  {
+							"dy": "æsk ˈænsər",
+							"meaning": "问，询问; 回答，答复",
+							"word": "ask answer",
+							"type": []
+						  },
+						  {
+							"dy": "əˈbʌv bɪˈloʊ",
+							"meaning": "在...上面，高于; 在...下面，低于",
+							"word": "above below",
+							"type": []
+						  },
+						  {
+							"dy": "ˈæftər bɪˈfɔːr",
+							"meaning": "在...之后，后来; 在...之前，以前",
+							"word": "after before",
+							"type": []
+						  },
+						  {
+							"dy": "bæk frʌnt",
+							"meaning": "后面，背部; 前面，正面",
+							"word": "back front",
+							"type": []
+						  },
+						  {
+							"dy": "bæd ɡʊd",
+							"meaning": "坏的，糟糕的; 好的，优秀的",
+							"word": "bad good",
+							"type": []
+						  },
+						  {
+							"dy": "ˈbjuːtɪfl ˈʌɡli",
+							"meaning": "美丽的，漂亮的; 丑陋的，难看的",
+							"word": "beautiful ugly",
+							"type": []
+						  },
+						  {
+							"dy": "ˈbædli wel",
+							"meaning": "严重地，糟糕地; 很好地，健康地",
+							"word": "badly well",
+							"type": []
+						  },
+						  {
+							"dy": "bɪˈɡɪn end",
+							"meaning": "开始，着手; 结束，终止",
+							"word": "begin end",
+							"type": []
+						  },
+						  {
+							"dy": "best wɜːrst",
+							"meaning": "最好的，最优秀的; 最差的，最糟糕的",
+							"word": "best worst",
+							"type": []
+						  },
+						  {
+							"dy": "ˈbetər wɜːrs",
+							"meaning": "更好的，较好的; 更差的，更坏的",
+							"word": "better worse",
+							"type": []
+						  },
+						  {
+							"dy": "bɪɡ ˈlɪtl",
+							"meaning": "大的，巨大的; 小的，少量的",
+							"word": "big little",
+							"type": []
+						  },
+						  {
+							"dy": "blæk waɪt",
+							"meaning": "黑色的，黑暗的; 白色的，白的",
+							"word": "black white",
+							"type": []
+						  },
+						  {
+							"dy": "ˈbɒroʊ rɪˈtɜːrn",
+							"meaning": "借入，借用; 归还，返回",
+							"word": "borrow return",
+							"type": []
+						  },
+						  {
+							"dy": "boʊθ ˈnaɪðər",
+							"meaning": "两者都，双方都; 两者都不，既不",
+							"word": "both neither",
+							"type": []
+						  },
+						  {
+							"dy": "ˈbɪzi friː",
+							"meaning": "忙碌的，繁忙的; 空闲的，免费的",
+							"word": "busy free",
+							"type": []
+						  },
+						  {
+							"dy": "baɪ sel",
+							"meaning": "购买，买; 出售，卖",
+							"word": "buy sell",
+							"type": []
+						  },
+						  {
+							"dy": "bɔɪ ɡɜːrl",
+							"meaning": "男孩，少年; 女孩，姑娘",
+							"word": "boy girl",
+							"type": []
+						  },
+						  {
+							"dy": "tʃiːp ɪkˈspensɪv",
+							"meaning": "便宜的，廉价的; 昂贵的，花钱多的",
+							"word": "cheap expensive",
+							"type": []
+						  },
+						  {
+							"dy": "ˈbrʌðər ˈsɪstər",
+							"meaning": "兄弟，兄或弟; 姐妹，姐或妹",
+							"word": "brother sister",
+							"type": []
+						  },
+						  {
+							"dy": "kliːn ˈdɜːrti",
+							"meaning": "干净的，清洁的; 肮脏的，污秽的",
+							"word": "clean dirty",
+							"type": []
+						  },
+						  {
+							"dy": "ˈklaʊdi ˈsʌni",
+							"meaning": "多云的，阴天的; 阳光充足的，晴朗的",
+							"word": "cloudy sunny",
+							"type": []
+						  },
+						  {
+							"dy": "ˈklevər ˈfuːlɪʃ",
+							"meaning": "聪明的，机灵的; 愚蠢的，傻的",
+							"word": "clever foolish",
+							"type": []
+						  },
+						  {
+							"dy": "koʊld hɒt",
+							"meaning": "冷的，寒冷的; 热的，烫的",
+							"word": "cold hot",
+							"type": []
+						  },
+						  {
+							"dy": "kʌm ɡoʊ",
+							"meaning": "来，来到; 去，离开",
+							"word": "come go",
+							"type": []
+						  },
+						  {
+							"dy": "kraɪ læf",
+							"meaning": "哭，哭泣; 笑，发笑",
+							"word": "cry laugh",
+							"type": []
+						  },
+						  {
+							"dy": "ˈdeɪndʒər ˈseɪfti",
+							"meaning": "危险，风险; 安全，平安",
+							"word": "danger safety",
+							"type": []
+						  },
+						  {
+							"dy": "dɑːrk braɪt",
+							"meaning": "黑暗的，深色的; 明亮的，聪明的",
+							"word": "dark bright",
+							"type": []
+						  },
+						  {
+							"dy": "deɪ naɪt",
+							"meaning": "白天，日间; 夜晚，夜间",
+							"word": "day night",
+							"type": []
+						  },
+						  {
+							"dy": "ded əˈlaɪv",
+							"meaning": "死的，无生命的; 活着的，有活力的",
+							"word": "dead alive",
+							"type": []
+						  },
+						  {
+							"dy": "deθ laɪf",
+							"meaning": "死亡，逝世; 生命，生活",
+							"word": "death life",
+							"type": []
+						  },
+						  {
+							"dy": "daɪ lɪv",
+							"meaning": "死亡，死去; 活着，居住",
+							"word": "die live",
+							"type": []
+						  },
+						  {
+							"dy": "daʊn ʌp",
+							"meaning": "向下，往下; 向上，往上",
+							"word": "down up",
+							"type": []
+						  },
+						  {
+							"dy": "draɪ wet",
+							"meaning": "干的，干燥的; 湿的，潮湿的",
+							"word": "dry wet",
+							"type": []
+						  },
+						  {
+							"dy": "dæd mʌm",
+							"meaning": "爸爸，爹爹; 妈妈，母亲",
+							"word": "dad mum",
+							"type": []
+						  },
+						  {
+							"dy": "diːp ˈʃæloʊ",
+							"meaning": "深的，深刻的; 浅的，肤浅的",
+							"word": "deep shallow",
+							"type": []
+						  },
+						  {
+							"dy": "ˈɜːrli leɪt",
+							"meaning": "早的，早期的; 晚的，迟到的",
+							"word": "early late",
+							"type": []
+						  },
+						  {
+							"dy": "ˈiːzi ˈdɪfɪkəlt",
+							"meaning": "容易的，简单的; 困难的，艰难的",
+							"word": "easy difficult",
+							"type": []
+						  },
+						  {
+							"dy": "ˈempti fʊl",
+							"meaning": "空的，空洞的; 满的，充满的",
+							"word": "empty full",
+							"type": []
+						  },
+						  {
+							"dy": "ˈentrəns ˈeksɪt",
+							"meaning": "入口，进入; 出口，退出",
+							"word": "entrance exit",
+							"type": []
+						  },
+						  {
+							"dy": "iːst west",
+							"meaning": "东，东方; 西，西方",
+							"word": "east west",
+							"type": []
+						  },
+						  {
+							"dy": "fɔːl raɪz",
+							"meaning": "落下，下降; 上升，升起",
+							"word": "fall rise",
+							"type": []
+						  },
+						  {
+							"dy": "fɑːr nɪər",
+							"meaning": "远的，遥远的; 近的，接近的",
+							"word": "far near",
+							"type": []
+						  },
+						  {
+							"dy": "fæst sloʊ",
+							"meaning": "快的，迅速的; 慢的，缓慢的",
+							"word": "fast slow",
+							"type": []
+						  },
+						  {
+							"dy": "fɜːrst læst",
+							"meaning": "第一，首先; 最后，最终",
+							"word": "first last",
+							"type": []
+						  },
+						  {
+							"dy": "fərˈɡet rɪˈmembər",
+							"meaning": "忘记，遗忘; 记得，记住",
+							"word": "forget remember",
+							"type": []
+						  },
+						  {
+							"dy": "friːz melt",
+							"meaning": "冻结，结冰; 融化，熔化",
+							"word": "freeze melt",
+							"type": []
+						  },
+						  {
+							"dy": "frəm tuː",
+							"meaning": "从，来自; 到，向",
+							"word": "from to",
+							"type": []
+						  },
+						  {
+							"dy": "ɡlæd sæd",
+							"meaning": "高兴的，愉快的; 悲伤的，难过的",
+							"word": "glad sad",
+							"type": []
+						  },
+						  {
+							"dy": "ˈfɑːðər ˈmʌðər",
+							"meaning": "父亲，爸爸; 母亲，妈妈",
+							"word": "father mother",
+							"type": []
+						  },
+						  {
+							"dy": "ɡʊd ɪl",
+							"meaning": "好的，良好的; 生病的，坏的",
+							"word": "good ill",
+							"type": []
+						  },
+						  {
+							"dy": "ɡreɪt smɔːl",
+							"meaning": "伟大的，很大的; 小的，少的",
+							"word": "great small",
+							"type": []
+						  },
+						  {
+							"dy": "ˈhæpi ʌnˈhæpi",
+							"meaning": "快乐的，幸福的; 不快乐的，不幸的",
+							"word": "happy unhappy",
+							"type": []
+						  },
+						  {
+							"dy": "hɑːrd ˈiːzi",
+							"meaning": "困难的，坚硬的; 容易的，轻松的",
+							"word": "hard easy",
+							"type": []
+						  },
+						  {
+							"dy": "hɑːrd sɒft",
+							"meaning": "硬的，坚硬的; 软的，柔软的",
+							"word": "hard soft",
+							"type": []
+						  },
+						  {
+							"dy": "heɪt lʌv",
+							"meaning": "憎恨，讨厌; 爱，热爱",
+							"word": "hate love",
+							"type": []
+						  },
+						  {
+							"dy": "hɪər ðeər",
+							"meaning": "这里，在这里; 那里，在那里",
+							"word": "here there",
+							"type": []
+						  },
+						  {
+							"dy": "haɪ loʊ",
+							"meaning": "高的，高度的; 低的，矮的",
+							"word": "high low",
+							"type": []
+						  },
+						  {
+							"dy": "hoʊld drɒp",
+							"meaning": "握住，持有; 掉落，下降",
+							"word": "hold drop",
+							"type": []
+						  },
+						  {
+							"dy": "ˈhɒlədeɪ ˈwiːkdeɪ",
+							"meaning": "假日，假期; 工作日，平日",
+							"word": "holiday weekday",
+							"type": []
+						  },
+						  {
+							"dy": "ɪl ˈhelθi",
+							"meaning": "生病的，不舒服的; 健康的，有益健康的",
+							"word": "ill healthy",
+							"type": []
+						  },
+						  {
+							"dy": "ˈhʌŋɡri fʊl",
+							"meaning": "饥饿的，渴望的; 饱的，充满的",
+							"word": "hungry full",
+							"type": []
+						  },
+						  {
+							"dy": "ˌɪnˈsaɪd ˌaʊtˈsaɪd",
+							"meaning": "里面，内部; 外面，外部",
+							"word": "inside outside",
+							"type": []
+						  },
+						  {
+							"dy": "ˈɪntuː ˈaʊt əv",
+							"meaning": "进入，到...里面; 从...出来，离开",
+							"word": "into out of",
+							"type": []
+						  },
+						  {
+							"dy": "ɪn aʊt",
+							"meaning": "在...里面，进入; 在外面，出去",
+							"word": "in out",
+							"type": []
+						  },
+						  {
+							"dy": "ˈdʒɔɪfl ˈdʒɔɪləs",
+							"meaning": "快乐的，高兴的; 不快乐的，沉闷的",
+							"word": "joyful joyless",
+							"type": []
+						  },
+						  {
+							"dy": "kɪl seɪv",
+							"meaning": "杀死，杀害; 拯救，挽救",
+							"word": "kill save",
+							"type": []
+						  },
+						  {
+							"dy": "liːv əˈraɪv",
+							"meaning": "离开，出发; 到达，抵达",
+							"word": "leave arrive",
+							"type": []
+						  },
+						  {
+							"dy": "liːv steɪ",
+							"meaning": "离开，离去; 停留，留下",
+							"word": "leave stay",
+							"type": []
+						  },
+						  {
+							"dy": "left raɪt",
+							"meaning": "左边，左侧; 右边，右侧",
+							"word": "left right",
+							"type": []
+						  },
+						  {
+							"dy": "laɪt dɑːrk",
+							"meaning": "光，光线; 黑暗，暗处",
+							"word": "light dark",
+							"type": []
+						  },
+						  {
+							"dy": "laɪt ˈhevi",
+							"meaning": "轻的，轻便的; 重的，沉重的",
+							"word": "light heavy",
+							"type": []
+						  },
+						  {
+							"dy": "laɪk heɪt",
+							"meaning": "喜欢，喜爱; 憎恨，讨厌",
+							"word": "like hate",
+							"type": []
+						  },
+						  {
+							"dy": "laɪk ʌnˈlaɪk",
+							"meaning": "像，相似; 不像，与...不同",
+							"word": "like unlike",
+							"type": []
+						  },
+						  {
+							"dy": "luːz faɪnd",
+							"meaning": "失去，丢失; 找到，发现",
+							"word": "lose find",
+							"type": []
+						  },
+						  {
+							"dy": "luːz wɪn",
+							"meaning": "输，失败; 赢，获胜",
+							"word": "lose win",
+							"type": []
+						  },
+						  {
+							"dy": "leɪt ˈɜːrli",
+							"meaning": "晚的，迟到的; 早的，早期的",
+							"word": "late early",
+							"type": []
+						  },
+						  {
+							"dy": "ˈmeni fjuː",
+							"meaning": "许多，很多; 很少，不多",
+							"word": "many few",
+							"type": []
+						  },
+						  {
+							"dy": "mɪs kætʃ",
+							"meaning": "错过，未击中; 抓住，接住",
+							"word": "miss catch",
+							"type": []
+						  },
+						  {
+							"dy": "mɔːr les",
+							"meaning": "更多，更加; 更少，较少",
+							"word": "more less",
+							"type": []
+						  },
+						  {
+							"dy": "moʊst liːst",
+							"meaning": "最多，大多数; 最少，最小",
+							"word": "most least",
+							"type": []
+						  },
+						  {
+							"dy": "muːv stɒp",
+							"meaning": "移动，搬动; 停止，阻止",
+							"word": "move stop",
+							"type": []
+						  },
+						  {
+							"dy": "mʌtʃ ˈlɪtl",
+							"meaning": "许多，大量; 少的，小的",
+							"word": "much little",
+							"type": []
+						  },
+						  {
+							"dy": "niːt ˈmesi",
+							"meaning": "整洁的，干净的; 凌乱的，肮脏的",
+							"word": "neat messy",
+							"type": []
+						  },
+						  {
+							"dy": "mæn ˈwʊmən",
+							"meaning": "男人，人; 女人，女性",
+							"word": "man woman",
+							"type": []
+						  },
+						  {
+							"dy": "ˈnevər ˈevər",
+							"meaning": "从不，绝不; 曾经，永远",
+							"word": "never ever",
+							"type": []
+						  },
+						  {
+							"dy": "nekst læst",
+							"meaning": "下一个，接下来的; 最后的，上一个",
+							"word": "next last",
+							"type": []
+						  },
+						  {
+							"dy": "ˈnʌθɪŋ ˈevriθɪŋ",
+							"meaning": "没有什么，无事; 一切事物，所有事物",
+							"word": "nothing everything",
+							"type": []
+						  },
+						  {
+							"dy": "naʊ ðen",
+							"meaning": "现在，目前; 那时，然后",
+							"word": "now then",
+							"type": []
+						  },
+						  {
+							"dy": "oʊld njuː",
+							"meaning": "老的，旧的; 新的，新鲜的",
+							"word": "old new",
+							"type": []
+						  },
+						  {
+							"dy": "oʊld jʌŋ",
+							"meaning": "年老的，老的; 年轻的，幼小的",
+							"word": "old young",
+							"type": []
+						  },
+						  {
+							"dy": "ɒn ɒf",
+							"meaning": "在...上，开着; 离开，关闭",
+							"word": "on off",
+							"type": []
+						  },
+						  {
+							"dy": "ˈoʊpən kloʊz",
+							"meaning": "打开，开放的; 关闭，亲密的",
+							"word": "open close",
+							"type": []
+						  },
+						  {
+							"dy": "ˈoʊvər ˈʌndər",
+							"meaning": "在...上面，超过; 在...下面，低于",
+							"word": "over under",
+							"type": []
+						  },
+						  {
+							"dy": "peɪn ˈpleʒər",
+							"meaning": "疼痛，痛苦; 愉快，乐趣",
+							"word": "pain pleasure",
+							"type": []
+						  },
+						  {
+							"dy": "pæs feɪl",
+							"meaning": "通过，及格; 失败，不及格",
+							"word": "pass fail",
+							"type": []
+						  },
+						  {
+							"dy": "pɔːr rɪtʃ",
+							"meaning": "贫穷的，可怜的; 富有的，丰富的",
+							"word": "poor rich",
+							"type": []
+						  },
+						  {
+							"dy": "pʊl pʊʃ",
+							"meaning": "拉，拖; 推，推动",
+							"word": "pull push",
+							"type": []
+						  },
+						  {
+							"dy": "ˈpʌnɪʃ rɪˈwɔːrd",
+							"meaning": "惩罚，处罚; 奖励，报酬",
+							"word": "punish reward",
+							"type": []
+						  },
+						  {
+							"dy": "plʌs ˈmaɪnəs",
+							"meaning": "加，正号; 减，负号",
+							"word": "plus minus",
+							"type": []
+						  },
+						  {
+							"dy": "ˈkwaɪət ˈnɔɪzi",
+							"meaning": "安静的，平静的; 嘈杂的，喧闹的",
+							"word": "quiet noisy",
+							"type": []
+						  },
+						  {
+							"dy": "ˈreɪni draɪ",
+							"meaning": "多雨的，下雨的; 干燥的，干的",
+							"word": "rainy dry",
+							"type": []
+						  },
+						  {
+							"dy": "raɪt rɒŋ",
+							"meaning": "正确的，对的; 错误的，不对的",
+							"word": "right wrong",
+							"type": []
+						  },
+						  {
+							"dy": "ˈruːstər hen",
+							"meaning": "公鸡，雄鸡; 母鸡，雌禽",
+							"word": "rooster hen",
+							"type": []
+						  },
+						  {
+							"dy": "seɪf ˈdeɪndʒərəs",
+							"meaning": "安全的，保险的; 危险的，不安全的",
+							"word": "safe dangerous",
+							"type": []
+						  },
+						  {
+							"dy": "seɪm ˈdɪfrənt",
+							"meaning": "相同的，同样的; 不同的，有差异的",
+							"word": "same different",
+							"type": []
+						  },
+						  {
+							"dy": "ʃɔːrt lɒŋ",
+							"meaning": "短的，矮的; 长的，长久的",
+							"word": "short long",
+							"type": []
+						  },
+						  {
+							"dy": "ʃɔːrt tɔːl",
+							"meaning": "矮的，短的; 高的，高大的",
+							"word": "short tall",
+							"type": []
+						  },
+						  {
+							"dy": "sliːp weɪk",
+							"meaning": "睡觉，睡眠; 醒来，唤醒",
+							"word": "sleep wake",
+							"type": []
+						  },
+						  {
+							"dy": "smuːð rʌf",
+							"meaning": "平滑的，顺利的; 粗糙的，不平的",
+							"word": "smooth rough",
+							"type": []
+						  },
+						  {
+							"dy": "smɔːl bɪɡ",
+							"meaning": "小的，少的; 大的，重要的",
+							"word": "small big",
+							"type": []
+						  },
+						  {
+							"dy": "stɑːrt riːtʃ",
+							"meaning": "开始，出发; 到达，达到",
+							"word": "start reach",
+							"type": []
+						  },
+						  {
+							"dy": "strɒŋ wiːk",
+							"meaning": "强壮的，强大的; 虚弱的，弱的",
+							"word": "strong weak",
+							"type": []
+						  },
+						  {
+							"dy": "sʌn ˈdɔːtər",
+							"meaning": "儿子，孩子; 女儿，女孩子",
+							"word": "son daughter",
+							"type": []
+						  },
+						  {
+							"dy": "sɪt stænd",
+							"meaning": "坐，就座; 站，站立",
+							"word": "sit stand",
+							"type": []
+						  },
+						  {
+							"dy": "teɪk brɪŋ",
+							"meaning": "拿，取; 带来，拿来",
+							"word": "take bring",
+							"type": []
+						  },
+						  {
+							"dy": "teɪk ɡɪv",
+							"meaning": "拿，取; 给，给予",
+							"word": "take give",
+							"type": []
+						  },
+						  {
+							"dy": "teɪk ɒn teɪk ɒf",
+							"meaning": "承担，雇用; 脱下，起飞",
+							"word": "take on take off",
+							"type": []
+						  },
+						  {
+							"dy": "tiːtʃ lɜːrn",
+							"meaning": "教，教导; 学习，学会",
+							"word": "teach learn",
+							"type": []
+						  },
+						  {
+							"dy": "θɪn fæt",
+							"meaning": "薄的，瘦的; 胖的，肥的",
+							"word": "thin fat",
+							"type": []
+						  },
+						  {
+							"dy": "θɪn θɪk",
+							"meaning": "薄的，细的; 厚的，粗的",
+							"word": "thin thick",
+							"type": []
+						  },
+						  {
+							"dy": "truː fɔːls",
+							"meaning": "真实的，真的; 假的，错误的",
+							"word": "true false",
+							"type": []
+						  },
+						  {
+							"dy": "wɔːr piːs",
+							"meaning": "战争，斗争; 和平，平静",
+							"word": "war peace",
+							"type": []
+						  },
+						  {
+							"dy": "wɔːrm kuːl",
+							"meaning": "温暖的，暖和的; 凉爽的，酷的",
+							"word": "warm cool",
+							"type": []
+						  },
+						  {
+							"dy": "hoʊl pɑːrt",
+							"meaning": "全部的，整体的; 部分，零件",
+							"word": "whole part",
+							"type": []
+						  },
+						  {
+							"dy": "wɪn luːz",
+							"meaning": "赢，获胜; 输，失败",
+							"word": "win lose",
+							"type": []
+						  },
+						  {
+							"dy": "waɪd ˈnæroʊ",
+							"meaning": "宽的，广阔的; 窄的，狭窄的",
+							"word": "wide narrow",
+							"type": []
+						  },
+						  {
+							"dy": "wɪð wɪˈðaʊt",
+							"meaning": "和...一起，带有; 没有，无",
+							"word": "with without",
+							"type": []
+						  },
+						  {
+							"dy": "jes noʊ",
+							"meaning": "是，是的; 不，没有",
+							"word": "yes no",
+							"type": []
+						  }
 					]
 				},
 				{
@@ -4428,12 +6604,12 @@
 				},
 				{
                     "id": "countrys",
-                    "name": "国家类",
+                    "name": "国家城市类",
                     "words": [
 						{
 						  "word": "China",
 						  "dy": "ˈtʃaɪnə",
-						  "meaning": "中国",
+						  "meaning": "中国；小写是 瓷器",
 						  "type": ["名"]
 						},
 						{
@@ -4585,6 +6761,114 @@
 						  "dy": "əˈfɪʃl ˈlæŋɡwɪdʒ",
 						  "meaning": "官方语言",
 						  "type": ["名"]
+						},
+						{
+						  "word": "Mexico",
+						  "dy": "/ˈmɛksɪkoʊ/",
+						  "meaning": "墨西哥",
+						  "type": [""]
+						},
+						{
+						  "word": "India",
+						  "dy": "/ˈɪndiə/",
+						  "meaning": "印度",
+						  "type": [""]
+						},
+						{
+						  "word": "Scotland",
+						  "dy": "/ˈskɒtlənd/",
+						  "meaning": "苏格兰",
+						  "type": [""]
+						},
+						{
+						  "word": "New York",
+						  "dy": "/nuː ˈjɔːrk/",
+						  "meaning": "纽约",
+						  "type": [""]
+						},
+						{
+						  "word": "London",
+						  "dy": "/ˈlʌndən/",
+						  "meaning": "伦敦",
+						  "type": [""]
+						},
+						{
+						  "word": "Sydney",
+						  "dy": "/ˈsɪdni/",
+						  "meaning": "悉尼",
+						  "type": [""]
+						},
+						{
+						  "word": "Moscow",
+						  "dy": "/ˈmɒskoʊ/",
+						  "meaning": "莫斯科",
+						  "type": [""]
+						},
+						{
+						  "word": "Cairo",
+						  "dy": "/ˈkaɪroʊ/",
+						  "meaning": "开罗",
+						  "type": [""]
+						},
+						{
+						  "word": "Washington D.C.",
+						  "dy": "/ˈwɒʃɪŋtən ˌdiːˈsiː/",
+						  "meaning": "华盛顿特区",
+						  "type": [""]
+						},
+						{
+						  "word": "San Francisco",
+						  "dy": "/ˌsæn frænˈsɪskoʊ/",
+						  "meaning": "旧金山",
+						  "type": [""]
+						},
+						{
+						  "word": "Hong Kong",
+						  "dy": "/ˌhɒŋ ˈkɒŋ/",
+						  "meaning": "香港",
+						  "type": [""]
+						},
+						{
+						  "word": "Tibet",
+						  "dy": "/tɪˈbet/",
+						  "meaning": "西藏",
+						  "type": [""]
+						},
+						{
+						  "word": "Harbin",
+						  "dy": "/ˈhɑːrbɪn/",
+						  "meaning": "哈尔滨",
+						  "type": [""]
+						},
+						{
+						  "word": "UN",
+						  "dy": "/ˌjuː ˈen/",
+						  "meaning": "联合国",
+						  "type": [""]
+						},
+						{
+						  "word": "West Lake",
+						  "dy": "/ˌwest ˈleɪk/",
+						  "meaning": "西湖",
+						  "type": [""]
+						},
+						{
+						  "word": "Mount Tai",
+						  "dy": "/ˌmaʊnt ˈtaɪ/",
+						  "meaning": "泰山",
+						  "type": [""]
+						},
+						{
+						  "word": "the Yellow River",
+						  "dy": "/ðə ˈjeloʊ ˈrɪvər/",
+						  "meaning": "黄河",
+						  "type": [""]
+						},
+						{
+						  "word": "the Great Wall",
+						  "dy": "/ðə ˌɡreɪt ˈwɔːl/",
+						  "meaning": "长城",
+						  "type": [""]
 						}
 					]
 				},
@@ -4822,61 +7106,109 @@
 								  "word": "first",
 								  "dy": "fɜːst",
 								  "meaning": "第一",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "second",
 								  "dy": "ˈsekənd",
 								  "meaning": "第二",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "third",
 								  "dy": "θɜːd",
 								  "meaning": "第三",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "fourth",
 								  "dy": "fɔːθ",
 								  "meaning": "第四",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "fifth",
 								  "dy": "fɪfθ",
 								  "meaning": "第五",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "sixth",
 								  "dy": "sɪksθ",
 								  "meaning": "第六",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "seventh",
 								  "dy": "ˈsevnθ",
 								  "meaning": "第七",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "eighth",
 								  "dy": "eɪtθ",
 								  "meaning": "第八",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "ninth",
 								  "dy": "naɪnθ",
 								  "meaning": "第九",
-								  "type": ["形"]
+								  "type": ["形","名"]
 								},
 								{
 								  "word": "tenth",
 								  "dy": "tenθ",
 								  "meaning": "第十",
-								  "type": ["形"]
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "eleventh",
+								  "dy": "ɪˈlɛvənθ",
+								  "meaning": "第十一",
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "twelfth",
+								  "dy": "twelfθ",
+								  "meaning": "第十二",
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "thirteenth",
+								  "dy": "θəˈtinθ",
+								  "meaning": "第十三",
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "fourteenth",
+								  "dy": "fɔrˈtinθ",
+								  "meaning": "第十四",
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "fifteenth",
+								  "dy": "fɪfˈtinθ",
+								  "meaning": "第十五",
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "twentieth",
+								  "dy": "ˈtwentiəθ",
+								  "meaning": "第二十",
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "thirtieth",
+								  "dy": "ˈθɜːrtiəθ",
+								  "meaning": "第三十",
+								  "type": ["形","名"]
+								},
+								{
+								  "word": "fortieth",
+								  "dy": "ˈfɔrtiɪθ",
+								  "meaning": "第四十",
+								  "type": ["形","名"]
 								}
 							]
 						},
@@ -5201,6 +7533,48 @@
 								  "dy": "ˈpəʊni",
 								  "meaning": "小马",
 								  "type": ["名"]
+								},
+								{
+								  "word": "turkey",
+								  "dy": "/ˈtɜːki/",
+								  "meaning": "火鸡",
+								  "type": ["名"]
+								},
+								{
+								  "word": "donkey",
+								  "dy": "/ˈdɒŋki/",
+								  "meaning": "驴",
+								  "type": ["名"]
+								},
+								{
+								  "word": "lobster",
+								  "dy": "/ˈlɒbstə/",
+								  "meaning": "龙虾",
+								  "type": ["名"]
+								},
+							   {
+								  "word": "kitten",
+								  "dy": "/ˈkɪtn/",
+								  "meaning": "小猫",
+								  "type": ["名"]
+								},
+								{
+								  "word": "duckling",
+								  "dy": "/ˈdʌklɪŋ/",
+								  "meaning": "小鸭子",
+								  "type": ["名"]
+								},
+								{
+								  "word": "puppy",
+								  "dy": "/ˈpʌpi/",
+								  "meaning": "小狗",
+								  "type": ["名"]
+								},
+								{
+								  "word": "swan",
+								  "dy": "/swɒn/",
+								  "meaning": "天鹅",
+								  "type": ["名"]
 								}
                             ]
                         },
@@ -5211,7 +7585,7 @@
                                 {
 								  "word": "mouse",
 								  "dy": "maʊs",
-								  "meaning": "老鼠",
+								  "meaning": "老鼠;鼠标",
 								  "type": ["名"]
 								},
                                 {
@@ -5387,6 +7761,67 @@
 								  "dy": "bɜːrd",
 								  "meaning": "鸟",
 								  "type": ["名"]
+								},
+								{
+								  "word": "owl",
+								  "dy": "/aʊl/",
+								  "meaning": "猫头鹰",
+								  "type": ["名"]
+								},
+								{
+								  "word": "parrot",
+								  "dy": "/ˈpærət/",
+								  "meaning": "鹦鹉",
+								  "type": ["名"]
+								},
+								{
+								  "word": "kangaroo",
+								  "dy": "/ˌkæŋɡəˈruː/",
+								  "meaning": "袋鼠",
+								  "type": ["名"]
+								},
+								{
+								  "word": "zebra",
+								  "dy": "/ˈzebrə/",
+								  "meaning": "斑马",
+								  "type": ["名"]
+								},
+								{
+								  "word": "seal",
+								  "dy": "/siːl/",
+								  "meaning": "海豹",
+								  "type": ["名"]
+								},
+								{
+								  "word": "squirrel",
+								  "dy": "/ˈskwɪrəl/",
+								  "meaning": "松鼠",
+								  "type": ["名"]
+								},
+
+								{
+								  "word": "gorilla",
+								  "dy": "/ɡəˈrɪlə/",
+								  "meaning": "大猩猩",
+								  "type": ["名"]
+								},
+								{
+								  "word": "insect",
+								  "dy": "/ˈɪnsekt/",
+								  "meaning": "昆虫",
+								  "type": ["名"]
+								},
+								{
+								  "word": "hare",
+								  "dy": "/heər/",
+								  "meaning": "野兔",
+								  "type": ["名"]
+								},
+								{
+								  "word": "dinosaur",
+								  "dy": "/ˈdaɪnəsɔː/",
+								  "meaning": "恐龙",
+								  "type": ["名"]
 								}
                             ]
                         }
@@ -5478,6 +7913,36 @@
 						  "word": "gold",
 						  "dy": "ɡəʊld",
 						  "meaning": "金色;金色的",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "silver",
+						  "dy": "/ˈsɪlvər/",
+						  "meaning": "银色",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "violet",
+						  "dy": "/ˈvaɪələt/",
+						  "meaning": "紫罗兰色",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "beige",
+						  "dy": "/beɪʒ/",
+						  "meaning": "米色，浅褐色",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "maroon",
+						  "dy": "/məˈruːn/",
+						  "meaning": "栗色，褐红色",
+						  "type": ["名","形"]
+						},
+						{
+						  "word": "Navy Blue",
+						  "dy": "/ˈneɪvi bluː/",
+						  "meaning": "海军蓝，深蓝色",
 						  "type": ["名","形"]
 						}
                     ]
@@ -5591,6 +8056,102 @@
 									"type": ["名"],
 									"meaning": "晚上;夜晚(指晚上十点后)",
 									"dy":"naɪt"
+								},
+								{
+								  "word": "time",
+								  "dy": "/taɪm/",
+								  "meaning": "时间",
+								  "type": ["名"]
+								},
+								{
+								  "word": "day off",
+								  "dy": "/deɪ ɒf/",
+								  "meaning": "休息日",
+								  "type": [""]
+								},
+								{
+								  "word": "night time",
+								  "dy": "/naɪt taɪm/",
+								  "meaning": "夜间",
+								  "type": [""]
+								},
+								{
+								  "word": "daily",
+								  "dy": "/ˈdeɪli/",
+								  "meaning": "每日的",
+								  "type": ["形","副"]
+								},
+								{
+								  "word": "calendar",
+								  "dy": "/ˈkælɪndər/",
+								  "meaning": "日历",
+								  "type": ["名"]
+								},
+								{
+								  "word": "leap year",
+								  "dy": "/liːp jɪər/",
+								  "meaning": "闰年",
+								  "type": [""]
+								},
+								{
+								  "word": "date",
+								  "dy": "/deɪt/",
+								  "meaning": "日期",
+								  "type": ["名"]
+								},
+								{
+								  "word": "holiday",
+								  "dy": "/ˈhɒlədeɪ/",
+								  "meaning": "假日",
+								  "type": ["名"]
+								},
+								{
+								  "word": "weekday",
+								  "dy": "/ˈwiːkdeɪ/",
+								  "meaning": "工作日",
+								  "type": ["名"]
+								},
+								{
+								  "word": "tonight",
+								  "dy": "/təˈnaɪt/",
+								  "meaning": "今晚",
+								  "type": ["名","副"]
+								},
+								{
+								  "word": "clock",
+								  "dy": "/klɒk/",
+								  "meaning": "时钟",
+								  "type": ["名"]
+								},
+								{
+								  "word": "sometimes",
+								  "dy": "/ˈsʌmtaɪmz/",
+								  "meaning": "有时候;“偶尔发生”，频率副词。",
+								  "type": ["副"]
+								},
+								{
+								  "word": "sometime",
+								  "dy": "/ˈsʌmtaɪm/",
+								  "meaning": "某个时候;指“将来或过去的某个不确定时间”",
+								  "type": ["副"]
+								},
+								{
+								  "word": "some times",
+								  "dy": "/ˈsʌm taɪmz/",
+								  "meaning": "几次;指“几次、若干次”（较少用，通常用 a few times 代替）",
+								  "type": ["副"]
+								},
+								{
+								  "word": "sometime",
+								  "dy": "/ˈsʌm taɪm/",
+								  "meaning": "一段时间;指“较长的一段时间”。",
+								  "type": ["副"]
+								},
+								{
+								  "word": "someday",
+								  "dy": "/ˈsʌmdeɪ/",
+								  "meaning": "有一天",
+								  "type": ["副"]
 								}
 							]
 						},
@@ -6308,39 +8869,2751 @@
 					]
 				},
 				{
-                    "id": "abs",
-                    "name": "缩略词",
+                    "id": "jbs",
+                    "name": "疾病类",
 					"words":[
+						{
+						  "word": "have a fever",
+						  "dy": "/hæv ə ˈfiːvər/",
+						  "meaning": "发烧",
+						  "type": [""]
+						},
+						{
+						  "word": "hurt",
+						  "dy": "/hɜːrt/",
+						  "meaning": "疼痛",
+						  "type": ["动"]
+						},
+						{
+						  "word": "have a cold",
+						  "dy": "/hæv ə koʊld/",
+						  "meaning": "感冒",
+						  "type": [""]
+						},
+						{
+						  "word": "have a toothache",
+						  "dy": "/hæv ə ˈtuːθeɪk/",
+						  "meaning": "牙痛",
+						  "type": [""]
+						},
+						{
+						  "word": "have a headache",
+						  "dy": "/hæv ə ˈhedeɪk/",
+						  "meaning": "头痛",
+						  "type": [""]
+						},
+						{
+						  "word": "have a sore throat",
+						  "dy": "/hæv ə sɔːr θroʊt/",
+						  "meaning": "喉咙痛",
+						  "type": [""]
+						},
+						{
+						  "word": "have a stomachache",
+						  "dy": "/hæv ə ˈstʌməkeɪk/",
+						  "meaning": "胃痛",
+						  "type": [""]
+						},
+						{
+						  "word": "have a cough",
+						  "dy": "/hæv ə kɔːf/",
+						  "meaning": "咳嗽",
+						  "type": [""]
+						}
 					]
 				},
 				{
-                    "id": "abs",
-                    "name": "缩略词",
+                    "id": "abjs",
+                    "name": "形容词",
 					"words":[
+						{
+						  "word": "big",
+						  "dy": "/bɪɡ/",
+						  "meaning": "大的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "small",
+						  "dy": "/smɔːl/",
+						  "meaning": "小的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "long",
+						  "dy": "/lɒŋ/",
+						  "meaning": "长的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "short",
+						  "dy": "/ʃɔːt/",
+						  "meaning": "短的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "tall",
+						  "dy": "/tɔːl/",
+						  "meaning": "高的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "thin",
+						  "dy": "/θɪn/",
+						  "meaning": "瘦的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "fat",
+						  "dy": "/fæt/",
+						  "meaning": "胖的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "light",
+						  "dy": "/laɪt/",
+						  "meaning": "轻的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "old",
+						  "dy": "/əʊld/",
+						  "meaning": "老的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "little",
+						  "dy": "/ˈlɪtl/",
+						  "meaning": "小的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "young",
+						  "dy": "/jʌŋ/",
+						  "meaning": "年轻的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "hungry",
+						  "dy": "/ˈhʌŋɡri/",
+						  "meaning": "饥饿的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "thirsty",
+						  "dy": "/ˈθɜːsti/",
+						  "meaning": "口渴的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "tired",
+						  "dy": "/ˈtaɪəd/",
+						  "meaning": "疲倦的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "sad",
+						  "dy": "/sæd/",
+						  "meaning": "悲伤的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "shy",
+						  "dy": "/ʃaɪ/",
+						  "meaning": "害羞的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "exciting",
+						  "dy": "/ɪkˈsaɪtɪŋ/",
+						  "meaning": "令人兴奋的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "happy",
+						  "dy": "/ˈhæpi/",
+						  "meaning": "快乐的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "angry",
+						  "dy": "/ˈæŋɡri/",
+						  "meaning": "生气的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "bored",
+						  "dy": "/bɔːd/",
+						  "meaning": "无聊的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "excited",
+						  "dy": "/ɪkˈsaɪtɪd/",
+						  "meaning": "兴奋的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "nervous",
+						  "dy": "/ˈnɜːvəs/",
+						  "meaning": "紧张的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "normal",
+						  "dy": "/ˈnɔːməl/",
+						  "meaning": "正常的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "favorite",
+						  "dy": "/ˈfeɪvərɪt/",
+						  "meaning": "最喜欢的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "dear",
+						  "dy": "/dɪər/",
+						  "meaning": "亲爱的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "new",
+						  "dy": "/njuː/",
+						  "meaning": "新的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "lost",
+						  "dy": "/lɒst/",
+						  "meaning": "丢失的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "quiet",
+						  "dy": "/ˈkwaɪət/",
+						  "meaning": "安静的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "right",
+						  "dy": "/raɪt/",
+						  "meaning": "正确的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "dark",
+						  "dy": "/dɑːk/",
+						  "meaning": "黑暗的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "nice",
+						  "dy": "/naɪs/",
+						  "meaning": "好的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "well",
+						  "dy": "/wel/",
+						  "meaning": "好的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "cute",
+						  "dy": "/kjuːt/",
+						  "meaning": "可爱的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "clever",
+						  "dy": "/ˈklevər/",
+						  "meaning": "聪明的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "naughty",
+						  "dy": "/ˈnɔːti/",
+						  "meaning": "淘气的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "cheap",
+						  "dy": "/tʃiːp/",
+						  "meaning": "便宜的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "expensive",
+						  "dy": "/ɪkˈspensɪv/",
+						  "meaning": "昂贵的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "soft",
+						  "dy": "/sɒft/",
+						  "meaning": "柔软的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "beautiful",
+						  "dy": "/ˈbjuːtɪfl/",
+						  "meaning": "美丽的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "difficult",
+						  "dy": "/ˈdɪfɪkəlt/",
+						  "meaning": "困难的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "better",
+						  "dy": "/ˈbetər/",
+						  "meaning": "更好的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "worse",
+						  "dy": "/wɜːs/",
+						  "meaning": "更差的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "boiling",
+						  "dy": "/ˈbɔɪlɪŋ/",
+						  "meaning": "沸腾的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "famous",
+						  "dy": "/ˈfeɪməs/",
+						  "meaning": "著名的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "bright",
+						  "dy": "/braɪt/",
+						  "meaning": "明亮的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "scary",
+						  "dy": "/ˈskeəri/",
+						  "meaning": "可怕的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "fast",
+						  "dy": "/fɑːst/",
+						  "meaning": "快的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "great",
+						  "dy": "/ɡreɪt/",
+						  "meaning": "伟大的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "heavy",
+						  "dy": "/ˈhevi/",
+						  "meaning": "重的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "high",
+						  "dy": "/haɪ/",
+						  "meaning": "高的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "wide",
+						  "dy": "/waɪd/",
+						  "meaning": "宽的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "lovely",
+						  "dy": "/ˈlʌvli/",
+						  "meaning": "可爱的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "welcome",
+						  "dy": "/ˈwelkəm/",
+						  "meaning": "受欢迎的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "busy",
+						  "dy": "/ˈbɪzi/",
+						  "meaning": "忙碌的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "really",
+						  "dy": "/ˈrɪəli/",
+						  "meaning": "真的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "lucky",
+						  "dy": "/ˈlʌki/",
+						  "meaning": "幸运的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "enough",
+						  "dy": "/ɪˈnʌf/",
+						  "meaning": "足够的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "fantastic",
+						  "dy": "/fænˈtæstɪk/",
+						  "meaning": "极好的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "tidy",
+						  "dy": "/ˈtaɪdi/",
+						  "meaning": "整洁的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "useful",
+						  "dy": "/ˈjuːsfl/",
+						  "meaning": "有用的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "blind",
+						  "dy": "/blaɪnd/",
+						  "meaning": "盲的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "thick",
+						  "dy": "/θɪk/",
+						  "meaning": "厚的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "dangerous",
+						  "dy": "/ˈdeɪndʒərəs/",
+						  "meaning": "危险的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "interesting",
+						  "dy": "/ˈɪntrəstɪŋ/",
+						  "meaning": "有趣的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "talented",
+						  "dy": "/ˈtæləntɪd/",
+						  "meaning": "有才华的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "traditional",
+						  "dy": "/trəˈdɪʃənl/",
+						  "meaning": "传统的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "deaf",
+						  "dy": "/def/",
+						  "meaning": "聋的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "special",
+						  "dy": "/ˈspeʃl/",
+						  "meaning": "特别的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "proud",
+						  "dy": "/praʊd/",
+						  "meaning": "自豪的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "wrong",
+						  "dy": "/rɒŋ/",
+						  "meaning": "错误的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "noisy",
+						  "dy": "/ˈnɔɪzi/",
+						  "meaning": "吵闹的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "important",
+						  "dy": "/ɪmˈpɔːtnt/",
+						  "meaning": "重要的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "weak",
+						  "dy": "/wiːk/",
+						  "meaning": "虚弱的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "dirty",
+						  "dy": "/ˈdɜːti/",
+						  "meaning": "脏的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "safe",
+						  "dy": "/seɪf/",
+						  "meaning": "安全的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "free",
+						  "dy": "/friː/",
+						  "meaning": "免费的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "active",
+						  "dy": "/ˈæktɪv/",
+						  "meaning": "活跃的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "rich",
+						  "dy": "/rɪtʃ/",
+						  "meaning": "富有的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "stupid",
+						  "dy": "/ˈstjuːpɪd/",
+						  "meaning": "愚蠢的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "juicy",
+						  "dy": "/ˈdʒuːsi/",
+						  "meaning": "多汁的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "same",
+						  "dy": "/seɪm/",
+						  "meaning": "相同的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "healthy",
+						  "dy": "/ˈhelθi/",
+						  "meaning": "健康的",
+						  "type": ["形"]
+						},
+						{
+						  "word": "different",
+						  "dy": "/ˈdɪfrənt/",
+						  "meaning": "不同的",
+						  "type": ["形"]
+						}
 					]
 				},
 				{
-                    "id": "abs",
-                    "name": "缩略词",
+                    "id": "pres",
+                    "name": "介词",
 					"words":[
+						{
+						  "word": "in",
+						  "dy": "/ɪn/",
+						  "meaning": "在...里面",
+						  "type": ["介"]
+						},
+						{
+						  "word": "on",
+						  "dy": "/ɒn/",
+						  "meaning": "在...上面",
+						  "type": ["介"]
+						},
+						{
+						  "word": "under",
+						  "dy": "/ˈʌndər/",
+						  "meaning": "在...下面",
+						  "type": ["介"]
+						},
+						{
+						  "word": "near",
+						  "dy": "/nɪər/",
+						  "meaning": "在...附近",
+						  "type": ["介"]
+						},
+						{
+						  "word": "behind",
+						  "dy": "/bɪˈhaɪnd/",
+						  "meaning": "在...后面",
+						  "type": ["介"]
+						},
+						{
+						  "word": "next to",
+						  "dy": "/ˈnekst tuː/",
+						  "meaning": "紧挨着",
+						  "type": ["介"]
+						},
+						{
+						  "word": "over",
+						  "dy": "/ˈəʊvər/",
+						  "meaning": "在...上方",
+						  "type": ["介"]
+						},
+						{
+						  "word": "in front of",
+						  "dy": "/ɪn ˈfrʌnt əv/",
+						  "meaning": "在...前面",
+						  "type": ["介"]
+						},
+						{
+						  "word": "beside",
+						  "dy": "/bɪˈsaɪd/",
+						  "meaning": "在...旁边",
+						  "type": ["介"]
+						},
+						{
+						  "word": "by",
+						  "dy": "/baɪ/",
+						  "meaning": "通过；靠近",
+						  "type": ["介"]
+						},
+						{
+						  "word": "with",
+						  "dy": "/wɪð/",
+						  "meaning": "和...一起",
+						  "type": ["介"]
+						},
+						{
+						  "word": "to",
+						  "dy": "/tuː/",
+						  "meaning": "向；到",
+						  "type": ["介"]
+						},
+						{
+						  "word": "at",
+						  "dy": "/æt/",
+						  "meaning": "在（某处）",
+						  "type": ["介"]
+						},
+						{
+						  "word": "along",
+						  "dy": "/əˈlɒŋ/",
+						  "meaning": "沿着",
+						  "type": ["介"]
+						},
+						{
+						  "word": "before",
+						  "dy": "/bɪˈfɔːr/",
+						  "meaning": "在...之前",
+						  "type": ["介"]
+						},
+						{
+						  "word": "after",
+						  "dy": "/ˈɑːftər/",
+						  "meaning": "在...之后",
+						  "type": ["介"]
+						},
+						{
+						  "word": "during",
+						  "dy": "/ˈdjʊərɪŋ/",
+						  "meaning": "在...期间",
+						  "type": ["介"]
+						},
+						{
+						  "word": "until",
+						  "dy": "/ənˈtɪl/",
+						  "meaning": "直到",
+						  "type": ["介"]
+						},
+						{
+						  "word": "through",
+						  "dy": "/θruː/",
+						  "meaning": "穿过",
+						  "type": ["介"]
+						},
+						{
+						  "word": "across",
+						  "dy": "/əˈkrɒs/",
+						  "meaning": "横过",
+						  "type": ["介"]
+						},
+						{
+						  "word": "below",
+						  "dy": "/bɪˈləʊ/",
+						  "meaning": "在...下面",
+						  "type": ["介"]
+						},
+						{
+						  "word": "inside",
+						  "dy": "/ˌɪnˈsaɪd/",
+						  "meaning": "在...里面",
+						  "type": ["介"]
+						},
+						{
+						  "word": "for",
+						  "dy": "/fɔːr/",
+						  "meaning": "为了；给",
+						  "type": ["介"]
+						}
 					]
 				},
 				{
-                    "id": "abs",
-                    "name": "缩略词",
-					"words":[
+                    "id": "fcs",
+                    "name": "副词",
+					"subcategories":[
+						{
+							"id": "ywfcs",
+							"name": "疑问副词",
+							"words":[
+								{
+								  "word": "how",
+								  "dy": "/haʊ/",
+								  "meaning": "如何，怎样",
+								  "type": ["副"]
+								},
+								{
+								  "word": "when",
+								  "dy": "/wen/",
+								  "meaning": "什么时候",
+								  "type": ["副"]
+								},
+								{
+								  "word": "where",
+								  "dy": "/wer/",
+								  "meaning": "在哪里",
+								  "type": ["副"]
+								},
+								{
+								  "word": "why",
+								  "dy": "/waɪ/",
+								  "meaning": "为什么",
+								  "type": ["副"]
+								}
+							]
+						},
+						{
+							"id": "pdfcs",
+							"name": "频度副词",
+							"words":[
+								{
+								  "word": "always",
+								  "dy": "/ˈɔːlweɪz/",
+								  "meaning": "总是",
+								  "type": ["副"]
+								},
+								{
+								  "word": "usually",
+								  "dy": "/ˈjuːʒuəli/",
+								  "meaning": "通常",
+								  "type": ["副"]
+								},
+								{
+								  "word": "often",
+								  "dy": "/ˈɔːfn/",
+								  "meaning": "经常",
+								  "type": ["副"]
+								},
+								{
+								  "word": "sometimes",
+								  "dy": "/ˈsʌmtaɪmz/",
+								  "meaning": "有时",
+								  "type": ["副"]
+								},
+								{
+								  "word": "seldom",
+								  "dy": "/ˈseldəm/",
+								  "meaning": "很少",
+								  "type": ["副"]
+								},
+								{
+								  "word": "never",
+								  "dy": "/ˈnevər/",
+								  "meaning": "从不",
+								  "type": ["副"]
+								}
+							]
+						},
+						{
+							"id": "cqfcs",
+							"name": "程度副词",
+							"words":[
+								{
+								  "word": "very",
+								  "dy": "/ˈveri/",
+								  "meaning": "非常",
+								  "type": ["副"]
+								},
+								{
+								  "word": "much",
+								  "dy": "/mʌtʃ/",
+								  "meaning": "很多",
+								  "type": ["副"]
+								},
+								{
+								  "word": "enough",
+								  "dy": "/ɪˈnʌf/",
+								  "meaning": "足够地",
+								  "type": ["副"]
+								},
+								{
+								  "word": "almost",
+								  "dy": "/ˈɔːlmoʊst/",
+								  "meaning": "几乎",
+								  "type": ["副"]
+								},
+								{
+								  "word": "hardly",
+								  "dy": "/ˈhɑːrdli/",
+								  "meaning": "几乎不",
+								  "type": ["副"]
+								},
+								{
+								  "word": "rather",
+								  "dy": "/ˈræðər/",
+								  "meaning": "相当",
+								  "type": ["副"]
+								},
+								{
+								  "word": "quite",
+								  "dy": "/kwaɪt/",
+								  "meaning": "相当，完全",
+								  "type": ["副"]
+								}
+							]
+						},
+						{
+							"id": "sjfcs",
+							"name": "时间副词",
+							"words":[
+								{
+								  "word": "now",
+								  "dy": "/naʊ/",
+								  "meaning": "现在",
+								  "type": ["副"]
+								},
+								{
+								  "word": "then",
+								  "dy": "/ðen/",
+								  "meaning": "然后",
+								  "type": ["副"]
+								},
+								{
+								  "word": "yesterday",
+								  "dy": "/ˈjestərdeɪ/",
+								  "meaning": "昨天",
+								  "type": ["副"]
+								},
+								{
+								  "word": "today",
+								  "dy": "/təˈdeɪ/",
+								  "meaning": "今天",
+								  "type": ["副"]
+								},
+								{
+								  "word": "tomorrow",
+								  "dy": "/təˈmɒroʊ/",
+								  "meaning": "明天",
+								  "type": ["副"]
+								},
+								{
+								  "word": "tonight",
+								  "dy": "/təˈnaɪt/",
+								  "meaning": "今晚",
+								  "type": ["副"]
+								},
+								{
+								  "word": "already",
+								  "dy": "/ɔːlˈredi/",
+								  "meaning": "已经",
+								  "type": ["副"]
+								},
+								{
+								  "word": "later",
+								  "dy": "/ˈleɪtər/",
+								  "meaning": "稍后",
+								  "type": ["副"]
+								},
+								{
+								  "word": "soon",
+								  "dy": "/suːn/",
+								  "meaning": "很快",
+								  "type": ["副"]
+								}
+							]
+						},
+						{
+							"id": "ddfcs",
+							"name": "地点副词",
+							"words":[
+								{
+								  "word": "here",
+								  "dy": "/hɪər/",
+								  "meaning": "这里",
+								  "type": ["副"]
+								},
+								{
+								  "word": "there",
+								  "dy": "/ðer/",
+								  "meaning": "那里",
+								  "type": ["副"]
+								},
+								{
+								  "word": "home",
+								  "dy": "/hoʊm/",
+								  "meaning": "在家，回家",
+								  "type": ["副"]
+								},
+								{
+								  "word": "out",
+								  "dy": "/aʊt/",
+								  "meaning": "在外面",
+								  "type": ["副"]
+								},
+								{
+								  "word": "anywhere",
+								  "dy": "/ˈeniwer/",
+								  "meaning": "任何地方",
+								  "type": ["副"]
+								},
+								{
+								  "word": "everywhere",
+								  "dy": "/ˈevriwer/",
+								  "meaning": "到处",
+								  "type": ["副"]
+								}
+							]
+						},
+						{
+							"id": "fsfcs",
+							"name": "方式副词",
+							"words":[
+								{
+								  "word": "well",
+								  "dy": "/wel/",
+								  "meaning": "好地",
+								  "type": ["副"]
+								},
+								{
+								  "word": "fast",
+								  "dy": "/fæst/",
+								  "meaning": "快地",
+								  "type": ["副"]
+								},
+								{
+								  "word": "slowly",
+								  "dy": "/ˈsloʊli/",
+								  "meaning": "慢慢地",
+								  "type": ["副"]
+								},
+								{
+								  "word": "carefully",
+								  "dy": "/ˈkerfəli/",
+								  "meaning": "小心地",
+								  "type": ["副"]
+								},
+								{
+								  "word": "angrily",
+								  "dy": "/ˈæŋɡrɪli/",
+								  "meaning": "生气地",
+								  "type": ["副"]
+								},
+								{
+								  "word": "happily",
+								  "dy": "/ˈhæpɪli/",
+								  "meaning": "快乐地",
+								  "type": ["副"]
+								},
+								{
+								  "word": "suddenly",
+								  "dy": "/ˈsʌdənli/",
+								  "meaning": "突然地",
+								  "type": ["副"]
+								}
+							]
+						}
 					]
 				},
 				{
-                    "id": "abs",
-                    "name": "缩略词",
+                    "id": "dongcis",
+                    "name": "动词",
 					"words":[
+						{
+						  "word": "play",
+						  "dy": "/pleɪ/",
+						  "meaning": "玩耍",
+						  "type": ["动"]
+						},
+						{
+						  "word": "sing",
+						  "dy": "/sɪŋ/",
+						  "meaning": "唱歌",
+						  "type": ["动"]
+						},
+						{
+						  "word": "read",
+						  "dy": "/riːd/",
+						  "meaning": "阅读",
+						  "type": ["动"]
+						},
+						{
+						  "word": "write",
+						  "dy": "/raɪt/",
+						  "meaning": "写作",
+						  "type": ["动"]
+						},
+						{
+						  "word": "listen",
+						  "dy": "/ˈlɪsən/",
+						  "meaning": "听",
+						  "type": ["动"]
+						},
+						{
+						  "word": "talk",
+						  "dy": "/tɔːk/",
+						  "meaning": "说话",
+						  "type": ["动"]
+						},
+						{
+						  "word": "draw",
+						  "dy": "/drɔː/",
+						  "meaning": "画画",
+						  "type": ["动"]
+						},
+						{
+						  "word": "drink",
+						  "dy": "/drɪŋk/",
+						  "meaning": "喝",
+						  "type": ["动"]
+						},
+						{
+						  "word": "jump",
+						  "dy": "/dʒʌmp/",
+						  "meaning": "跳",
+						  "type": ["动"]
+						},
+						{
+						  "word": "ride",
+						  "dy": "/raɪd/",
+						  "meaning": "骑",
+						  "type": ["动"]
+						},
+						{
+						  "word": "row",
+						  "dy": "/roʊ/",
+						  "meaning": "划船",
+						  "type": ["动"]
+						},
+						{
+						  "word": "run",
+						  "dy": "/rʌn/",
+						  "meaning": "跑",
+						  "type": ["动"]
+						},
+						{
+						  "word": "swim",
+						  "dy": "/swɪm/",
+						  "meaning": "游泳",
+						  "type": ["动"]
+						},
+						{
+						  "word": "train",
+						  "dy": "/treɪn/",
+						  "meaning": "训练",
+						  "type": ["动"]
+						},
+						{
+						  "word": "wash",
+						  "dy": "/wɒʃ/",
+						  "meaning": "洗",
+						  "type": ["动"]
+						},
+						{
+						  "word": "hold",
+						  "dy": "/hoʊld/",
+						  "meaning": "拿，握",
+						  "type": ["动"]
+						},
+						{
+						  "word": "wear",
+						  "dy": "/wer/",
+						  "meaning": "穿",
+						  "type": ["动"]
+						},
+						{
+						  "word": "dance",
+						  "dy": "/dæns/",
+						  "meaning": "跳舞",
+						  "type": ["动"]
+						},
+						{
+						  "word": "walk",
+						  "dy": "/wɔːk/",
+						  "meaning": "走",
+						  "type": ["动"]
+						},
+						{
+						  "word": "eat",
+						  "dy": "/iːt/",
+						  "meaning": "吃",
+						  "type": ["动"]
+						},
+						{
+						  "word": "click",
+						  "dy": "/klɪk/",
+						  "meaning": "点击",
+						  "type": ["动"]
+						},
+						{
+						  "word": "type",
+						  "dy": "/taɪp/",
+						  "meaning": "打字",
+						  "type": ["动"]
+						},
+						{
+						  "word": "clean",
+						  "dy": "/kliːn/",
+						  "meaning": "打扫",
+						  "type": ["动"]
+						},
+						{
+						  "word": "catch",
+						  "dy": "/kætʃ/",
+						  "meaning": "抓住",
+						  "type": ["动"]
+						},
+						{
+						  "word": "collect",
+						  "dy": "/kəˈlekt/",
+						  "meaning": "收集",
+						  "type": ["动"]
+						},
+						{
+						  "word": "born",
+						  "dy": "/bɔːrn/",
+						  "meaning": "出生",
+						  "type": ["动"]
+						},
+						{
+						  "word": "help",
+						  "dy": "/help/",
+						  "meaning": "帮助",
+						  "type": ["动"]
+						},
+						{
+						  "word": "pass",
+						  "dy": "/pæs/",
+						  "meaning": "通过",
+						  "type": ["动"]
+						},
+						{
+						  "word": "take",
+						  "dy": "/teɪk/",
+						  "meaning": "拿，取",
+						  "type": ["动"]
+						},
+						{
+						  "word": "let",
+						  "dy": "/let/",
+						  "meaning": "让",
+						  "type": ["动"]
+						},
+						{
+						  "word": "turn",
+						  "dy": "/tɜːrn/",
+						  "meaning": "转动",
+						  "type": ["动"]
+						},
+						{
+						  "word": "live",
+						  "dy": "/lɪv/",
+						  "meaning": "居住，生活",
+						  "type": ["动"]
+						},
+						{
+						  "word": "guess",
+						  "dy": "/ɡes/",
+						  "meaning": "猜测",
+						  "type": ["动"]
+						},
+						{
+						  "word": "please",
+						  "dy": "/pliːz/",
+						  "meaning": "请",
+						  "type": ["动"]
+						},
+						{
+						  "word": "buy",
+						  "dy": "/baɪ/",
+						  "meaning": "买",
+						  "type": ["动"]
+						},
+						{
+						  "word": "come",
+						  "dy": "/kʌm/",
+						  "meaning": "来",
+						  "type": ["动"]
+						},
+						{
+						  "word": "find",
+						  "dy": "/faɪnd/",
+						  "meaning": "找到",
+						  "type": ["动"]
+						},
+						{
+						  "word": "make",
+						  "dy": "/meɪk/",
+						  "meaning": "制作",
+						  "type": ["动"]
+						},
+						{
+						  "word": "put",
+						  "dy": "/pʊt/",
+						  "meaning": "放",
+						  "type": ["动"]
+						},
+						{
+						  "word": "repair",
+						  "dy": "/rɪˈper/",
+						  "meaning": "修理",
+						  "type": ["动"]
+						},
+						{
+						  "word": "try",
+						  "dy": "/traɪ/",
+						  "meaning": "尝试",
+						  "type": ["动"]
+						},
+						{
+						  "word": "visit",
+						  "dy": "/ˈvɪzɪt/",
+						  "meaning": "参观",
+						  "type": ["动"]
+						},
+						{
+						  "word": "wait",
+						  "dy": "/weɪt/",
+						  "meaning": "等待",
+						  "type": ["动"]
+						},
+						{
+						  "word": "send",
+						  "dy": "/send/",
+						  "meaning": "发送",
+						  "type": ["动"]
+						},
+						{
+						  "word": "welcome",
+						  "dy": "/ˈwelkəm/",
+						  "meaning": "欢迎",
+						  "type": ["动"]
+						},
+						{
+						  "word": "call",
+						  "dy": "/kɔːl/",
+						  "meaning": "打电话",
+						  "type": ["动"]
+						},
+						{
+						  "word": "speak",
+						  "dy": "/spiːk/",
+						  "meaning": "说话",
+						  "type": ["动"]
+						},
+						{
+						  "word": "go",
+						  "dy": "/ɡoʊ/",
+						  "meaning": "去",
+						  "type": ["动"]
+						},
+						{
+						  "word": "finish",
+						  "dy": "/ˈfɪnɪʃ/",
+						  "meaning": "完成",
+						  "type": ["动"]
+						},
+						{
+						  "word": "begin",
+						  "dy": "/bɪˈɡɪn/",
+						  "meaning": "开始",
+						  "type": ["动"]
+						},
+						{
+						  "word": "change",
+						  "dy": "/tʃeɪndʒ/",
+						  "meaning": "改变",
+						  "type": ["动"]
+						},
+						{
+						  "word": "fall",
+						  "dy": "/fɔːl/",
+						  "meaning": "落下",
+						  "type": ["动"]
+						},
+						{
+						  "word": "practice",
+						  "dy": "/ˈpræktɪs/",
+						  "meaning": "练习",
+						  "type": ["动"]
+						},
+						{
+						  "word": "point",
+						  "dy": "/pɔɪnt/",
+						  "meaning": "指向",
+						  "type": ["动"]
+						},
+						{
+						  "word": "look",
+						  "dy": "/lʊk/",
+						  "meaning": "看",
+						  "type": ["动"]
+						},
+						{
+						  "word": "like",
+						  "dy": "/laɪk/",
+						  "meaning": "喜欢",
+						  "type": ["动"]
+						},
+						{
+						  "word": "watch",
+						  "dy": "/wɒtʃ/",
+						  "meaning": "观看",
+						  "type": ["动"]
+						},
+						{
+						  "word": "see",
+						  "dy": "/siː/",
+						  "meaning": "看见",
+						  "type": ["动"]
+						},
+						{
+						  "word": "count",
+						  "dy": "/kaʊnt/",
+						  "meaning": "数数",
+						  "type": ["动"]
+						},
+						{
+						  "word": "want",
+						  "dy": "/wɒnt/",
+						  "meaning": "想要",
+						  "type": ["动"]
+						},
+						{
+						  "word": "love",
+						  "dy": "/lʌv/",
+						  "meaning": "爱",
+						  "type": ["动"]
+						},
+						{
+						  "word": "think",
+						  "dy": "/θɪŋk/",
+						  "meaning": "思考",
+						  "type": ["动"]
+						},
+						{
+						  "word": "agree",
+						  "dy": "/əˈɡriː/",
+						  "meaning": "同意",
+						  "type": ["动"]
+						},
+						{
+						  "word": "start",
+						  "dy": "/stɑːrt/",
+						  "meaning": "开始",
+						  "type": ["动"]
+						},
+						{
+						  "word": "meet",
+						  "dy": "/miːt/",
+						  "meaning": "遇见",
+						  "type": ["动"]
+						},
+						{
+						  "word": "hear",
+						  "dy": "/hɪər/",
+						  "meaning": "听见",
+						  "type": ["动"]
+						},
+						{
+						  "word": "feel",
+						  "dy": "/fiːl/",
+						  "meaning": "感觉",
+						  "type": ["动"]
+						},
+						{
+						  "word": "phone",
+						  "dy": "/foʊn/",
+						  "meaning": "打电话",
+						  "type": ["动"]
+						},
+						{
+						  "word": "prepare",
+						  "dy": "/prɪˈper/",
+						  "meaning": "准备",
+						  "type": ["动"]
+						},
+						{
+						  "word": "leave",
+						  "dy": "/liːv/",
+						  "meaning": "离开",
+						  "type": ["动"]
+						},
+						{
+						  "word": "believe",
+						  "dy": "/bɪˈliːv/",
+						  "meaning": "相信",
+						  "type": ["动"]
+						},
+						{
+						  "word": "clap",
+						  "dy": "/klæp/",
+						  "meaning": "鼓掌",
+						  "type": ["动"]
+						},
+						{
+						  "word": "miss",
+						  "dy": "/mɪs/",
+						  "meaning": "想念，错过",
+						  "type": ["动"]
+						},
+						{
+						  "word": "show",
+						  "dy": "/ʃoʊ/",
+						  "meaning": "展示",
+						  "type": ["动"]
+						},
+						{
+						  "word": "stamp",
+						  "dy": "/stæmp/",
+						  "meaning": "跺脚，盖章",
+						  "type": ["动"]
+						},
+						{
+						  "word": "enjoy",
+						  "dy": "/ɪnˈdʒɔɪ/",
+						  "meaning": "享受",
+						  "type": ["动"]
+						},
+						{
+						  "word": "shine",
+						  "dy": "/ʃaɪn/",
+						  "meaning": "发光",
+						  "type": ["动"]
+						},
+						{
+						  "word": "ring",
+						  "dy": "/rɪŋ/",
+						  "meaning": "响铃",
+						  "type": ["动"]
+						},
+						{
+						  "word": "stand",
+						  "dy": "/stænd/",
+						  "meaning": "站立",
+						  "type": ["动"]
+						},
+						{
+						  "word": "know",
+						  "dy": "/noʊ/",
+						  "meaning": "知道",
+						  "type": ["动"]
+						},
+						{
+						  "word": "happen",
+						  "dy": "/ˈhæpən/",
+						  "meaning": "发生",
+						  "type": ["动"]
+						},
+						{
+						  "word": "carry",
+						  "dy": "/ˈkæri/",
+						  "meaning": "携带",
+						  "type": ["动"]
+						},
+						{
+						  "word": "bump",
+						  "dy": "/bʌmp/",
+						  "meaning": "碰撞",
+						  "type": ["动"]
+						},
+						{
+						  "word": "invent",
+						  "dy": "/ɪnˈvent/",
+						  "meaning": "发明",
+						  "type": ["动"]
+						},
+						{
+						  "word": "shop",
+						  "dy": "/ʃɒp/",
+						  "meaning": "购物",
+						  "type": ["动"]
+						},
+						{
+						  "word": "cost",
+						  "dy": "/kɒst/",
+						  "meaning": "花费",
+						  "type": ["动"]
+						},
+						{
+						  "word": "pay",
+						  "dy": "/peɪ/",
+						  "meaning": "支付",
+						  "type": ["动"]
+						},
+						{
+						  "word": "fly",
+						  "dy": "/flaɪ/",
+						  "meaning": "飞",
+						  "type": ["动"]
+						},
+						{
+						  "word": "argue",
+						  "dy": "/ˈɑːrɡjuː/",
+						  "meaning": "争论",
+						  "type": ["动"]
+						},
+						{
+						  "word": "control",
+						  "dy": "/kənˈtroʊl/",
+						  "meaning": "控制",
+						  "type": ["动"]
+						},
+						{
+						  "word": "tell",
+						  "dy": "/tel/",
+						  "meaning": "告诉",
+						  "type": ["动"]
+						},
+						{
+						  "word": "smell",
+						  "dy": "/smel/",
+						  "meaning": "闻",
+						  "type": ["动"]
+						},
+						{
+						  "word": "cross",
+						  "dy": "/krɒs/",
+						  "meaning": "穿过",
+						  "type": ["动"]
+						},
+						{
+						  "word": "cook",
+						  "dy": "/kʊk/",
+						  "meaning": "烹饪",
+						  "type": ["动"]
+						},
+						{
+						  "word": "travel",
+						  "dy": "/ˈtrævl/",
+						  "meaning": "旅行",
+						  "type": ["动"]
+						},
+						{
+						  "word": "return",
+						  "dy": "/rɪˈtɜːrn/",
+						  "meaning": "返回",
+						  "type": ["动"]
+						},
+						{
+						  "word": "prefer",
+						  "dy": "/prɪˈfɜːr/",
+						  "meaning": "更喜欢",
+						  "type": ["动"]
+						},
+						{
+						  "word": "solve",
+						  "dy": "/sɒlv/",
+						  "meaning": "解决",
+						  "type": ["动"]
+						},
+						{
+						  "word": "suggest",
+						  "dy": "/səˈdʒest/",
+						  "meaning": "建议",
+						  "type": ["动"]
+						},
+						{
+						  "word": "disagree",
+						  "dy": "/ˌdɪsəˈɡriː/",
+						  "meaning": "不同意",
+						  "type": ["动"]
+						},
+						{
+						  "word": "sound",
+						  "dy": "/saʊnd/",
+						  "meaning": "听起来",
+						  "type": ["动"]
+						},
+						{
+						  "word": "become",
+						  "dy": "/bɪˈkʌm/",
+						  "meaning": "成为",
+						  "type": ["动"]
+						},
+						{
+						  "word": "spend",
+						  "dy": "/spend/",
+						  "meaning": "花费",
+						  "type": ["动"]
+						},
+						{
+						  "word": "laugh",
+						  "dy": "/læf/",
+						  "meaning": "笑",
+						  "type": ["动"]
+						},
+						{
+						  "word": "understand",
+						  "dy": "/ˌʌndərˈstænd/",
+						  "meaning": "理解",
+						  "type": ["动"]
+						},
+						{
+						  "word": "study",
+						  "dy": "/ˈstʌdi/",
+						  "meaning": "学习",
+						  "type": ["动"]
+						},
+						{
+						  "word": "worry",
+						  "dy": "/ˈwɜːri/",
+						  "meaning": "担心",
+						  "type": ["动"]
+						},
+						{
+						  "word": "sleep",
+						  "dy": "/sliːp/",
+						  "meaning": "睡觉",
+						  "type": ["动"]
+						},
+						{
+						  "word": "fold",
+						  "dy": "/foʊld/",
+						  "meaning": "折叠",
+						  "type": ["动"]
+						},
+						{
+						  "word": "stay",
+						  "dy": "/steɪ/",
+						  "meaning": "停留",
+						  "type": ["动"]
+						},
+						{
+						  "word": "relax",
+						  "dy": "/rɪˈlæks/",
+						  "meaning": "放松",
+						  "type": ["动"]
+						},
+						{
+						  "word": "hurt",
+						  "dy": "/hɜːrt/",
+						  "meaning": "伤害",
+						  "type": ["动"]
+						},
+						{
+						  "word": "fail",
+						  "dy": "/feɪl/",
+						  "meaning": "失败",
+						  "type": ["动"]
+						},
+						{
+						  "word": "stop",
+						  "dy": "/stɒp/",
+						  "meaning": "停止",
+						  "type": ["动"]
+						},
+						{
+						  "word": "remember",
+						  "dy": "/rɪˈmembər/",
+						  "meaning": "记住",
+						  "type": ["动"]
+						},
+						{
+						  "word": "get",
+						  "dy": "/ɡet/",
+						  "meaning": "得到",
+						  "type": ["动"]
+						},
+						{
+						  "word": "design",
+						  "dy": "/dɪˈzaɪn/",
+						  "meaning": "设计",
+						  "type": ["动"]
+						},
+						{
+						  "word": "swing",
+						  "dy": "/swɪŋ/",
+						  "meaning": "摇摆",
+						  "type": ["动"]
+						},
+						{
+						  "word": "skate",
+						  "dy": "/skeɪt/",
+						  "meaning": "滑冰",
+						  "type": ["动"]
+						},
+						{
+						  "word": "water",
+						  "dy": "/ˈwɔːtər/",
+						  "meaning": "浇水",
+						  "type": ["动"]
+						},
+						{
+						  "word": "work",
+						  "dy": "/wɜːrk/",
+						  "meaning": "工作",
+						  "type": ["动"]
+						},
+						{
+						  "word": "use",
+						  "dy": "/juːz/",
+						  "meaning": "使用",
+						  "type": ["动"]
+						},
+						{
+						  "word": "rain",
+						  "dy": "/reɪn/",
+						  "meaning": "下雨",
+						  "type": ["动"]
+						},
+						{
+						  "word": "taste",
+						  "dy": "/teɪst/",
+						  "meaning": "品尝",
+						  "type": ["动"]
+						},
+						{
+						  "word": "feed",
+						  "dy": "/fiːd/",
+						  "meaning": "喂养",
+						  "type": ["动"]
+						},
+						{
+						  "word": "open",
+						  "dy": "/ˈoʊpən/",
+						  "meaning": "打开",
+						  "type": ["动"]
+						},
+						{
+						  "word": "set",
+						  "dy": "/set/",
+						  "meaning": "设置",
+						  "type": ["动"]
+						},
+						{
+						  "word": "fight",
+						  "dy": "/faɪt/",
+						  "meaning": "打架",
+						  "type": ["动"]
+						},
+						{
+						  "word": "plant",
+						  "dy": "/plænt/",
+						  "meaning": "种植",
+						  "type": ["动"]
+						},
+						{
+						  "word": "dive",
+						  "dy": "/daɪv/",
+						  "meaning": "潜水",
+						  "type": ["动"]
+						},
+						{
+						  "word": "drive",
+						  "dy": "/draɪv/",
+						  "meaning": "驾驶",
+						  "type": ["动"]
+						},
+						{
+						  "word": "need",
+						  "dy": "/niːd/",
+						  "meaning": "需要",
+						  "type": ["动"]
+						},
+						{
+						  "word": "hike",
+						  "dy": "/haɪk/",
+						  "meaning": "徒步旅行",
+						  "type": ["动"]
+						},
+						{
+						  "word": "thank",
+						  "dy": "/θæŋk/",
+						  "meaning": "感谢",
+						  "type": ["动"]
+						}
 					]
 				},
 				{
-                    "id": "abs",
-                    "name": "缩略词",
+                    "id": "tongyis",
+                    "name": "同义词",
 					"words":[
+						{
+						  "word": "also - too",
+						  "dy": "/ˈɔːlsoʊ - tuː/",
+						  "meaning": "也，还",
+						  "type":[]
+						},
+						{
+						  "word": "a lot of - lots of",
+						  "dy": "/ə lɒt əv - lɒts əv/",
+						  "meaning": "许多，大量",
+						  "type":[]
+						},
+						{
+						  "word": "author - writer",
+						  "dy": "/ˈɔːθər - ˈraɪtər/",
+						  "meaning": "作者，作家",
+						  "type":[]
+						},
+						{
+						  "word": "alone - lonely",
+						  "dy": "/əˈloʊn - ˈloʊnli/",
+						  "meaning": "独自的 - 孤独的",
+						  "type":[]
+						},
+						{
+						  "word": "almost - nearly",
+						  "dy": "/ˈɔːlmoʊst - ˈnɪrli/",
+						  "meaning": "几乎，差不多",
+						  "type":[]
+						},
+						{
+						  "word": "again - once more",
+						  "dy": "/əˈɡen - wʌns mɔːr/",
+						  "meaning": "再次，又一次",
+						  "type":[]
+						},
+						{
+						  "word": "afraid - terrified",
+						  "dy": "/əˈfreɪd - ˈterɪfaɪd/",
+						  "meaning": "害怕的 -  terrified",
+						  "type":[]
+						},
+						{
+						  "word": "always - all the time",
+						  "dy": "/ˈɔːlweɪz - ɔːl ðə taɪm/",
+						  "meaning": "总是，一直",
+						  "type":[]
+						},
+						{
+						  "word": "arrive - reach",
+						  "dy": "/əˈraɪv - riːtʃ/",
+						  "meaning": "到达",
+						  "type":[]
+						},
+						{
+						  "word": "bike - bicycle",
+						  "dy": "/baɪk - ˈbaɪsɪkl/",
+						  "meaning": "自行车",
+						  "type":[]
+						},
+						{
+						  "word": "by bus - take a bus",
+						  "dy": "/baɪ bʌs - teɪk ə bʌs/",
+						  "meaning": "乘公交车",
+						  "type":[]
+						},
+						{
+						  "word": "be from - come from",
+						  "dy": "/biː frɒm - kʌm frɒm/",
+						  "meaning": "来自",
+						  "type":[]
+						},
+						{
+						  "word": "be good at - do well in",
+						  "dy": "/biː ɡʊd æt - duː wel ɪn/",
+						  "meaning": "擅长",
+						  "type":[]
+						},
+						{
+						  "word": "big - large",
+						  "dy": "/bɪɡ - lɑːrdʒ/",
+						  "meaning": "大的",
+						  "type":[]
+						},
+						{
+						  "word": "begin - start",
+						  "dy": "/bɪˈɡɪn - stɑːrt/",
+						  "meaning": "开始",
+						  "type":[]
+						},
+						{
+						  "word": "bear - stand",
+						  "dy": "/ber - stænd/",
+						  "meaning": "忍受",
+						  "type":[]
+						},
+						{
+						  "word": "build - set up",
+						  "dy": "/bɪld - set ʌp/",
+						  "meaning": "建立，建造",
+						  "type":[]
+						},
+						{
+						  "word": "beat - knock",
+						  "dy": "/biːt - nɒk/",
+						  "meaning": "敲打",
+						  "type":[]
+						},
+						{
+						  "word": "cup - glass",
+						  "dy": "/kʌp - ɡlæs/",
+						  "meaning": "杯子",
+						  "type":[]
+						},
+						{
+						  "word": "class - lesson",
+						  "dy": "/klæs - ˈlesn/",
+						  "meaning": "课程",
+						  "type":[]
+						},
+						{
+						  "word": "center - middle",
+						  "dy": "/ˈsentər - ˈmɪdl/",
+						  "meaning": "中心，中间",
+						  "type":[]
+						},
+						{
+						  "word": "can - may",
+						  "dy": "/kæn - meɪ/",
+						  "meaning": "可以",
+						  "type":[]
+						},
+						{
+						  "word": "chance - opportunity",
+						  "dy": "/tʃæns - ˌɑːpərˈtuːnəti/",
+						  "meaning": "机会",
+						  "type":[]
+						},
+						{
+						  "word": "create - invent",
+						  "dy": "/kriˈeɪt - ɪnˈvent/",
+						  "meaning": "创造，发明",
+						  "type":[]
+						},
+						{
+						  "word": "crazy - mad",
+						  "dy": "/ˈkreɪzi - mæd/",
+						  "meaning": "疯狂的",
+						  "type":[]
+						},
+						{
+						  "word": "cause - reason",
+						  "dy": "/kɔːz - ˈriːzn/",
+						  "meaning": "原因",
+						  "type":[]
+						},
+						{
+						  "word": "chief - major",
+						  "dy": "/tʃiːf - ˈmeɪdʒər/",
+						  "meaning": "主要的",
+						  "type":[]
+						},
+						{
+						  "word": "concern - care",
+						  "dy": "/kənˈsɜːrn - ker/",
+						  "meaning": "关心，担忧",
+						  "type":[]
+						},
+						{
+						  "word": "check - examine",
+						  "dy": "/tʃek - ɪɡˈzæmɪn/",
+						  "meaning": "检查",
+						  "type":[]
+						},
+						{
+						  "word": "dad - father",
+						  "dy": "/dæd - ˈfɑːðər/",
+						  "meaning": "爸爸，父亲",
+						  "type":[]
+						},
+						{
+						  "word": "desk - table",
+						  "dy": "/desk - ˈteɪbl/",
+						  "meaning": "桌子",
+						  "type":[]
+						},
+						{
+						  "word": "dear - expensive",
+						  "dy": "/dɪr - ɪkˈspensɪv/",
+						  "meaning": "昂贵的",
+						  "type":[]
+						},
+						{
+						  "word": "daily - everyday",
+						  "dy": "/ˈdeɪli - ˈevrideɪ/",
+						  "meaning": "每日的，日常的",
+						  "type":[]
+						},
+						{
+						  "word": "danger - peril",
+						  "dy": "/ˈdeɪndʒər - ˈperəl/",
+						  "meaning": "危险",
+						  "type":[]
+						},
+						{
+						  "word": "dull - boring",
+						  "dy": "/dʌl - ˈbɔːrɪŋ/",
+						  "meaning": "无聊的，乏味的",
+						  "type":[]
+						},
+						{
+						  "word": "during - in",
+						  "dy": "/ˈdjʊrɪŋ - ɪn/",
+						  "meaning": "在...期间",
+						  "type":[]
+						},
+						{
+						  "word": "draw - paint",
+						  "dy": "/drɔː - peɪnt/",
+						  "meaning": "绘画",
+						  "type":[]
+						},
+						{
+						  "word": "deadly - fateful",
+						  "dy": "/ˈdedli - ˈfeɪtfl/",
+						  "meaning": "致命的，决定性的",
+						  "type":[]
+						},
+						{
+						  "word": "discover - find",
+						  "dy": "/dɪˈskʌvər - faɪnd/",
+						  "meaning": "发现",
+						  "type":[]
+						},
+						{
+						  "word": "everyone - everybody",
+						  "dy": "/ˈevriwʌn - ˈevribɒdi/",
+						  "meaning": "每个人",
+						  "type":[]
+						},
+						{
+						  "word": "each - every",
+						  "dy": "/iːtʃ - ˈevri/",
+						  "meaning": "每个",
+						  "type":[]
+						},
+						{
+						  "word": "exam - test",
+						  "dy": "/ɪɡˈzæm - test/",
+						  "meaning": "考试",
+						  "type":[]
+						},
+						{
+						  "word": "example - instance",
+						  "dy": "/ɪɡˈzæmpl - ˈɪnstəns/",
+						  "meaning": "例子",
+						  "type":[]
+						},
+						{
+						  "word": "end - finish",
+						  "dy": "/end - ˈfɪnɪʃ/",
+						  "meaning": "结束",
+						  "type":[]
+						},
+						{
+						  "word": "easy - simple",
+						  "dy": "/ˈiːzi - ˈsɪmpl/",
+						  "meaning": "简单的",
+						  "type":[]
+						},
+						{
+						  "word": "except - but",
+						  "dy": "/ɪkˈsept - bʌt/",
+						  "meaning": "除了",
+						  "type":[]
+						},
+						{
+						  "word": "eat - feed",
+						  "dy": "/iːt - fiːd/",
+						  "meaning": "吃 - 喂养",
+						  "type":[]
+						},
+						{
+						  "word": "entire - whole",
+						  "dy": "/ɪnˈtaɪər - hoʊl/",
+						  "meaning": "全部的，整个的",
+						  "type":[]
+						},
+						{
+						  "word": "fast - quick",
+						  "dy": "/fæst - kwɪk/",
+						  "meaning": "快的",
+						  "type":[]
+						},
+						{
+						  "word": "find - look for",
+						  "dy": "/faɪnd - lʊk fɔːr/",
+						  "meaning": "寻找",
+						  "type":[]
+						},
+						{
+						  "word": "film - movie",
+						  "dy": "/fɪlm - ˈmuːvi/",
+						  "meaning": "电影",
+						  "type":[]
+						},
+						{
+						  "word": "funny - interesting",
+						  "dy": "/ˈfʌni - ˈɪntrəstɪŋ/",
+						  "meaning": "有趣的",
+						  "type":[]
+						},
+						{
+						  "word": "final - last",
+						  "dy": "/ˈfaɪnl - læst/",
+						  "meaning": "最后的",
+						  "type":[]
+						},
+						{
+						  "word": "finally - at last",
+						  "dy": "/ˈfaɪnəli - æt læst/",
+						  "meaning": "最后，终于",
+						  "type":[]
+						},
+						{
+						  "word": "go home - come home",
+						  "dy": "/ɡoʊ hoʊm - kʌm hoʊm/",
+						  "meaning": "回家",
+						  "type":[]
+						},
+						{
+						  "word": "great - terrific",
+						  "dy": "/ɡreɪt - təˈrɪfɪk/",
+						  "meaning": "极好的",
+						  "type":[]
+						},
+						{
+						  "word": "gift - present",
+						  "dy": "/ɡɪft - ˈpreznt/",
+						  "meaning": "礼物",
+						  "type":[]
+						},
+						{
+						  "word": "glad - happy",
+						  "dy": "/ɡlæd - ˈhæpi/",
+						  "meaning": "高兴的",
+						  "type":[]
+						},
+						{
+						  "word": "go to sleep - fall asleep",
+						  "dy": "/ɡoʊ tuː sliːp - fɔːl əˈsliːp/",
+						  "meaning": "入睡",
+						  "type":[]
+						},
+						{
+						  "word": "get down - drop off",
+						  "dy": "/ɡet daʊn - drɒp ɒf/",
+						  "meaning": "下车，放下",
+						  "type":[]
+						},
+						{
+						  "word": "grasp - master",
+						  "dy": "/ɡræsp - ˈmæstər/",
+						  "meaning": "掌握",
+						  "type":[]
+						},
+						{
+						  "word": "grow - plant",
+						  "dy": "/ɡroʊ - plænt/",
+						  "meaning": "种植",
+						  "type":[]
+						},
+						{
+						  "word": "home - house",
+						  "dy": "/hoʊm - haʊs/",
+						  "meaning": "家 - 房子",
+						  "type":[]
+						},
+						{
+						  "word": "hate - dislike",
+						  "dy": "/heɪt - dɪsˈlaɪk/",
+						  "meaning": "讨厌，不喜欢",
+						  "type":[]
+						},
+						{
+						  "word": "hi - hello",
+						  "dy": "/haɪ - həˈloʊ/",
+						  "meaning": "你好",
+						  "type":[]
+						},
+						{
+						  "word": "hear - listen",
+						  "dy": "/hɪr - ˈlɪsn/",
+						  "meaning": "听",
+						  "type":[]
+						},
+						{
+						  "word": "holiday - vacation",
+						  "dy": "/ˈhɒlədeɪ - veɪˈkeɪʃn/",
+						  "meaning": "假期",
+						  "type":[]
+						},
+						{
+						  "word": "happen - take place",
+						  "dy": "/ˈhæpən - teɪk pleɪs/",
+						  "meaning": "发生",
+						  "type":[]
+						},
+						{
+						  "word": "high - tall",
+						  "dy": "/haɪ - tɔːl/",
+						  "meaning": "高的",
+						  "type":[]
+						},
+						{
+						  "word": "hard - difficult",
+						  "dy": "/hɑːrd - ˈdɪfɪkəlt/",
+						  "meaning": "困难的",
+						  "type":[]
+						},
+						{
+						  "word": "hobby - interest",
+						  "dy": "/ˈhɒbi - ˈɪntrəst/",
+						  "meaning": "爱好，兴趣",
+						  "type":[]
+						},
+						{
+						  "word": "hold - have",
+						  "dy": "/hoʊld - hæv/",
+						  "meaning": "持有，拥有",
+						  "type":[]
+						},
+						{
+						  "word": "hold - catch",
+						  "dy": "/hoʊld - kætʃ/",
+						  "meaning": "抓住",
+						  "type":[]
+						},
+						{
+						  "word": "just now - a moment ago",
+						  "dy": "/dʒʌst naʊ - ə ˈmoʊmənt əˈɡoʊ/",
+						  "meaning": "刚才",
+						  "type":[]
+						},
+						{
+						  "word": "job - work",
+						  "dy": "/dʒɒb - wɜːrk/",
+						  "meaning": "工作",
+						  "type":[]
+						},
+						{
+						  "word": "join - take part in",
+						  "dy": "/dʒɔɪn - teɪk pɑːrt ɪn/",
+						  "meaning": "参加",
+						  "type":[]
+						},
+						{
+						  "word": "kid - child",
+						  "dy": "/kɪd - tʃaɪld/",
+						  "meaning": "孩子",
+						  "type":[]
+						},
+						{
+						  "word": "kind - type",
+						  "dy": "/kaɪnd - taɪp/",
+						  "meaning": "种类",
+						  "type":[]
+						},
+						{
+						  "word": "keep - stay",
+						  "dy": "/kiːp - steɪ/",
+						  "meaning": "保持",
+						  "type":[]
+						},
+						{
+						  "word": "keep away - far from",
+						  "dy": "/kiːp əˈweɪ - fɑːr frɒm/",
+						  "meaning": "远离",
+						  "type":[]
+						},
+						{
+						  "word": "know - understand",
+						  "dy": "/noʊ - ˌʌndərˈstænd/",
+						  "meaning": "知道，理解",
+						  "type":[]
+						},
+						{
+						  "word": "learn - study",
+						  "dy": "/lɜːrn - ˈstʌdi/",
+						  "meaning": "学习",
+						  "type":[]
+						},
+						{
+						  "word": "laugh - smile",
+						  "dy": "/læf - smaɪl/",
+						  "meaning": "笑",
+						  "type":[]
+						},
+						{
+						  "word": "lift - elevator",
+						  "dy": "/lɪft - ˈelɪveɪtər/",
+						  "meaning": "电梯",
+						  "type":[]
+						},
+						{
+						  "word": "look after - take care of",
+						  "dy": "/lʊk ˈæftər - teɪk ker əv/",
+						  "meaning": "照顾",
+						  "type":[]
+						},
+						{
+						  "word": "luckily - fortunately",
+						  "dy": "/ˈlʌkɪli - ˈfɔːrtʃənətli/",
+						  "meaning": "幸运地",
+						  "type":[]
+						},
+						{
+						  "word": "look out - be careful",
+						  "dy": "/lʊk aʊt - biː ˈkerfl/",
+						  "meaning": "小心",
+						  "type":[]
+						},
+						{
+						  "word": "loss - miss",
+						  "dy": "/lɒs - mɪs/",
+						  "meaning": "失去，错过",
+						  "type":[]
+						},
+						{
+						  "word": "low - short",
+						  "dy": "/loʊ - ʃɔːrt/",
+						  "meaning": "低的 - 矮的",
+						  "type":[]
+						},
+						{
+						  "word": "mum - mother",
+						  "dy": "/mʌm - ˈmʌðər/",
+						  "meaning": "妈妈，母亲",
+						  "type":[]
+						},
+						{
+						  "word": "much - many",
+						  "dy": "/mʌtʃ - ˈmeni/",
+						  "meaning": "许多",
+						  "type":[]
+						},
+						{
+						  "word": "memorize - remember",
+						  "dy": "/ˈmeməraɪz - rɪˈmembər/",
+						  "meaning": "记住",
+						  "type":[]
+						},
+						{
+						  "word": "maybe - perhaps",
+						  "dy": "/ˈmeɪbi - pərˈhæps/",
+						  "meaning": "也许",
+						  "type":[]
+						},
+						{
+						  "word": "mad - angry",
+						  "dy": "/mæd - ˈæŋɡri/",
+						  "meaning": "生气的",
+						  "type":[]
+						},
+						{
+						  "word": "mend - repair",
+						  "dy": "/mend - rɪˈper/",
+						  "meaning": "修理",
+						  "type":[]
+						},
+						{
+						  "word": "night - evening",
+						  "dy": "/naɪt - ˈiːvnɪŋ/",
+						  "meaning": "晚上，夜晚",
+						  "type":[]
+						},
+						{
+						  "word": "near - beside",
+						  "dy": "/nɪr - bɪˈsaɪd/",
+						  "meaning": "在...附近",
+						  "type":[]
+						},
+						{
+						  "word": "next - following",
+						  "dy": "/nekst - ˈfɒloʊɪŋ/",
+						  "meaning": "下一个的",
+						  "type":[]
+						},
+						{
+						  "word": "noise - voice",
+						  "dy": "/nɔɪz - vɔɪs/",
+						  "meaning": "噪音 - 声音",
+						  "type":[]
+						},
+						{
+						  "word": "on - above",
+						  "dy": "/ɒn - əˈbʌv/",
+						  "meaning": "在...上面",
+						  "type":[]
+						},
+						{
+						  "word": "on - about",
+						  "dy": "/ɒn - əˈbaʊt/",
+						  "meaning": "关于",
+						  "type":[]
+						},
+						{
+						  "word": "often - usually",
+						  "dy": "/ˈɒfn - ˈjuːʒuəli/",
+						  "meaning": "经常，通常",
+						  "type":[]
+						},
+						{
+						  "word": "own - have",
+						  "dy": "/oʊn - hæv/",
+						  "meaning": "拥有",
+						  "type":[]
+						},
+						{
+						  "word": "opinion - idea",
+						  "dy": "/əˈpɪnjən - aɪˈdɪə/",
+						  "meaning": "观点，想法",
+						  "type":[]
+						},
+						{
+						  "word": "over - more than",
+						  "dy": "/ˈoʊvər - mɔːr ðæn/",
+						  "meaning": "超过",
+						  "type":[]
+						},
+						{
+						  "word": "pretty - beautiful",
+						  "dy": "/ˈprɪti - ˈbjuːtɪfl/",
+						  "meaning": "漂亮的",
+						  "type":[]
+						},
+						{
+						  "word": "park - garden",
+						  "dy": "/pɑːrk - ˈɡɑːrdn/",
+						  "meaning": "公园 - 花园",
+						  "type":[]
+						},
+						{
+						  "word": "purse - wallet",
+						  "dy": "/pɜːrs - ˈwɒlɪt/",
+						  "meaning": "钱包",
+						  "type":[]
+						},
+						{
+						  "word": "photo - picture",
+						  "dy": "/ˈfoʊtoʊ - ˈpɪktʃər/",
+						  "meaning": "照片",
+						  "type":[]
+						},
+						{
+						  "word": "plane - airplane",
+						  "dy": "/pleɪn - ˈerpleɪn/",
+						  "meaning": "飞机",
+						  "type":[]
+						},
+						{
+						  "word": "phone - telephone",
+						  "dy": "/foʊn - ˈtelɪfoʊn/",
+						  "meaning": "电话",
+						  "type":[]
+						},
+						{
+						  "word": "people - person",
+						  "dy": "/ˈpiːpl - ˈpɜːrsn/",
+						  "meaning": "人们 - 人",
+						  "type":[]
+						},
+						{
+						  "word": "point - view",
+						  "dy": "/pɔɪnt - vjuː/",
+						  "meaning": "观点",
+						  "type":[]
+						},
+						{
+						  "word": "pen pal - pen friend",
+						  "dy": "/pen pæl - pen frend/",
+						  "meaning": "笔友",
+						  "type":[]
+						},
+						{
+						  "word": "private - personal",
+						  "dy": "/ˈpraɪvət - ˈpɜːrsənl/",
+						  "meaning": "私人的",
+						  "type":[]
+						},
+						{
+						  "word": "perfect - excellent",
+						  "dy": "/ˈpɜːfɪkt - ˈeksələnt/",
+						  "meaning": "完美的，极好的",
+						  "type":[]
+						},
+						{
+						  "word": "quite - very",
+						  "dy": "/kwaɪt - ˈveri/",
+						  "meaning": "相当，非常",
+						  "type":[]
+						},
+						{
+						  "word": "question - problem",
+						  "dy": "/ˈkwestʃən - ˈprɒbləm/",
+						  "meaning": "问题",
+						  "type":[]
+						},
+						{
+						  "word": "quiet - silent",
+						  "dy": "/ˈkwaɪət - ˈsaɪlənt/",
+						  "meaning": "安静的",
+						  "type":[]
+						},
+						{
+						  "word": "rat - mouse",
+						  "dy": "/ræt - maʊs/",
+						  "meaning": "老鼠",
+						  "type":[]
+						},
+						{
+						  "word": "room - space",
+						  "dy": "/ruːm - speɪs/",
+						  "meaning": "空间",
+						  "type":[]
+						},
+						{
+						  "word": "rude - impolite",
+						  "dy": "/ruːd - ˌɪmpəˈlaɪt/",
+						  "meaning": "粗鲁的",
+						  "type":[]
+						},
+						{
+						  "word": "right - correct",
+						  "dy": "/raɪt - kəˈrekt/",
+						  "meaning": "正确的",
+						  "type":[]
+						},
+						{
+						  "word": "report - account",
+						  "dy": "/rɪˈpɔːrt - əˈkaʊnt/",
+						  "meaning": "报告，叙述",
+						  "type":[]
+						},
+						{
+						  "word": "right away - at once",
+						  "dy": "/raɪt əˈweɪ - æt wʌns/",
+						  "meaning": "立刻，马上",
+						  "type":[]
+						},
+						{
+						  "word": "reply - answer",
+						  "dy": "/rɪˈplaɪ - ˈænsər/",
+						  "meaning": "回答",
+						  "type":[]
+						},
+						{
+						  "word": "ring - telephone",
+						  "dy": "/rɪŋ - ˈtelɪfoʊn/",
+						  "meaning": "打电话",
+						  "type":[]
+						},
+						{
+						  "word": "sure - of course",
+						  "dy": "/ʃʊr - əv kɔːrs/",
+						  "meaning": "当然",
+						  "type":[]
+						},
+						{
+						  "word": "shop - store",
+						  "dy": "/ʃɒp - stɔːr/",
+						  "meaning": "商店",
+						  "type":[]
+						},
+						{
+						  "word": "see - look",
+						  "dy": "/siː - lʊk/",
+						  "meaning": "看",
+						  "type":[]
+						},
+						{
+						  "word": "small - little",
+						  "dy": "/smɔːl - ˈlɪtl/",
+						  "meaning": "小的",
+						  "type":[]
+						},
+						{
+						  "word": "sea - ocean",
+						  "dy": "/siː - ˈoʊʃn/",
+						  "meaning": "海洋",
+						  "type":[]
+						},
+						{
+						  "word": "shut - close",
+						  "dy": "/ʃʌt - kloʊz/",
+						  "meaning": "关闭",
+						  "type":[]
+						},
+						{
+						  "word": "spot - place",
+						  "dy": "/spɒt - pleɪs/",
+						  "meaning": "地点",
+						  "type":[]
+						},
+						{
+						  "word": "sick - ill",
+						  "dy": "/sɪk - ɪl/",
+						  "meaning": "生病的",
+						  "type":[]
+						},
+						{
+						  "word": "sickness - illness",
+						  "dy": "/ˈsɪknəs - ˈɪlnəs/",
+						  "meaning": "疾病",
+						  "type":[]
+						},
+						{
+						  "word": "talk - speak",
+						  "dy": "/tɔːk - spiːk/",
+						  "meaning": "说话",
+						  "type":[]
+						},
+						{
+						  "word": "take a walk - go for a walk",
+						  "dy": "/teɪk ə wɔːk - ɡoʊ fɔːr ə wɔːk/",
+						  "meaning": "散步",
+						  "type":[]
+						},
+						{
+						  "word": "trash - rubbish",
+						  "dy": "/træʃ - ˈrʌbɪʃ/",
+						  "meaning": "垃圾",
+						  "type":[]
+						},
+						{
+						  "word": "term - semester",
+						  "dy": "/tɜːrm - sɪˈmestər/",
+						  "meaning": "学期",
+						  "type":[]
+						},
+						{
+						  "word": "turn - become",
+						  "dy": "/tɜːrn - bɪˈkʌm/",
+						  "meaning": "变成",
+						  "type":[]
+						},
+						{
+						  "word": "tourist - traveler",
+						  "dy": "/ˈtʊərɪst - ˈtrævələr/",
+						  "meaning": "游客",
+						  "type":[]
+						},
+						{
+						  "word": "tasty - delicious",
+						  "dy": "/ˈteɪsti - dɪˈlɪʃəs/",
+						  "meaning": "美味的",
+						  "type":[]
+						},
+						{
+						  "word": "tonight - this evening",
+						  "dy": "/təˈnaɪt - ðɪs ˈiːvnɪŋ/",
+						  "meaning": "今晚",
+						  "type":[]
+						},
+						{
+						  "word": "though - although",
+						  "dy": "/ðoʊ - ɔːlˈðoʊ/",
+						  "meaning": "虽然",
+						  "type":[]
+						},
+						{
+						  "word": "true - real",
+						  "dy": "/truː - ˈriːəl/",
+						  "meaning": "真实的",
+						  "type":[]
+						},
+						{
+						  "word": "tale - story",
+						  "dy": "/teɪl - ˈstɔːri/",
+						  "meaning": "故事",
+						  "type":[]
+						},
+						{
+						  "word": "tidy - clean",
+						  "dy": "/ˈtaɪdi - kliːn/",
+						  "meaning": "整洁的",
+						  "type":[]
+						},
+						{
+						  "word": "under - below",
+						  "dy": "/ˈʌndər - bɪˈloʊ/",
+						  "meaning": "在...下面",
+						  "type":[]
+						},
+						{
+						  "word": "usual - common",
+						  "dy": "/ˈjuːʒuəl - ˈkɒmən/",
+						  "meaning": "通常的，常见的",
+						  "type":[]
+						},
+						{
+						  "word": "useful - helpful",
+						  "dy": "/ˈjuːsfl - ˈhelpfl/",
+						  "meaning": "有用的",
+						  "type":[]
+						},
+						{
+						  "word": "unusual - special",
+						  "dy": "/ʌnˈjuːʒuəl - ˈspeʃl/",
+						  "meaning": "不寻常的，特别的",
+						  "type":[]
+						},
+						{
+						  "word": "use up - run out of",
+						  "dy": "/juːz ʌp - rʌn aʊt əv/",
+						  "meaning": "用完",
+						  "type":[]
+						},
+						{
+						  "word": "until - till",
+						  "dy": "/ənˈtɪl - tɪl/",
+						  "meaning": "直到",
+						  "type":[]
+						},
+						{
+						  "word": "universal - popular",
+						  "dy": "/ˌjuːnɪˈvɜːrsl - ˈpɒpjələr/",
+						  "meaning": "普遍的，流行的",
+						  "type":[]
+						},
+						{
+						  "word": "want - would like",
+						  "dy": "/wɒnt - wʊd laɪk/",
+						  "meaning": "想要",
+						  "type":[]
+						},
+						{
+						  "word": "WC - toilet",
+						  "dy": "/ˌdʌbəljuː ˈsiː - ˈtɔɪlət/",
+						  "meaning": "厕所",
+						  "type":[]
+						},
+						{
+						  "word": "wish - hope",
+						  "dy": "/wɪʃ - hoʊp/",
+						  "meaning": "希望",
+						  "type":[]
+						},
+						{
+						  "word": "well - fine",
+						  "dy": "/wel - faɪn/",
+						  "meaning": "好的",
+						  "type":[]
+						}
 					]
 				}
             ]
@@ -6353,6 +11626,171 @@
         const totalWordCount = document.getElementById('totalWordCount');
 		const wordBtn =  document.getElementById('word-btn');
 		const chineseBtn =  document.getElementById('chinese-btn');
+// 开始数据处理代码
+		const extractBtn =  document.getElementById('extractBtn');
+		const firstClass =  document.getElementById('firstClass');
+		const secondClass =  document.getElementById('secondClass');
+
+		let categories = wordData.categories;
+		categories.forEach((obj,index) => {
+			let name = obj.name;	
+			// 创建一个新的option元素
+			var option = document.createElement("option");
+			 
+			// 设置option的文本内容
+			option.text = obj.name;
+			 
+			// 设置option的值（可选）
+			option.value = obj.name;
+			// 将option添加到select元素中
+			firstClass.add(option);
+
+			if(index == 0){
+				if(obj.subcategories)
+				{
+					obj.subcategories.forEach((obj1,index) => {
+						let name1 = obj1.name;	
+						// 创建一个新的option元素
+						var option1 = document.createElement("option");
+						// 设置option的文本内容
+						option1.text = obj1.name;
+						// 设置option的值（可选）
+						option1.value = obj1.name;
+						// 将option添加到select元素中
+						secondClass.add(option1);
+
+					});
+				}
+			}
+		});
+		firstClass.addEventListener('change', function() {
+			let value = this.value;
+			while (secondClass.firstChild) {
+				secondClass.firstChild.remove();
+			}
+			categories.forEach((obj,index) => {
+				if(obj.name == value)
+				{
+					if(obj.subcategories)
+					{
+						obj.subcategories.forEach((obj1,index) => {
+							let name1 = obj1.name;	
+							// 创建一个新的option元素
+							var option1 = document.createElement("option");
+							// 设置option的文本内容
+							option1.text = obj1.name;
+							// 设置option的值（可选）
+							option1.value = obj1.name;
+							// 将option添加到select元素中
+							secondClass.add(option1);
+
+						});
+					}
+				}
+			});
+		});
+
+		document.getElementById('extractBtn').addEventListener('click', function() {
+            const inputData = document.getElementById('inputData').value;
+            const outputElement = document.getElementById('outputResult');
+            
+            if (!inputData.trim()) {
+                outputElement.innerHTML = '<p style="color: #e74c3c; text-align: center;">请输入数据</p>';
+                return;
+            }
+            console.log("firstClass.value = " + firstClass.value);
+			var sv = "b"+secondClass.value + "a";
+			
+			//alert("b"+secondClass.value + "a");
+			//if(sv == "ba"){alert(1);}
+            // 按行分割输入数据
+            const lines = inputData.split('\n');
+            const results = [];
+			const olds = [];
+
+			categories.forEach((obj,index) => {
+				if(obj.name == firstClass.value)
+				{
+					console.log("obj.name = " + obj.name);
+					if(obj.subcategories)
+					{
+						console.log("有子节点");
+						obj.subcategories.forEach((obj1,index) => {
+							console.log("子节点 = " + obj1.name);
+							if(secondClass.value == obj1.name)
+							{
+								console.log("找到子节点 = " + obj1.name);
+								obj1.words.forEach((oxx,oindex)=>{
+									console.log("找到子节点的name = " + oxx.word);
+									olds.push(oxx.word);
+								});
+							}
+
+						});
+					}
+					else
+					{
+						console.log("无子节点");
+						if(obj.words)
+						{
+							obj.words.forEach((oxx,oindex)=>{olds.push(oxx.word);});
+						}
+					}
+				}
+			});
+            console.log(olds.length);
+            console.log(olds[0]);
+            // 处理每一行数据
+            lines.forEach(line => {
+                line = line.trim();
+                if (!line) return;
+                
+                // 使用正则表达式匹配格式：序号.数据1-数据2
+                const match = line.match(/^\d+\.(.+)-.+$/);
+                if (match && match[1]) {
+                    results.push(match[1].trim());
+                }
+            });
+			if(results.length > 0)
+			{
+				let html = '';
+
+				console.log("最终处理数据");
+				results.forEach((result, index) => {
+					if(!olds.includes(result))
+					{
+						console.log("最终处理数据，不包含 " + result);				
+						html += `${result}、`;
+					}
+
+                });
+				if(html.length > 0 )
+				{
+					html = '帮我用json文件罗列出' + html + "单词、读音、汉语意思、单词类型。单词使用word属性，读音使用dy属性，汉语意思使用meaning属性，单词类型使用type属性";
+					document.getElementById('outputResultds').innerHTML = html;
+				}else{					document.getElementById('outputResultds').innerHTML = "没有需要处理的数据";}
+			}else{alert("原数据解析问题或者输入数据有问题");}
+            
+            // 显示结果
+            if (results.length > 0) {
+                let html = '';
+				
+                results.forEach((result, index) => {
+                    html += `<div class="result-item">
+                        <div class="index">${index + 1}</div>
+                        <div class="text">${result}</div>
+                    </div>`;
+                });
+                //outputElement.innerHTML = html;
+
+
+            } else {
+                outputElement.innerHTML = '<p style="color: #e74c3c; text-align: center;">未找到匹配的数据，请检查格式是否正确</p>';
+            }
+        });
+
+
+// 结束数据处理代码
 
 
         // 当前状态
