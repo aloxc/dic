@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学pdf课本短语转json</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .input-area {
+            margin-bottom: 30px;
+        }
+        
+        .input-area label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 250px;
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .example-text {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .example-text i {
+            margin-right: 6px;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        button {
+            background: linear-gradient(to right, #3498db, #2c80b9);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .output-area {
+            margin-top: 30px;
+        }
+        
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .output-header h3 {
+            color: #2c3e50;
+        }
+        
+        .copy-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #219653;
+        }
+        
+        .output-container {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        
+        .result-info {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #e8f4fc;
+            color: #2c3e50;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-info i {
+            margin-right: 8px;
+            color: #3498db;
+        }
+        
+        .result-info.error {
+            background-color: #fde8e8;
+            color: #e74c3c;
+        }
+        
+        .result-info.error i {
+            color: #e74c3c;
+        }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            textarea {
+                height: 200px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>文本转JSON工具</h1>
+            <p class="subtitle">将英语短语和汉语意思转换为JSON格式。请确保英语短语在奇数行，对应的汉语意思在偶数行。</p>
+        </header>
+        
+        <div class="input-area">
+            <label for="textInput"><i class="fas fa-align-left"></i> 输入文本（奇数行：英语，偶数行：汉语）</label>
+            <textarea id="textInput" placeholder="请输入英语短语和汉语意思，每行一个...">
+apple
+苹果
+computer
+电脑
+hello world
+你好世界
+programming
+编程
+artificial intelligence
+人工智能</textarea>
+            <div class="example-text">
+                <i class="fas fa-info-circle"></i> 提示：请确保英语短语在奇数行，对应的汉语意思在偶数行，每行一个条目
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button id="convertBtn">
+                <i class="fas fa-sync-alt"></i> 转换为JSON
+            </button>
+        </div>
+        
+        <div class="output-area">
+            <div class="output-header">
+                <h3><i class="fas fa-file-code"></i> JSON输出结果</h3>
+                <button id="copyBtn" class="copy-btn" disabled>
+                    <i class="far fa-copy"></i> 复制JSON
+                </button>
+            </div>
+            <div id="outputContainer" class="output-container">
+                转换后的JSON将显示在这里...
+            </div>
+            <div id="resultInfo" class="result-info">
+                <i class="fas fa-info-circle"></i> 点击"转换为JSON"按钮开始转换
+            </div>
+        </div>
+        
+        <footer>
+            <p>文本转JSON工具 &copy; 2023 | 设计：英语-汉语短语转换器</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textInput = document.getElementById('textInput');
+            const convertBtn = document.getElementById('convertBtn');
+            const outputContainer = document.getElementById('outputContainer');
+            const copyBtn = document.getElementById('copyBtn');
+            const resultInfo = document.getElementById('resultInfo');
+            
+            // 转换文本为JSON
+            function convertToJson() {
+                const text = textInput.value.trim();
+                
+                if (!text) {
+                    showResult('请输入文本内容', 'error');
+                    outputContainer.textContent = '请输入文本内容';
+                    copyBtn.disabled = true;
+                    return;
+                }
+                
+                // 按行分割文本
+                const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+                
+                if (lines.length < 2) {
+                    showResult('至少需要两行文本（一行英语，一行汉语）', 'error');
+                    outputContainer.textContent = '至少需要两行文本（一行英语，一行汉语）';
+                    copyBtn.disabled = true;
+                    return;
+                }
+                
+                // 检查是否有奇数行
+                if (lines.length % 2 !== 0) {
+                    showResult('检测到奇数行，最后一行将不会被处理（需要成对的英语-汉语）', 'error');
+                }
+                
+                // 创建JSON对象
+                const jsonArray = [];
+                
+                for (let i = 0; i < lines.length; i += 2) {
+                    // 确保有对应的汉语行
+                    if (i + 1 < lines.length) {
+                        const entry = {
+                            word: lines[i],
+                            meaning: lines[i + 1],
+							dy:"",
+							type:[]
+                        };
+                        jsonArray.push(entry);
+                    }
+                }
+                
+                // 格式化为漂亮的JSON字符串
+                const jsonString = JSON.stringify(jsonArray, null, 2);
+                
+                // 显示结果
+                outputContainer.textContent = jsonString;
+                
+                // 显示成功信息
+                showResult(`成功转换了 ${jsonArray.length} 个条目`, 'success');
+                
+                // 启用复制按钮
+                copyBtn.disabled = false;
+            }
+            
+            // 显示结果信息
+            function showResult(message, type = 'info') {
+                resultInfo.textContent = message;
+                resultInfo.className = 'result-info';
+                
+                if (type === 'error') {
+                    resultInfo.classList.add('error');
+                    resultInfo.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                } else if (type === 'success') {
+                    resultInfo.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                } else {
+                    resultInfo.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+                }
+            }
+            
+            // 复制JSON到剪贴板
+            function copyToClipboard() {
+                const jsonText = outputContainer.textContent.slice(0,-2).slice(2);
+                // 使用现代剪贴板API
+                navigator.clipboard.writeText(jsonText).then(() => {
+                    // 临时更改按钮文本和颜色
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                    copyBtn.style.backgroundColor = '#27ae60';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.backgroundColor = '';
+                    }, 2000);
+                    
+                    showResult('JSON已复制到剪贴板', 'success');
+                }).catch(err => {
+                    console.error('复制失败: ', err);
+                    showResult('复制失败，请手动复制', 'error');
+                });
+            }
+            
+            // 事件监听器
+            convertBtn.addEventListener('click', convertToJson);
+            copyBtn.addEventListener('click', copyToClipboard);
+            
+            // 初始加载时转换示例文本
+            convertToJson();
+        });
+    </script>
+</body>
+</html>
