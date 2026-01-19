@@ -578,7 +578,33 @@
         // 模拟单词数据（实际应用中可以从JSON文件加载）
         const wordData = {
             "categories": [
-                /* */
+                /*{
+                    "id": "sample",
+                    "name": "示例",
+                    "subcategories": [
+                        {
+                            "id": "farm_animals",
+                            "name": "农场动物",
+                            "words": [
+                                {
+                                    "word": "cow",
+                                    "type": ["n."],
+									"dy":"kaʊ",
+                                    "meaning": "奶牛",
+                                    "detail": {
+                                        "definition": "一种大型家畜，通常饲养以获取牛奶和牛肉",
+                                        "examples": [
+                                            "The cow is grazing in the field. (奶牛正在田野里吃草。)",
+                                            "We get milk from cows. (我们从奶牛身上获取牛奶。)"
+                                        ],
+                                        "synonyms": ["cattle", "bovine"],
+                                        "notes": "cow通常指母牛，公牛称为bull"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },*/
 				{
                     "id": "grade3a",
                     "name": "三年级上册",
@@ -3495,7 +3521,10 @@
 								  "word": "I",
 								  "dy": "/aɪ/",
 								  "meaning": "我",
-								  "type": ["代"]
+								  "type": ["代"],
+								  "detail": {
+										"notes": "<img src=\"daici.png\" />"
+									}
 								},
 								{
 								  "word": "you",
